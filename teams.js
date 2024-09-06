@@ -1,5 +1,4 @@
-const teams = 
-[
+const teams = [
   {
     "teamNumber": 1,
     "teamName": "The Juggernauts"
@@ -12943,7 +12942,7 @@ const teams =
   {
     "teamNumber": 4000,
     "teamName": "Texsquad"
-  }
+  },
 {
     "teamNumber": 5001,
     "teamName": "Fast and Serious"
