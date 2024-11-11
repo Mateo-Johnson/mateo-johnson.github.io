@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FlowerGen</title>
+  <title>Flower Generator</title>
   <script src="https://esm.sh/css-doodle@0.40.8/css-doodle.min.js?raw"></script>
 </head>
 
@@ -126,17 +126,23 @@
       const doodle = document.querySelector('css-doodle');
       const selectedColors = colorPalettes[currentPaletteIndex];
 
+      // Update CSS custom properties for colors
       selectedColors.forEach((color, index) => {
         doodle.style.setProperty(`--color-${index + 1}`, color);
       });
 
       doodle.style.backgroundColor = pastelColors[currentBackgroundIndex];
       doodle.update();
+
+      // Update URL with the current background color and each color in the palette
       const newUrl = new URL(window.location.href);
-      newUrl.searchParams.set('backgroundIndex', currentBackgroundIndex);
-      newUrl.searchParams.set('paletteIndex', currentPaletteIndex);
+      newUrl.searchParams.set('backgroundColor', pastelColors[currentBackgroundIndex]);
+      selectedColors.forEach((color, index) => {
+        newUrl.searchParams.set(`flowerColor${index + 1}`, color);
+      });
       window.history.replaceState(null, '', newUrl.toString());
 
+      // Increment indices
       currentBackgroundIndex = (currentBackgroundIndex + 1) % pastelColors.length;
       currentPaletteIndex = (currentPaletteIndex + 1) % colorPalettes.length;
     }
@@ -149,22 +155,18 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const backgroundIndexFromUrl = urlParams.get('backgroundIndex');
-      const paletteIndexFromUrl = urlParams.get('paletteIndex');
+      const backgroundColorFromUrl = urlParams.get('backgroundColor');
 
-      if (backgroundIndexFromUrl !== null) {
-        currentBackgroundIndex = parseInt(backgroundIndexFromUrl, 10) % pastelColors.length;
-      }
-      if (paletteIndexFromUrl !== null) {
-        currentPaletteIndex = parseInt(paletteIndexFromUrl, 10) % colorPalettes.length;
+      if (backgroundColorFromUrl) {
+        document.querySelector('css-doodle').style.backgroundColor = backgroundColorFromUrl;
       }
 
-      const doodle = document.querySelector('css-doodle');
-      const savedColors = colorPalettes[currentPaletteIndex];
-      savedColors.forEach((color, index) => {
-        doodle.style.setProperty(`--color-${index + 1}`, color);
-      });
-      doodle.style.backgroundColor = pastelColors[currentBackgroundIndex];
+      for (let i = 1; i <= 8; i++) {
+        const color = urlParams.get(`flowerColor${i}`);
+        if (color) {
+          document.querySelector('css-doodle').style.setProperty(`--color-${i}`, color);
+        }
+      }
     });
   </script>
 </body>
