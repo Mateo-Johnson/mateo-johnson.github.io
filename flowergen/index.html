@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flower Generator</title>
+  <title>FlowerGen</title>
   <script src="https://esm.sh/css-doodle@0.40.8/css-doodle.min.js?raw"></script>
 </head>
 
@@ -14,15 +14,6 @@
         @grid: 200x1 / 70vmin 100vmin;
         overflow: visible;
         contain: initial;
-        --colors: @p(
-          (#e9dbce, #fceade, #ea526f, #e2c290, #6b2d5c, #25ced1, #b3908c, #f7d5cb),
-          (#c9cba3, #ffe1a8, #e26d5c, #723d46, #472d30, #bcd29f, #ffd19d, #d46958),
-          (#2B2B2B, #91B3E1, #2F5FB3, #3D4B89, #AE99E8, #DBE2EC, #4c6378, #627d9c),
-          (#114b5f, #1a936f, #88d498, #c6dabf, #f3e9d2, #0e6770, #5fa48d, #b7c9b0),
-          (#e42268, #fb8075, #761871, #5b7d9c, #a38cb4, #476590, #ff9baa, #d782b2),
-          (#223843, #e9dbce, #eff1f3, #dbd3d8, #d8b4a0, #d77a61, #c7b1a5, #aca8a4),
-          (#e29578, #ffffff, #006d77, #83c5be, #ffddd2, #edf6f9, #a8d6d3, #d1e4e2),
-          (#ffbe0b, #fb5607, #ff006e, #8338ec, #3a86ff, #ff9f1c, #fa8072, #6a4c93));
         --color-1: black; 
         --color-2: @P;
         --color-3: @P;
@@ -66,76 +57,6 @@
           opacity: 1;
         }
       }
-
-      @keyframes keyframes {
-        from {
-          scale: 1;
-        }
-
-        to {
-          scale: 0;
-        }
-      }
-
-      @match (i < @p(1, 41)) {
-        @size: @r(5, 12)vmin;
-        @place: @r(0, 100)% @r(60, 100)%;
-        transform: rotate(calc(@p(-90, 90)deg + @r(±30)deg)) skew(@r(20)deg);
-        background: linear-gradient(180deg, @p(--colors), @P);
-        opacity: @r(0.5, 0.8);
-        clip-path: @shape(points: 200;
-          a: cos(t)*@r(9, 13)/18 - cos(2t)*5/@r(9, 18);
-          b: cos(3t)/@r(10, 18) + cos(3t)/@r(18, 20);
-          x: .75 * sin(t - @r(0.1))^3;
-          y: a - b + .15;
-        );
-      }
-
-      @match(i=41) {
-        @place: 57% 65%;
-
-        ::after {
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          content: "(";
-          font-size: 15vmin;
-          color: black;
-          -webkit-text-stroke: 0.2vmin @P();
-          transform: rotate(60deg) skew(60deg) scale(1.2, 3);
-        }
-      }
-
-      @match(i > 41 && i < 60) {
-        @size: @r(15, 25)vmin;
-        @place: 50% 20%;
-        transform: rotate(@r(360)deg) skew(@r(20)deg);
-        transform-origin: 50% 85%;
-        background: linear-gradient(180deg, @p(--colors), @P);
-        opacity: @r(0.2, 1);
-        clip-path: @shape(points: 200;
-          a: cos(t)*@r(9, 13)/18 - cos(2t)*5/@r(9, 18);
-          b: cos(3t)/@r(10, 18) + cos(3t)/@r(18, 20);
-          x: .75 * sin(t - @r(0.1))^3;
-          y: a - b + .15;
-        );
-
-        ::after {
-          content: "";
-          @size: 100%;
-          @place: center;
-          animation: rotate 3s linear infinite;
-        }
-      }
-
-      @keyframes rotate {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
     )
   }
 
@@ -172,15 +93,12 @@
 
 <body>
   <graph>
-    <css-doodle use="var(--rule)" click-to-update>
-      :doodle {
-
-      }
-    </css-doodle>
+    <css-doodle use="var(--rule)" click-to-update></css-doodle>
   </graph>
 
   <script>
-    let currentColorIndex = 0;
+    let currentBackgroundIndex = 0;
+    let currentPaletteIndex = 0;
 
     const pastelColors = [
       '#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff',
@@ -193,17 +111,34 @@
       '#f3d1f4', '#c2e9fb', '#f3e5f5', '#d7ffeb', '#fffee3'
     ];
 
+    const colorPalettes = [
+      ['#e9dbce', '#fceade', '#ea526f', '#e2c290', '#6b2d5c', '#25ced1', '#b3908c', '#f7d5cb'],
+      ['#c9cba3', '#ffe1a8', '#e26d5c', '#723d46', '#472d30', '#bcd29f', '#ffd19d', '#d46958'],
+      ['#2B2B2B', '#91B3E1', '#2F5FB3', '#3D4B89', '#AE99E8', '#DBE2EC', '#4c6378', '#627d9c'],
+      ['#114b5f', '#1a936f', '#88d498', '#c6dabf', '#f3e9d2', '#0e6770', '#5fa48d', '#b7c9b0'],
+      ['#e42268', '#fb8075', '#761871', '#5b7d9c', '#a38cb4', '#476590', '#ff9baa', '#d782b2'],
+      ['#223843', '#e9dbce', '#eff1f3', '#dbd3d8', '#d8b4a0', '#d77a61', '#c7b1a5', '#aca8a4'],
+      ['#e29578', '#ffffff', '#006d77', '#83c5be', '#ffddd2', '#edf6f9', '#a8d6d3', '#d1e4e2'],
+      ['#ffbe0b', '#fb5607', '#ff006e', '#8338ec', '#3a86ff', '#ff9f1c', '#fa8072', '#6a4c93']
+    ];
+
     function updateDoodleAndBackground() {
       const doodle = document.querySelector('css-doodle');
-      doodle.style.transition = 'background-color 1s ease';
-      doodle.style.backgroundColor = pastelColors[currentColorIndex];
-      doodle.update();
+      const selectedColors = colorPalettes[currentPaletteIndex];
 
+      selectedColors.forEach((color, index) => {
+        doodle.style.setProperty(`--color-${index + 1}`, color);
+      });
+
+      doodle.style.backgroundColor = pastelColors[currentBackgroundIndex];
+      doodle.update();
       const newUrl = new URL(window.location.href);
-      newUrl.searchParams.set('colorIndex', currentColorIndex);
+      newUrl.searchParams.set('backgroundIndex', currentBackgroundIndex);
+      newUrl.searchParams.set('paletteIndex', currentPaletteIndex);
       window.history.replaceState(null, '', newUrl.toString());
 
-      currentColorIndex = (currentColorIndex + 1) % pastelColors.length;
+      currentBackgroundIndex = (currentBackgroundIndex + 1) % pastelColors.length;
+      currentPaletteIndex = (currentPaletteIndex + 1) % colorPalettes.length;
     }
 
     function handleMouseMove() {
@@ -214,14 +149,22 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const colorIndexFromUrl = urlParams.get('colorIndex');
+      const backgroundIndexFromUrl = urlParams.get('backgroundIndex');
+      const paletteIndexFromUrl = urlParams.get('paletteIndex');
 
-      if (colorIndexFromUrl !== null) {
-        currentColorIndex = parseInt(colorIndexFromUrl, 10) % pastelColors.length;
+      if (backgroundIndexFromUrl !== null) {
+        currentBackgroundIndex = parseInt(backgroundIndexFromUrl, 10) % pastelColors.length;
+      }
+      if (paletteIndexFromUrl !== null) {
+        currentPaletteIndex = parseInt(paletteIndexFromUrl, 10) % colorPalettes.length;
       }
 
       const doodle = document.querySelector('css-doodle');
-      doodle.style.backgroundColor = pastelColors[currentColorIndex];
+      const savedColors = colorPalettes[currentPaletteIndex];
+      savedColors.forEach((color, index) => {
+        doodle.style.setProperty(`--color-${index + 1}`, color);
+      });
+      doodle.style.backgroundColor = pastelColors[currentBackgroundIndex];
     });
   </script>
 </body>
