@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML, CSS, and JS Editor</title>
+  <style>
+    body {
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
 
+    .editor {
+      display: flex;
+      flex: 1;
+    }
+
+    .editor > div {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      overflow: auto;
+    }
+
+    .editor textarea {
+      font-size: 16px;
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      resize: none;
+    }
+
+    iframe {
+      flex: 1;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="editor">
+    <div>
+      <h3>HTML</h3>
+      <textarea id="html-input" placeholder="Enter your HTML code here..."></textarea>
+    </div>
+    <div>
+      <h3>CSS</h3>
+      <textarea id="css-input" placeholder="Enter your CSS code here..."></textarea>
+    </div>
+    <div>
+      <h3>JavaScript</h3>
+      <textarea id="js-input" placeholder="Enter your JavaScript code here..."></textarea>
+    </div>
+  </div>
+  <iframe id="preview-frame"></iframe>
+
+  <script>
+    const htmlInput = document.getElementById('html-input');
+    const cssInput = document.getElementById('css-input');
+    const jsInput = document.getElementById('js-input');
+    const previewFrame = document.getElementById('preview-frame');
+
+    function updatePreview() {
+      const html = htmlInput.value;
+      const css = cssInput.value;
+      const js = jsInput.value;
+
+      const doc = previewFrame.contentDocument;
+      doc.open();
+      doc.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Preview</title>
+          <style>${css}</style>
+        </head>
+        <body>
+          ${html}
+          <script>${js}</script>
+        </body>
+        </html>
+      `);
+      doc.close();
+    }
+
+    htmlInput.addEventListener('input', updatePreview);
+    cssInput.addEventListener('input', updatePreview);
+    jsInput.addEventListener('input', updatePreview);
+  </script>
+</body>
+</html>
