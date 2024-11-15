@@ -1,1 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F8F8F8;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: #1E6BAF;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #3469A4;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #1E6BAF;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .contact-hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 100px 30px 50px;
+      background-color: #F1F1F1;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .contact-hero .text {
+      flex: 1;
+      max-width: 100%;
+    }
+
+    .contact-hero .text h1 {
+      font-size: 3em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+      font-family: 'Georgia', serif;
+    }
+
+    .contact-hero .text p {
+      font-size: 1.25em;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      color: #555;
+    }
+
+    .contact-hero .text .highlight {
+      color: #3469A4;
+      font-weight: bold;
+      background-color: #E7F3FD;
+    }
+
+    .contact-details {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .contact-details h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+    }
+
+    .contact-details p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #666;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      font-size: 1.2em;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #1E6BAF;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .social-links a:hover {
+      color: #fff;
+    }
+
+    .social-links i {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #e2f7ff;
+      border-radius: 50%;
+      padding: 8px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      font-size: 1.3em;
+    }
+
+    .social-links i:hover {
+      background-color: #3469A4;
+      transform: scale(1.1);
+    }
+
+    .social-links a::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1E6BAF;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8em;
+      white-space: nowrap;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .social-links a:hover::after {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    footer {
+      background-color: #1E6BAF;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    footer a {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      color: #F1F1F1;
+    }
+  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <a href="https://mateo-johnson.github.io">
+      <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
+    </a>
+    <nav>
+      <a href="https://mateo-johnson.github.io/about">About</a>
+      <a href="https://mateo-johnson.github.io/skills">Skills</a>
+      <a href="https://mateo-johnson.github.io/projects">Projects</a>
+      <a href="https://mateo-johnson.github.io/contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="contact-hero">
+    <div class="text">
+      <h1>Get in Touch</h1>
+      <p>
+        I would love to hear from you! Whether you're interested in discussing robotics, technology, or any potential collaborations, feel free to reach out.
+      </p>
+      <p>
+        You can contact me through my social media links below or by visiting my GitHub page for my open-source projects.
+      </p>
+    </div>
+  </section>
+
+  <section class="contact-details">
+    <h2>Contact Information</h2>
+    <p>If you want to connect, here's where you can find me:</p> <br>
+
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank" data-tooltip="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/Mateo-Johnson" target="_blank" data-tooltip="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.instagram.com/not_mateojohnson" target="_blank" data-tooltip="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="mailto:mjohnson012908@gmail.com" target="_blank" data-tooltip="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="mateo-johnson.github.io/assets/resume.pdf" download="Mateo_Johnson_Resume.pdf" data-tooltip="Download Resume">
+        <i class="fas fa-file"></i>
+      </a>
+      <a href="https://drive.google.com/drive/u/0/folders/1FH_oOgilr82oWNqWrB_cWnqgv9c7x2aw" target="_blank" data-tooltip="Google Drive">
+        <i class="fab fa-google-drive"></i>
+      </a>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
+    <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
+  </footer>
+
+</body>
+
+</html>
