@@ -251,6 +251,70 @@
     footer a:hover {
       color: #F1F1F1;
     }
+
+    /* Media Queries for Mobile */
+    @media (max-width: 768px) {
+      .about-hero {
+        padding: 50px 20px;
+      }
+
+      .about-hero .text h1 {
+        font-size: 2.5em;
+      }
+
+      .about-hero .text p {
+        font-size: 1.1em;
+      }
+
+      .timeline-section {
+        max-width: 100%;
+        height: auto;
+        padding: 20px;
+        margin-top: 20px;
+        border-left: none;
+      }
+
+      .skills h2 {
+        font-size: 2em;
+      }
+
+      .skills p {
+        font-size: 1em;
+      }
+
+      .skills .skill-icons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .skills .skill-icons div {
+        width: 90%;
+        margin: 10px 0;
+      }
+
+      footer {
+        font-size: 1em;
+      }
+
+      header nav a {
+        margin: 0 10px;
+      }
+
+      .timeline-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .timeline-item .marker {
+        margin-bottom: 10px;
+      }
+
+      .timeline-item .content {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
