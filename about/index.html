@@ -1,253 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me | Mateo Johnson</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; background-color: #F8F8F8; color: #333; }
-        a { text-decoration: none; color: #1E6BAF; transition: color 0.3s ease; }
-        a:hover { color: #3469A4; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        header { 
-            display: flex; justify-content: space-between; align-items: center; padding: 20px;
-            background-color: #1E6BAF; color: #fff; 
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        header .logo {
-            width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-right: 15px;
-        }
-        header nav a {
-            margin: 0 15px; font-weight: bold;
-            color: #fff;
-            text-transform: uppercase;
-        }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F8F8F8;
+      color: #333;
+    }
 
-        .about-hero {
-            display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; 
-            padding: 100px 30px 50px; background-color: #F1F1F1;
-            border-bottom: 2px solid #ddd;
-        }
-        .about-hero .text {
-            flex: 1; max-width: 100%;
-        }
-        .about-hero .text h1 { 
-            font-size: 3em; color: #1E6BAF; margin-bottom: 15px; font-family: 'Georgia', serif; 
-        }
-        .about-hero .text p { 
-            font-size: 1.25em; line-height: 1.7; margin-bottom: 25px; color: #555;
-        }
-        .about-hero .text .highlight {
-            color: #3469A4; font-weight: bold;
-            background-color: #E7F3FD;
-        }
+    a {
+      text-decoration: none;
+      color: #1E6BAF;
+      transition: color 0.3s ease;
+    }
 
-.skills {
-            background-color: #fff; padding: 60px 20px;
-            text-align: center; margin-top: 50px; 
-        }
-        .skills h2 {
-            font-size: 2.5em; color: #1E6BAF; margin-bottom: 20px;
-        }
-        .skills p {
-            font-size: 1.2em; margin-bottom: 30px; max-width: 800px; margin: 0 auto;
-            color: #666;
-        }
-        .skills .skill-icons {
-            display: flex; justify-content: space-around; flex-wrap: wrap;
-        }
-        .skills .skill-icons div {
-            flex: 1; min-width: 100px; padding: 20px;
-            text-align: center; background-color: #e2f7ff;
-            margin: 10px; border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-        .skills .skill-icons div:hover {
-            transform: scale(1.05);
-            background-color: #3469A4;
-            color: #fff;
-        }
-      
-      .skills .skill-icons div:hover h3,
-.skills .skill-icons div:hover p {
-    color: #fff;
-}
+    a:hover {
+      color: #3469A4;
+    }
 
-        .timeline-section {
-            flex: 1; max-width: 35%; padding: 20px;
-            background-color: #F0F8FF;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            height: 500px;
-            overflow-y: auto;
-            padding-right: 10px;
-            border-left: 5px solid #1E6BAF;
-        }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #1E6BAF;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .timeline-section h2 {
-            font-size: 2em; color: #1E6BAF; margin-bottom: 20px; text-align: center;
-            font-weight: bold; border-bottom: 2px solid #3469A4;
-            padding-bottom: 10px;
-        }
+    header .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
 
-        .timeline {
-            position: relative; padding: 20px 10px;
-        }
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+    }
 
-        .timeline-item {
-            display: flex; align-items: flex-start; margin-bottom: 30px;
-            position: relative;
-        }
+    .about-hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 100px 30px 50px;
+      background-color: #F1F1F1;
+      border-bottom: 2px solid #ddd;
+    }
 
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
+    .about-hero .text {
+      flex: 1;
+      max-width: 100%;
+    }
 
-        .timeline-item .marker {
-            flex-shrink: 0; width: 20px; height: 20px;
-            background-color: #1E6BAF; border-radius: 50%;
-            position: relative; z-index: 1;
-            border: 4px solid #F0F8FF;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
+    .about-hero .text h1 {
+      font-size: 3em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+      font-family: 'Georgia', serif;
+    }
 
-        .timeline-item::before {
-            content: '';
-            position: absolute; left: 9px; top: 20px;
-            width: 2px; height: calc(100% - 20px);
-            background-color: #1E6BAF;
-            z-index: 0;
-        }
+    .about-hero .text p {
+      font-size: 1.25em;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      color: #555;
+    }
 
-        .timeline-item:last-child::before {
-            height: 0;
-        }
+    .about-hero .text .highlight {
+      color: #3469A4;
+      font-weight: bold;
+      background-color: #E7F3FD;
+    }
 
-        .timeline-item .content {
-            margin-left: 30px; padding: 15px 20px;
-            background-color: #fff; border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #3469A4;
-        }
+    .skills {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
 
-        .timeline-item .content h3 {
-            font-size: 1.4em; color: #1E6BAF; margin-bottom: 10px;
-        }
+    .skills h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+    }
 
-        .timeline-item .content p {
-            font-size: 1em; color: #555;
-        }
+    .skills p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #666;
+    }
 
-        .timeline-item .date {
-            font-size: 0.9em; color: #3469A4; margin-bottom: 5px;
-            font-style: italic;
-        }
+    .skills .skill-icons {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
 
-        footer {
-            background-color: #1E6BAF; color: #fff; padding: 40px 20px; text-align: center;
-            font-size: 1.2em;
-        }
-        footer a { color: #fff; font-weight: bold; }
-        footer a:hover { color: #F1F1F1; }
-    </style>
+    .skills .skill-icons div {
+      flex: 1;
+      min-width: 100px;
+      padding: 20px;
+      text-align: center;
+      background-color: #e2f7ff;
+      margin: 10px;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .skills .skill-icons div:hover {
+      transform: scale(1.05);
+      background-color: #3469A4;
+      color: #fff;
+    }
+
+    .skills .skill-icons div:hover h3,
+    .skills .skill-icons div:hover p {
+      color: #fff;
+    }
+
+    .timeline-section {
+      flex: 1;
+      max-width: 35%;
+      padding: 20px;
+      background-color: #F0F8FF;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      height: 500px;
+      overflow-y: auto;
+      padding-right: 10px;
+      border-left: 5px solid #1E6BAF;
+    }
+
+    .timeline-section h2 {
+      font-size: 2em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid #3469A4;
+      padding-bottom: 10px;
+    }
+
+    .timeline {
+      position: relative;
+      padding: 20px 10px;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item .marker {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      background-color: #1E6BAF;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      border: 4px solid #F0F8FF;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 20px;
+      width: 2px;
+      height: calc(100% - 20px);
+      background-color: #1E6BAF;
+      z-index: 0;
+    }
+
+    .timeline-item:last-child::before {
+      height: 0;
+    }
+
+    .timeline-item .content {
+      margin-left: 30px;
+      padding: 15px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #3469A4;
+    }
+
+    .timeline-item .content h3 {
+      font-size: 1.4em;
+      color: #1E6BAF;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item .content p {
+      font-size: 1em;
+      color: #555;
+    }
+
+    .timeline-item .date {
+      font-size: 0.9em;
+      color: #3469A4;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+
+    footer {
+      background-color: #1E6BAF;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    footer a {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      color: #F1F1F1;
+    }
+  </style>
 </head>
+
 <body>
 
-    <header>
-        <a href="https://mateo-johnson.github.io">
-    <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
-</a>
-        <nav>
-            <a href="/about">About</a>
-            <a href="/skills">Skills</a>
-            <a href="/projects">Projects</a>
-            <a href="/contact">Contact</a>
-        </nav>
-    </header>
+  <header>
+    <a href="https://mateo-johnson.github.io">
+      <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
+    </a>
+    <nav>
+      <a href="/about">About</a>
+      <a href="/skills">Skills</a>
+      <a href="/projects">Projects</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
 
-    <section class="about-hero">
-        <div class="text">
-            <h1>Hi, I'm Mateo Johnson</h1>
-            <p>
-                I'm a <span class="highlight">high school student</span> and aspiring engineer with a strong passion for 
-                <span class="highlight">robotics</span>, <span class="highlight">control systems</span>, and <span class="highlight">embedded systems</span>. I’ve led my school’s <i>robotics team</i> to multiple victories and am always seeking opportunities to expand my knowledge.
-            </p>
-            <p>
-                Beyond robotics, I enjoy creating <span class="highlight">open-source software</span> like my <i>Glimmer</i> website builder, and teaching young students about the wonders of <span class="highlight">STEM</span>.
-            </p>
+  <section class="about-hero">
+    <div class="text">
+      <h1>Hi, I'm Mateo Johnson</h1>
+      <p>
+        I'm a <span class="highlight">high school student</span> and aspiring engineer with a strong passion for
+        <span class="highlight">robotics</span>, <span class="highlight">control systems</span>, and <span class="highlight">embedded systems</span>. I’ve led my school’s <i>robotics team</i> to multiple victories and am always seeking opportunities to expand my knowledge.
+      </p>
+      <p>
+        Beyond robotics, I enjoy creating <span class="highlight">open-source software</span> like my <i>Glimmer</i> website builder, and teaching young students about the wonders of <span class="highlight">STEM</span>.
+      </p>
+    </div>
+    <div class="timeline-section">
+      <h2>My Journey</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="marker"></div>
+          <div class="content">
+            <div class="date">2023</div>
+            <h3>Regional Robotics Championship</h3>
+            <p>Led the school's robotics team to the regional championship, winning multiple awards in innovation and teamwork.</p>
+          </div>
         </div>
-        <div class="timeline-section">
-            <h2>My Journey</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="marker"></div>
-                    <div class="content">
-                        <div class="date">2023</div>
-                        <h3>Regional Robotics Championship</h3>
-                        <p>Led the school's robotics team to the regional championship, winning multiple awards in innovation and teamwork.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="marker"></div>
-                    <div class="content">
-                        <div class="date">2022</div>
-                        <h3>Open-Source Software Project: Glimmer</h3>
-                        <p>Developed "Glimmer", a website builder to make website creation easier for developers and non-developers alike.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="marker"></div>
-                    <div class="content">
-                        <div class="date">2021</div>
-                        <h3>STEM Outreach Program</h3>
-                        <p>Began mentoring younger students in robotics and computer science, organizing workshops to inspire the next generation of engineers.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="marker"></div>
-                    <div class="content">
-                        <div class="date">2020</div>
-                        <h3>Embedded Systems Exploration</h3>
-                        <p>Started experimenting with microcontrollers and sensors, building small robotics projects and learning about embedded systems.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="timeline-item">
+          <div class="marker"></div>
+          <div class="content">
+            <div class="date">2022</div>
+            <h3>Open-Source Software Project: Glimmer</h3>
+            <p>Developed "Glimmer", a website builder to make website creation easier for developers and non-developers alike.</p>
+          </div>
         </div>
-    </section>
+        <div class="timeline-item">
+          <div class="marker"></div>
+          <div class="content">
+            <div class="date">2021</div>
+            <h3>STEM Outreach Program</h3>
+            <p>Began mentoring younger students in robotics and computer science, organizing workshops to inspire the next generation of engineers.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="marker"></div>
+          <div class="content">
+            <div class="date">2020</div>
+            <h3>Embedded Systems Exploration</h3>
+            <p>Started experimenting with microcontrollers and sensors, building small robotics projects and learning about embedded systems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="skills">
-        <h2>Skills & Experience</h2>
-        <p>Throughout my journey, I’ve developed a wide array of skills in various fields of engineering and technology. Here are some of the key areas I focus on:</p>
-        <div class="skill-icons">
-            <div>
-                <h3>Robotics</h3>
-                <p>Programming, building, and testing robots.</p>
-            </div>
-            <div>
-                <h3>Software Development</h3>
-                <p>Web development, apps, and open-source tools.</p>
-            </div>
-            <div>
-                <h3>Embedded Systems</h3>
-                <p>Working with microcontrollers and sensors.</p>
-            </div>
-            <div>
-                <h3>STEM Outreach</h3>
-                <p>Mentoring and teaching younger students.</p>
-            </div>
-        </div>
-    </section>
+  <section class="skills">
+    <h2>Skills & Experience</h2>
+    <p>Throughout my journey, I’ve developed a wide array of skills in various fields of engineering and technology. Here are some of the key areas I focus on:</p>
+    <div class="skill-icons">
+      <div>
+        <h3>Robotics</h3>
+        <p>Programming, building, and testing robots.</p>
+      </div>
+      <div>
+        <h3>Software Development</h3>
+        <p>Web development, apps, and open-source tools.</p>
+      </div>
+      <div>
+        <h3>Embedded Systems</h3>
+        <p>Working with microcontrollers and sensors.</p>
+      </div>
+      <div>
+        <h3>STEM Outreach</h3>
+        <p>Mentoring and teaching younger students.</p>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
-        <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
-    </footer>
+  <footer>
+    <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
+    <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
+  </footer>
 
 </body>
+
 </html>
