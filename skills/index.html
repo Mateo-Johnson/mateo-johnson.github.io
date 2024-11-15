@@ -1,1 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F8F8F8;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: #1E6BAF;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #9de0fa;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #1E6BAF;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .skills-hero {
+      padding: 100px 30px 50px;
+      background-color: #F1F1F1;
+      text-align: center;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .skills-hero h1 {
+      font-size: 3em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+      font-family: 'Georgia', serif;
+    }
+
+    .skills-hero p {
+      font-size: 1.25em;
+      line-height: 1.7;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .skills-section {
+      background-color: #fff;
+      padding: 60px 20px;
+    }
+
+    .skills-section h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid #3469A4;
+      padding-bottom: 10px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .skill-card {
+      background-color: #e2f7ff;
+      padding: 30px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: scale(1.05);
+      background-color: #3469A4;
+      color: #fff;
+    }
+
+    .skill-card:hover h3,
+    .skill-card:hover p {
+      color: #fff;
+    }
+
+    .skill-card h3 {
+      font-size: 1.5em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+    }
+
+    .skill-card p {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    footer {
+      background-color: #1E6BAF;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    footer a {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      color: #F1F1F1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="https://mateo-johnson.github.io">
+      <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
+    </a>
+    <nav>
+      <a href="https://mateo-johnson.github.io/about">About</a>
+      <a href="https://mateo-johnson.github.io/skills">Skills</a>
+      <a href="https://mateo-johnson.github.io/projects">Projects</a>
+      <a href="https://mateo-johnson.github.io/contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="skills-hero">
+    <h1>Skills & Expertise</h1>
+    <p>
+      Over the years, I have honed my skills in several areas of engineering, technology, and education. Here’s a breakdown of the fields I specialize in.
+    </p>
+  </section>
+
+  <section class="skills-section">
+    <h2>Core Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>Robotics</h3>
+        <p>Programming, building, and testing robots with a focus on automation and problem-solving.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Software Development</h3>
+        <p>Building applications and websites, with experience in both front-end and back-end technologies.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Embedded Systems</h3>
+        <p>Working with microcontrollers, sensors, and real-time systems to create functional and efficient devices.</p>
+      </div>
+      <div class="skill-card">
+        <h3>STEM Outreach</h3>
+        <p>Mentoring and teaching the next generation of engineers, helping students explore the world of technology.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Data Analysis</h3>
+        <p>Leveraging statistical methods and tools like Python and R to process and analyze complex datasets.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Cloud Computing</h3>
+        <p>Utilizing cloud platforms such as AWS, Google Cloud, and Azure to deploy scalable and cost-efficient applications.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Machine Learning</h3>
+        <p>Designing and implementing machine learning models using Python, TensorFlow, and other tools to solve real-world problems.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Cybersecurity</h3>
+        <p>Applying best practices in security protocols to safeguard networks, systems, and data from malicious attacks.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
+    <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
+  </footer>
+
+</body>
+
+</html>
