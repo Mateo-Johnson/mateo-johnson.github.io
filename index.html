@@ -1,220 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mateo Johnson | Engineering Portfolio</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #F5F5F5; color: #2C2C2C; overflow-x: hidden; }
-        a { text-decoration: none; color: #2C2C2C; transition: color 0.3s ease; }
-        a:hover { color: #3A8DFF; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mateo Johnson | Engineering Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #F5F5F5;
+      color: #2C2C2C;
+      overflow-x: hidden;
+    }
 
-        header { 
-            display: flex; justify-content: space-between; align-items: center; padding: 20px;
-            background-color: #333; color: #fff; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        header .logo {
-            width: 50px; 
-            height: 50px; 
-            border-radius: 8px; 
-            object-fit: cover; 
-            margin-right: 15px;
-        }
-        header nav a {
-            margin: 0 15px; font-weight: bold;
-            position: relative;
-            text-transform: uppercase;
-            color: #fff;
-        }
-        header nav a:hover::after {
-            content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px;
-            background-color: #3A8DFF; animation: fadeInUp 0.5s ease-in-out;
-        }
+    a {
+      text-decoration: none;
+      color: #2C2C2C;
+      transition: color 0.3s ease;
+    }
 
-        .hero {
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-            padding: 80px 20px; background-color: #0c7be1; color: #fff;
-            animation: fadeInUp 1s ease-out;
-            position: relative;
-            background-color: #1E6BAF;
-            background-size: 400% 400%;
-            animation: gradientShift 10s ease infinite;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .hero h1 { font-size: 3em; margin-bottom: 10px; opacity: 0; animation: fadeInUp 1s ease-out 0.2s forwards; }
-        .hero p {
-            font-size: 1.5em; margin-bottom: 20px; max-width: 600px; opacity: 0;
-            animation: fadeInUp 1s ease-out 0.4s forwards;
-            line-height: 1.6;
-        }
-        .hero .button {
-            padding: 12px 25px; background-color: #3482C1; color: #fff; border-radius: 4px;
-            font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-            transition: transform 0.3s, background-color 0.3s;
-            opacity: 0; animation: fadeInUp 1s ease-out 0.6s forwards;
-            border: 2px solid #3482C1;
-        }
-        .hero .button:hover { 
-            background-color: #2871A8; transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+    a:hover {
+      color: #3A8DFF;
+    }
 
-        .about {
-            background-color: #fff; padding: 60px 20px; text-align: center;
-            opacity: 0; transform: translateY(30px); transition: opacity 1s ease-out, transform 1s ease-out;
-            font-family: 'Georgia', serif;
-            color: #333;
-        }
-        .about h2 {
-            font-size: 2.5em; margin-bottom: 15px; font-weight: bold;
-            color: #3482C1;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .about p {
-            font-size: 1.2em; margin-bottom: 30px; max-width: 800px; margin: 0 auto;
-            line-height: 1.7;
-            text-align: justify;
-            color: #555;
-            font-style: italic;
-            transition: color 0.3s ease;
-        }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
 
-        .highlight {
-            font-weight: bold;
-            color: #3A8DFF;
-            background-color: #e6f2ff;
-            padding: 0 5px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-        .highlight:hover {
-            color: #fff;
-            background-color: #2871A8;
-            text-decoration: underline;
-        }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #333;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .scroll-indicator {
-            position: absolute; bottom: 30px; color: #fff; font-size: 1.2em;
-            opacity: 0.7; animation: bounce 1.5s infinite; z-index: 1;
-            font-family: 'Courier New', Courier, monospace;
-            letter-spacing: 1px;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+    header .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
 
-        footer {
-            background-color: #333; color: #fff; padding: 40px 20px;
-            text-align: center; font-size: 1em; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-        }
-        footer .social-links a {
-            margin: 0 15px;
-            font-size: 1.5em;
-            color: #fff;
-            transition: color 0.3s ease;
-        }
-        footer .social-links a:hover {
-            color: #3A8DFF;
-        }
-        footer .contact-info {
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        footer .contact-info a {
-            color: #3A8DFF;
-        }
-        footer .contact-info a:hover {
-            text-decoration: underline;
-        }
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      position: relative;
+      text-transform: uppercase;
+      color: #fff;
+    }
 
-    </style>
+    header nav a:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #3A8DFF;
+      animation: fadeInUp 0.5s ease-in-out;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 80px 20px;
+      background-color: #0c7be1;
+      color: #fff;
+      animation: fadeInUp 1s ease-out;
+      position: relative;
+      background-color: #1E6BAF;
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.2s forwards;
+    }
+
+    .hero p {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      max-width: 600px;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.4s forwards;
+      line-height: 1.6;
+    }
+
+    .hero .button {
+      padding: 12px 25px;
+      background-color: #3482C1;
+      color: #fff;
+      border-radius: 4px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.3s, background-color 0.3s;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.6s forwards;
+      border: 2px solid #3482C1;
+    }
+
+    .hero .button:hover {
+      background-color: #2871A8;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .about {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+      font-family: 'Georgia', serif;
+      color: #333;
+    }
+
+    .about h2 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      font-weight: bold;
+      color: #3482C1;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .about p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.7;
+      text-align: justify;
+      color: #555;
+      font-style: italic;
+      transition: color 0.3s ease;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #3A8DFF;
+      background-color: #e6f2ff;
+      padding: 0 5px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .highlight:hover {
+      color: #fff;
+      background-color: #2871A8;
+      text-decoration: underline;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      color: #fff;
+      font-size: 1.2em;
+      opacity: 0.7;
+      animation: bounce 1.5s infinite;
+      z-index: 1;
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 1px;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1em;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    footer .social-links a {
+      margin: 0 15px;
+      font-size: 1.5em;
+      color: #fff;
+      transition: color 0.3s ease;
+    }
+
+    footer .social-links a:hover {
+      color: #3A8DFF;
+    }
+
+    footer .contact-info {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    footer .contact-info a {
+      color: #3A8DFF;
+    }
+
+    footer .contact-info a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
 
-    <header>
-        <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
-        <nav>
-            <a href="/about">About</a>
-            <a href="/skills">Skills</a>
-            <a href="/projects">Projects</a>
-            <a href="/contact">Contact</a>
-        </nav>
-    </header>
+  <header>
+    <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
+    <nav>
+      <a href="/about">About</a>
+      <a href="/skills">Skills</a>
+      <a href="/projects">Projects</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
 
-    <section class="hero">
-        <h1>Hi, I'm Mateo Johnson</h1>
-        <p>An aspiring engineer passionate about creating impactful solutions and solving complex technical challenges.</p>
-        <a href="/projects" class="button">View My Work</a>
-        <div class="scroll-indicator">&#x21E3; Scroll Down &#x21E3;</div>
-    </section>
+  <section class="hero">
+    <h1>Hi, I'm Mateo Johnson</h1>
+    <p>An aspiring engineer passionate about creating impactful solutions and solving complex technical challenges.</p>
+    <a href="/projects" class="button">View My Work</a>
+    <div class="scroll-indicator">&#x21E3; Scroll Down &#x21E3;</div>
+  </section>
 
-    <section class="about" id="about">
-        <h2>Who am I?</h2>
-        <p>
-            I am a passionate and driven high school student with a deep interest in <span class="highlight">engineering</span>, particularly in <span class="highlight">control systems</span>, <span class="highlight">embedded systems</span>, and <span class="highlight">avionics</span>. Throughout my academic journey, I have actively sought opportunities to learn, innovate, and lead. As the captain of my school's <span class="highlight">robotics team</span>, I led the Metrobots to several offseason wins and spearheaded projects like custom robot simulators and team websites, enhancing both performance and strategic abilities.
-        </p>
-        <p>
-            Beyond robotics, I founded <i>Glimmer</i>, an open-source <span class="highlight">visual website builder</span>, and have honed my programming skills through diverse projects ranging from web development to custom drones. I also dedicate over 300 hours to <span class="highlight">STEM outreach</span>, teaching elementary and middle school students, with a focus on increasing diversity in engineering.
-        </p>
-        <p>
-            My long-term goals are centered around using technology to empower underserved communities, creating low-cost, accessible solutions that address real-world challenges. I am eager to further develop my skills through rigorous academic and research experiences, collaborating with like-minded peers, and continuing my journey to make a meaningful impact in both engineering and education.
-        </p>
-    </section>
+  <section class="about" id="about">
+    <h2>Who am I?</h2>
+    <p>
+      I am a passionate and driven high school student with a deep interest in <span class="highlight">engineering</span>, particularly in <span class="highlight">control systems</span>, <span class="highlight">embedded systems</span>, and <span class="highlight">avionics</span>. Throughout my academic journey, I have actively sought opportunities to learn, innovate, and lead. As the captain of my school's <span class="highlight">robotics team</span>, I led the Metrobots to several offseason wins and spearheaded projects like custom robot simulators and team websites, enhancing both performance and strategic abilities.
+    </p>
+    <p>
+      Beyond robotics, I founded <i>Glimmer</i>, an open-source <span class="highlight">visual website builder</span>, and have honed my programming skills through diverse projects ranging from web development to custom drones. I also dedicate over 300 hours to <span class="highlight">STEM outreach</span>, teaching elementary and middle school students, with a focus on increasing diversity in engineering.
+    </p>
+    <p>
+      My long-term goals are centered around using technology to empower underserved communities, creating low-cost, accessible solutions that address real-world challenges. I am eager to further develop my skills through rigorous academic and research experiences, collaborating with like-minded peers, and continuing my journey to make a meaningful impact in both engineering and education.
+    </p>
+  </section>
 
-    <footer>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>
-            <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>
-            <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>
-        </div>
-        <div class="contact-info">
-            <p>Contact me at: <a href="mailto:mjohnson012908@gmail.com">mjohnson012908@gmail.com</a></p>
-        </div> <br>
-        <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
-    </footer>
+  <footer>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>
+      <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>
+    </div>
+    <div class="contact-info">
+      <p>Contact me at: <a href="mailto:mjohnson012908@gmail.com">mjohnson012908@gmail.com</a></p>
+    </div> <br>
+    <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
+  </footer>
 
-    <script>
-        window.addEventListener('scroll', function() {
-            const aboutSection = document.getElementById('about');
-            const scrollPosition = window.scrollY + window.innerHeight;
-            const aboutPosition = aboutSection.offsetTop;
-
-            if (scrollPosition > aboutPosition + 150) {
-                aboutSection.style.opacity = '1';
-                aboutSection.style.transform = 'translateY(0)';
-            }
-        });
-
-        const aboutParagraphs = document.querySelectorAll('.about p');
-
-        aboutParagraphs.forEach((paragraph) => {
-            paragraph.addEventListener('mouseenter', () => {
-                paragraph.style.color = '#3A8DFF';
-            });
-            paragraph.addEventListener('mouseleave', () => {
-                paragraph.style.color = '';
-            });
-        });
-    </script>
+  <script>
+    window.addEventListener('scroll', function() {
+      const aboutSection = document.getElementById('about');
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const aboutPosition = aboutSection.offsetTop;
+      if (scrollPosition > aboutPosition + 150) {
+        aboutSection.style.opacity = '1';
+        aboutSection.style.transform = 'translateY(0)';
+      }
+    });
+    const aboutParagraphs = document.querySelectorAll('.about p');
+    aboutParagraphs.forEach((paragraph) => {
+      paragraph.addEventListener('mouseenter', () => {
+        paragraph.style.color = '#3A8DFF';
+      });
+      paragraph.addEventListener('mouseleave', () => {
+        paragraph.style.color = '';
+      });
+    });
+  </script>
 
 </body>
+
 </html>
