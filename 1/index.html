@@ -235,6 +235,26 @@
     <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
   </footer>
 
+  <script>
+    window.addEventListener('scroll', function() {
+      const aboutSection = document.getElementById('about');
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const aboutPosition = aboutSection.offsetTop;
+      if (scrollPosition > aboutPosition + 150) {
+        aboutSection.style.opacity = '1';
+        aboutSection.style.transform = 'translateY(0)';
+      }
+    });
+    const aboutParagraphs = document.querySelectorAll('.about p');
+    aboutParagraphs.forEach((paragraph) => {
+      paragraph.addEventListener('mouseenter', () => {
+        paragraph.style.color = '#3A8DFF';
+      });
+      paragraph.addEventListener('mouseleave', () => {
+        paragraph.style.color = '';
+      });
+    });
+  </script>
 </body>
 
 </html>
