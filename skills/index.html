@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -132,6 +134,86 @@
       color: #555;
     }
 
+    .stats {
+      background-color: #f4f4f4;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .stat {
+      display: inline-block;
+      width: 22%;
+      padding: 20px;
+      background-color: #1E6BAF;
+      color: white;
+      border-radius: 8px;
+      margin: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat h3 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+
+    .stat p {
+      font-size: 1.2em;
+    }
+
+    .stat:hover {
+      transform: scale(1.05);
+      background-color: #3469A4;
+    }
+
+    .testimonials {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .testimonials h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid #3469A4;
+      padding-bottom: 10px;
+    }
+
+    .testimonial-card {
+      background-color: #e2f7ff;
+      padding: 30px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      margin: 15px;
+    }
+
+    .testimonial-card h3 {
+      font-size: 1.5em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+    }
+
+    .testimonial-card p {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    .testimonial-card:hover {
+      transform: scale(1.05);
+      background-color: #3469A4;
+      color: #fff;
+    }
+
+    .testimonial-card:hover h3,
+    .testimonial-card:hover p {
+      color: #fff;
+    }
+
     footer {
       background-color: #1E6BAF;
       color: #fff;
@@ -147,6 +229,16 @@
 
     footer a:hover {
       color: #F1F1F1;
+    }
+
+    .stats h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid #3469A4;
+      padding-bottom: 10px;
     }
   </style>
 </head>
@@ -175,42 +267,70 @@
   <section class="skills-section">
     <h2>Core Skills</h2>
     <div class="skills-grid">
-      <div class="skill-card">
+      <div class="skill-card" data-aos="fade-up">
         <h3>Robotics</h3>
         <p>Programming, building, and testing robots with a focus on automation and problem-solving.</p>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-aos="fade-up">
         <h3>Software Development</h3>
         <p>Building applications and websites, with experience in both front-end and back-end technologies.</p>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-aos="fade-up">
         <h3>Embedded Systems</h3>
         <p>Working with microcontrollers, sensors, and real-time systems to create functional and efficient devices.</p>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-aos="fade-up">
         <h3>STEM Outreach</h3>
         <p>Hosting over 300 hours of STEM events, mentoring, and teaching children about engineering and technology.</p>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-aos="fade-up">
         <h3>Writing Skills</h3>
         <p>Strong writing abilities in technical documentation, blog posts, and educational materials for STEM audiences, in addition to speeches and fiction.</p>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-aos="fade-up">
         <h3>Leadership Excellence</h3>
-        <p>Certified in leadership excellence with a focus on team management, communication, and strategic thinking.</p>
+        <p>Experience leading teams in educational workshops, engineering projects, and cross-functional collaboration with creative teams.</p>
       </div>
-      <div class="skill-card">
-        <h3>Connect and Lead Leadership Conference</h3>
-        <p>An inaugural member of the Connect and Lead Leadership Conference, focused on enhancing leadership and networking skills.</p>
-      </div>
-      <div class="skill-card">
-        <h3>Data Analysis</h3>
-        <p>Leveraging statistical methods and tools like Python and R to process and analyze complex datasets.</p>
-      </div>
-      <div class="skill-card">
-        <h3>Machine Learning</h3>
-        <p>Designing and implementing machine learning models using Python, TensorFlow, and other tools to solve real-world problems.</p>
-      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <h2>By the Numbers</h2>
+    <div class="stat" data-aos="flip-left">
+      <h3>50+</h3>
+      <p>Projects Completed</p>
+    </div>
+    <div class="stat" data-aos="flip-left" data-aos-delay="200">
+      <h3>15+</h3>
+      <p>STEM Events Hosted</p>
+    </div>
+    <div class="stat" data-aos="flip-left" data-aos-delay="400">
+      <h3>1500+</h3>
+      <p>Hours of Coding</p>
+    </div>
+    <div class="stat" data-aos="flip-left" data-aos-delay="600">
+      <h3>50+</h3>
+      <p>People Mentored</p>
+    </div>
+    <div class="stat" data-aos="flip-left" data-aos-delay="800">
+      <h3>350+</h3>
+      <p>Mentor Hours</p>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonial-card" data-aos="fade-up">
+      <h3>placeholder name, placeholder job</h3>
+      <p>"placeholder"</p>
+    </div>
+    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+      <h3>placeholder name, placeholder job</h3>
+      <p>"placeholder"</p>
+    </div>
+    <div class="testimonial-card" data-aos="fade-up" data-aos-delay="400">
+      <h3>placeholder name, placeholder job</h3>
+      <p>"placeholder"</p>
     </div>
   </section>
 
@@ -218,6 +338,14 @@
     <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
     <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  </script>
 
 </body>
 
