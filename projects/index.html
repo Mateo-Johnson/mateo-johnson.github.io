@@ -166,7 +166,7 @@
     }
 
     .project-card.active .expand-content {
-      max-height: 500px;
+      max-height: 1000px;
       padding-top: 20px;
     }
 
@@ -318,6 +318,24 @@
     .iframe-wrapper:hover .iframe-name {
       opacity: 1;
     }
+
+    .button {
+      padding: 5px 5px;
+      background-color: #3482C1;
+      color: #fff;
+      border-radius: 4px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.3s, background-color 0.3s;
+      border: 2px solid #3482C1;
+    }
+
+    .button:hover {
+      background-color: #2871A8;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
   </style>
 </head>
 
@@ -337,33 +355,31 @@
   <section class="projects-hero">
     <div>
       <h1>My Projects</h1>
-      <p>Here are some of the amazing projects I have worked on.</p>
+      <p>Here are some of the amazing projects I have worked on in  CAD, Computer Science, Circuit Design and Materials Science.</p>
     </div>
   </section>
 
   <section class="projects" id="projects" data-aos="fade-up" data-aos-duration="1000">
     <h2>Featured Projects</h2>
-    <p>These are a few of the projects that I've developed or contributed to, showcasing my skills in engineering, software development, and more!</p>
+    <p>These are a few of the more physical projects that I've developed or contributed to, showcasing my skills in engineering!</p>
     <div class="project-cards">
-      <div class="project-card" onclick="toggleProjectDetails(this)" data-aos="fade-right" data-aos-duration="1000">
-        <img src="https://via.placeholder.com/600x300" alt="Project 1">
-        <h3>Project One</h3>
-        <p>Short description of project one.</p>
-        <div class="expand-content">
-          <p>Detailed description of Project One.</p>
-          <img src="https://via.placeholder.com/600x300" alt="Project 1 Detailed">
+      <div class="project-card" onclick="toggleProjectDetails(this)">
+        <img src="https://mateo-johnson.github.io/assets/projects/additive.png" alt="Project 1">
+        <h3>Additive Manufacturing</h3>
+<p>This project explored the use of CAD and additive manufacturing to create a complex, custom-designed part that traditional methods couldn't produce.</p>
+<div class="expand-content">
+  <p>The project involved designing a part with unique features that could only be made through 3D printing. The purpose was to demonstrate the potential of additive manufacturing in industries like aerospace, automotive, and medical devices.</p> <br>
+          <center><a href="/projectpages/additive" class="button">View Project</a> <br><br></center>
         </div>
-        <div class="tooltip">Click to expand</div>
       </div>
-      <div class="project-card" onclick="toggleProjectDetails(this)" data-aos="fade-right" data-aos-duration="1000">
+      <div class="project-card" onclick="toggleProjectDetails(this)">
         <img src="https://via.placeholder.com/600x300" alt="Project 1">
         <h3>Project Two</h3>
         <p>Short description of project two.</p>
         <div class="expand-content">
           <p>Detailed description of Project Two.</p>
-          <img src="https://via.placeholder.com/600x300" alt="Project 2 Detailed">
+          <center><a href="/projectpages/cad" class="button">View Project</a> <br><br></center>
         </div>
-        <div class="tooltip">Click to expand</div>
       </div>
 
     </div>
