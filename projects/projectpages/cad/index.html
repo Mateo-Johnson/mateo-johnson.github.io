@@ -1,1 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Bridge Project | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F8F8F8;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: #1E6BAF;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #9de0fa;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #1E6BAF;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .project-hero {
+      display: flex;
+      justify-content: space-between;
+      padding: 80px 30px 50px;
+      background-color: #F1F1F1;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .project-hero .text {
+      flex: 1;
+      max-width: 60%;
+    }
+
+    .project-hero .text h1 {
+      font-size: 3em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+      font-family: 'Georgia', serif;
+    }
+
+    .project-hero .text p {
+      font-size: 1.25em;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      color: #555;
+    }
+
+    .project-hero .image {
+      flex: 1;
+      max-width: 35%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .project-hero .image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .technologies {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .technologies h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+    }
+
+    .technologies p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #666;
+    }
+
+    .technologies .tech-icons {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .technologies .tech-icons div {
+      flex: 1;
+      min-width: 150px;
+      padding: 20px;
+      text-align: center;
+      background-color: #e2f7ff;
+      margin: 10px;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .technologies .tech-icons div:hover {
+      transform: scale(1.05);
+      background-color: #3469A4;
+      color: #fff;
+    }
+
+    .technologies .tech-icons div:hover h3,
+    .technologies .tech-icons div:hover p {
+      color: #fff;
+    }
+
+    .gallery {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .gallery h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+    }
+
+    .gallery .gallery-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .gallery .gallery-images img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery .gallery-images img:hover {
+      transform: scale(1.05);
+    }
+
+    .timeline-section {
+      background-color: #F0F8FF;
+      padding: 40px 20px;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+
+    .timeline-section h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid #3469A4;
+      padding-bottom: 10px;
+    }
+
+    .timeline {
+      padding: 20px 10px;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .timeline-item .marker {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      background-color: #1E6BAF;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      border: 4px solid #F0F8FF;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 20px;
+      width: 2px;
+      height: calc(100% - 20px);
+      background-color: #1E6BAF;
+      z-index: 0;
+    }
+
+    .timeline-item:last-child::before {
+      height: 0;
+    }
+
+    .timeline-item .content {
+      margin-left: 30px;
+      padding: 15px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #3469A4;
+    }
+
+    .timeline-item .content h3 {
+      font-size: 1.4em;
+      color: #1E6BAF;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item .content p {
+      font-size: 1em;
+      color: #555;
+      margin: 0;
+      padding: 5px 0;
+    }
+
+    .timeline-item .date {
+      font-size: 0.9em;
+      color: #3469A4;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+
+    footer {
+      background-color: #1E6BAF;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    footer a {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      color: #F1F1F1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="https://mateo-johnson.github.io/1">
+      <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
+    </a>
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#timeline">Timeline</a>
+    </nav>
+  </header>
+
+  <section class="project-hero" id="overview">
+    <div class="text">
+      <h1>The Bridge Project</h1>
+      <p>
+        The Bridge Project was designed as a way to test knowledge of manufacturing methods along with knowledge of statics and moments. The goal of the project was to make a bridge out of an assigned material, that could span a 12” gap, hold 30 lb, and fit a 2”x 3”x 2” object down the center, while keeping to a strict set of material requirements.
+      </p>
+      <p>
+        This project allowed for the exploration of bridge design principles, including balancing forces, redundancy, load splitting, and material durability, all while adapting to the unique properties of resin casting. Sources can be found at <a href="https://imageshosted.github.io/citations.pdf"> imageshosted.github.io/citations.pdf</a>, a Github account I run.
+      </p>
+    </div>
+    <div class="image">
+      <img src="https://mateo-johnson.github.io/assets/projects/bridgereal.jpg" alt="The Bridge Project Image">
+    </div>
+  </section>
+
+  <section class="technologies" id="stack">
+    <h2>Technologies Used</h2>
+    <p>The bridge was manufactured using resin casting as the primary method, supported by the following technologies and tools:</p>
+    <div class="tech-icons">
+      <div>
+        <h3>3D Printing</h3>
+        <p>Used to create the initial parts for molding negatives.</p>
+      </div>
+      <div>
+        <h3>Silicone Molds</h3>
+        <p>Created using the 3D printed parts for flexible mold negatives.</p>
+      </div>
+      <div>
+        <h3>Resin Casting</h3>
+        <p>Allowed for precision and versatility in the parts while maintaining lightweight properties.</p>
+      </div>
+      <div>
+        <h3>West Point Bridge Designer</h3>
+        <p>Used for stress simulations and analysis of different designs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="gallery">
+    <h2>Project Gallery</h2>
+    <div class="gallery-images">
+      <img src="https://imageshosted.github.io/designmatrix.png" alt="Design Matrix">
+      <img src="https://mateo-johnson.github.io/assets/projects/bridge.png" alt="3D Model - Iso View">
+      <img src="https://mateo-johnson.github.io/assets/projects/bridge2.png" alt="3D Model - Flat View">
+      <img src="https://mateo-johnson.github.io/assets/projects/bridgedrawing.png" alt="Technical Sketch">
+    </div>
+  </section>
+
+  <section class="timeline-section" id="timeline">
+    <h2>Project Timeline</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="marker"></div>
+        <div class="content">
+          <h3>Empathize/Define</h3>
+          <p>Studied the principles of a good bridge: balance of forces, redundancy, load splitting, and material durability. Learned to adapt to resin casting's unique properties and constraints.</p>
+          <div class="date">Phase 1</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="marker"></div>
+        <div class="content">
+          <h3>Brainstorming/Prototyping</h3>
+          <p>Created concept sketches and a design matrix. Simulated designs using West Point Bridge Designer to evaluate weaknesses. Prototyping history can be found at <a href="https://imageshosted.github.io/prototyping.pdf"> imageshosted.github.io/prototyping.pdf </a></p>
+          <div class="date">Phase 2</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="marker"></div>
+        <div class="content">
+          <h3>Manufacturing</h3>
+          <p>3D printed parts to create molds for resin casting. Assembled the bridge using cast dovetail joints and liquid resin for structural integrity.</p>
+          <div class="date">Phase 3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
+    <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
+  </footer>
+
+</body>
+
+</html>
