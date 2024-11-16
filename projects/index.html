@@ -11,6 +11,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects | Mateo Johnson</title>
 
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -279,13 +282,6 @@
       transform: scale(1.05);
     }
 
-    .iframe-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 30px;
-    }
-
     .iframe-wrapper {
       position: relative;
       overflow: hidden;
@@ -342,15 +338,15 @@
   <section class="projects-hero">
     <div>
       <h1>My Projects</h1>
-      <p>Here are some of the exciting projects I’ve worked on. Click to explore more!</p>
+      <p>Here are some of the amazing projects I have worked on.</p>
     </div>
   </section>
 
-  <section class="projects" id="projects">
+  <section class="projects" id="projects" data-aos="fade-up" data-aos-duration="1000">
     <h2>Featured Projects</h2>
     <p>These are a few of the projects that I've developed or contributed to, showcasing my skills in engineering, software development, and more!</p>
     <div class="project-cards">
-      <div class="project-card" onclick="toggleProjectDetails(this)">
+      <div class="project-card" onclick="toggleProjectDetails(this)" data-aos="fade-right" data-aos-duration="1000">
         <img src="https://via.placeholder.com/600x300" alt="Project 1">
         <h3>Project One</h3>
         <p>Short description of project one.</p>
@@ -360,45 +356,44 @@
         </div>
         <div class="tooltip">Click to expand</div>
       </div>
-      <div class="project-card" onclick="toggleProjectDetails(this)">
-        <img src="https://via.placeholder.com/600x300" alt="Project 2">
+      <div class="project-card" onclick="toggleProjectDetails(this)" data-aos="fade-right" data-aos-duration="1000">
+        <img src="https://via.placeholder.com/600x300" alt="Project 1">
         <h3>Project Two</h3>
         <p>Short description of project two.</p>
         <div class="expand-content">
           <p>Detailed description of Project Two.</p>
-          <img src="https://via.placeholder.com/300x300" alt="Project 2 Detailed">
+          <img src="https://via.placeholder.com/600x300" alt="Project 2 Detailed">
         </div>
         <div class="tooltip">Click to expand</div>
       </div>
+
     </div>
   </section>
 
-  <section class="coding-projects" id="coding-projects">
+  <section class="coding-projects" id="coding-projects" data-aos="fade-up" data-aos-duration="1000">
     <h2>Coding Projects</h2>
     <p>Here are some live coding projects and demos I've worked on. Click to explore!</p>
-
     <div class="iframe-container">
-      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/GOL/', '_blank')">
+      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/GOL/', '_blank')" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
         <iframe src="https://mateo-johnson.github.io/projects/GOL/" title="Project Demo 1"></iframe>
         <div class="iframe-name">Game of Life</div>
       </div>
-      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/tictactoe/', '_blank')">
+      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/tictactoe/', '_blank')" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="400">
         <iframe src="https://mateo-johnson.github.io/projects/tictactoe/" title="Project Demo 2"></iframe>
         <div class="iframe-name">Tic Tac Toe</div>
       </div>
-      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/fluidsim/', '_blank')">
+      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/fluidsim/', '_blank')" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="600">
         <iframe src="https://mateo-johnson.github.io/projects/fluidsim/" title="Project Demo 3"></iframe>
         <div class="iframe-name">Fluid Simulator</div>
       </div>
-      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/minesweeper/', '_blank')">
-        <iframe src="https://mateo-johnson.github.io/projects/minesweeper/" title="Project Demo 3"></iframe>
+      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/minesweeper/', '_blank')" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="800">
+        <iframe src="https://mateo-johnson.github.io/projects/minesweeper/" title="Project Demo 4"></iframe>
         <div class="iframe-name">Minesweeper</div>
       </div>
-      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/flowergen/', '_blank')">
-        <iframe src="https://mateo-johnson.github.io/projects/flowergen/" title="Project Demo 3"></iframe>
+      <div class="iframe-wrapper" onclick="window.open('https://mateo-johnson.github.io/projects/flowergen/', '_blank')" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="1000">
+        <iframe src="https://mateo-johnson.github.io/projects/flowergen/" title="Project Demo 5"></iframe>
         <div class="iframe-name">Flower Generator</div>
       </div>
-
     </div>
   </section>
 
@@ -407,20 +402,17 @@
     <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script>
-    window.onscroll = function() {
-      const backToTop = document.querySelector('.back-to-top');
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        backToTop.style.display = "block";
-      } else {
-        backToTop.style.display = "none";
-      }
-    };
+    AOS.init();
+  </script>
 
+  <script>
     function toggleProjectDetails(card) {
-      card.classList.toggle('active');
+      card.classList.toggle("active");
     }
   </script>
+
 </body>
 
 </html>
