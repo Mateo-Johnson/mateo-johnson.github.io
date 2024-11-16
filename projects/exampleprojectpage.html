@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project: Glimmer | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F8F8F8;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: #1E6BAF;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #9de0fa;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #1E6BAF;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .project-hero {
+      display: flex;
+      justify-content: space-between;
+      padding: 80px 30px 50px;
+      background-color: #F1F1F1;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .project-hero .text {
+      flex: 1;
+      max-width: 60%;
+    }
+
+    .project-hero .text h1 {
+      font-size: 3em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+      font-family: 'Georgia', serif;
+    }
+
+    .project-hero .text p {
+      font-size: 1.25em;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      color: #555;
+    }
+
+    .project-hero .image {
+      flex: 1;
+      max-width: 35%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .project-hero .image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .technologies {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .technologies h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+    }
+
+    .technologies p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #666;
+    }
+
+    .technologies .tech-icons {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .technologies .tech-icons div {
+      flex: 1;
+      min-width: 150px;
+      padding: 20px;
+      text-align: center;
+      background-color: #e2f7ff;
+      margin: 10px;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .technologies .tech-icons div:hover {
+      transform: scale(1.05);
+      background-color: #3469A4;
+      color: #fff;
+    }
+
+    .technologies .tech-icons div:hover h3,
+    .technologies .tech-icons div:hover p {
+      color: #fff;
+    }
+
+    .timeline-section {
+      background-color: #F0F8FF;
+      padding: 40px 20px;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+
+    .timeline-section h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid #3469A4;
+      padding-bottom: 10px;
+    }
+
+    .timeline {
+      padding: 20px 10px;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .timeline-item .marker {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      background-color: #1E6BAF;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      border: 4px solid #F0F8FF;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 20px;
+      width: 2px;
+      height: calc(100% - 20px);
+      background-color: #1E6BAF;
+      z-index: 0;
+    }
+
+    .timeline-item:last-child::before {
+      height: 0;
+    }
+
+    .timeline-item .content {
+      margin-left: 30px;
+      padding: 15px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #3469A4;
+    }
+
+    .timeline-item .content h3 {
+      font-size: 1.4em;
+      color: #1E6BAF;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item .content p {
+      font-size: 1em;
+      color: #555;
+      margin: 0;
+      padding: 5px 0;
+    }
+
+    .timeline-item .date {
+      font-size: 0.9em;
+      color: #3469A4;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+
+    footer {
+      background-color: #1E6BAF;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    footer a {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      color: #F1F1F1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="https://mateo-johnson.github.io/1">
+      <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
+    </a>
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#timeline">Timeline</a>
+    </nav>
+  </header>
+
+  <section class="project-hero" id="overview">
+    <div class="text">
+      <h1>Project Name: Project Description</h1>
+      <p>
+        Placeholder
+      </p>
+      <p>
+        Placeholder
+      </p>
+    </div>
+    <div class="image">
+      <img src="https://example.com/project-image.jpg" alt="Placeholder Project Screenshot">
+    </div>
+  </section>
+
+  <section class="technologies" data-aos="fade-up" data-aos-duration="1000" id="stack">
+    <h2>Technology Stack</h2>
+    <p>
+      Explanation of what the text does.
+      Here's an overview of the key technologies:
+    </p>
+    <div class="tech-icons">
+      <div data-aos="zoom-in" data-aos-duration="1000">
+        <h3>Placeholder</h3>
+        <p>Placeholder</p>
+      </div>
+      <div data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
+        <h3>Placeholder</h3>
+        <p>Placeholder</p>
+      </div>
+      <div data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="400">
+        <h3>Placeholder</h3>
+        <p>Placeholder</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="timeline-section" id="timeline">
+    <h2 data-aos="fade-up" data-aos-duration="1000">Project Timeline</h2>
+    <div class="timeline">
+      <div class="timeline-item" data-aos="fade-up" data-aos-duration="1000">
+        <div class="marker"></div>
+        <div class="content">
+          <div class="date">placeholder</div>
+          <h3>placeholder</h3>
+          <p>placeholder</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+        <div class="marker"></div>
+        <div class="content">
+          <div class="date">placeholder</div>
+          <h3>placeholder</h3>
+          <p>placeholder</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+        <div class="marker"></div>
+        <div class="content">
+          <div class="date">placeholder</div>
+          <h3>placeholder</h3>
+          <p>placeholder</p>
+        </div>
+      </div>
+      <div class="timeline-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+        <div class="marker"></div>
+        <div class="content">
+          <div class="date">placeholder</div>
+          <h3>placeholder</h3>
+          <p>placeholder</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
+    <p>&copy; 2024 Mateo Johnson. All Rights Reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+
+</html>
