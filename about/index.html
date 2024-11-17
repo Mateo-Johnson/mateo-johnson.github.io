@@ -407,6 +407,76 @@
         font-size: 1em;
       }
     }
+
+    .goals {
+      background-color: #F5FAFF;
+      padding: 80px 20px;
+      text-align: center;
+      border-top: 2px solid #3469A4;
+    }
+
+    .goals-intro {
+      max-width: 800px;
+      margin: 0 auto;
+      margin-bottom: 50px;
+    }
+
+    .goals h2 {
+      font-size: 2.8em;
+      color: #1E6BAF;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .goals p {
+      font-size: 1.25em;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .goal-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .goal-card {
+      background: linear-gradient(145deg, #E7F3FD, #FFFFFF);
+      border: 1px solid #E4E7EB;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left;
+    }
+
+    .goal-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .goal-card .goal-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+      color: #1E6BAF;
+    }
+
+    .goal-card h3 {
+      font-size: 1.8em;
+      color: #3469A4;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .goal-card p {
+      font-size: 1.1em;
+      color: #555;
+      line-height: 1.6;
+    }
   </style>
 </head>
 
@@ -541,8 +611,40 @@
     </div>
   </section>
 
-  <style>
-  </style>
+  <section class="goals">
+    <div class="goals-intro">
+      <h2>My Goals</h2>
+      <p>
+        As an aspiring engineer, I constantly strive to push my limits and pursue new challenges. These goals represent where I aim to grow, both personally and professionally.
+      </p>
+    </div>
+    <div class="goal-container">
+      <div class="goal-card">
+        <h3>Advance My Knowledge</h3>
+        <p>
+          Master advanced control systems and avionics to contribute to cutting-edge aerospace innovations.
+        </p>
+      </div>
+      <div class="goal-card">
+        <h3>Contribute to Space Exploration</h3>
+        <p>
+          Join a team or project dedicated to exploring space technologies and developing sustainable solutions for future missions.
+        </p>
+      </div>
+      <div class="goal-card">
+        <h3>Expand STEM Outreach</h3>
+        <p>
+          Create more accessible resources and programs for students to engage with STEM education globally.
+        </p>
+      </div>
+      <div class="goal-card">
+        <h3>Build Open-Source Solutions</h3>
+        <p>
+          Continue developing impactful open-source tools that solve real-world problems and benefit the global community.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <footer>
     <p>Connect with me on <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>, <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>, or <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>.</p>
