@@ -1,145 +1,144 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sandbox | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
+    html,
+    body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
 
-    <title>Sandbox | Mateo Johnson</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .container {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
 
-        html, body {
-            height: 100vh;
-            overflow: hidden;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
+    .editor {
+      width: 30%;
+      background: #1e1e1e;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+      transition: width 0.3s ease;
+    }
 
-        .container {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-        }
+    .editor.collapsed {
+      width: 0 !important;
+    }
 
-        .editor {
-            width: 30%;  
-            background: #1e1e1e;
-            height: 100%;
-            position: relative;
-            flex-shrink: 0;  
-            transition: width 0.3s ease;
-        }
+    .code-editor {
+      width: 100%;
+      height: 100%;
+      background: #1e1e1e;
+      color: #fff;
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 16px;
+      border: none;
+      resize: none;
+      outline: none;
+    }
 
-        .editor.collapsed {
-            width: 0 !important;
-        }
+    .preview-pane {
+      flex: 1;
+      background: #fff;
+      position: relative;
+    }
 
-        .code-editor {
-            width: 100%;
-            height: 100%;
-            background: #1e1e1e;
-            color: #fff;
-            font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.5;
-            padding: 16px;
-            border: none;
-            resize: none;
-            outline: none;
-        }
+    .preview-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+    }
 
-        .preview-pane {
-            flex: 1;
-            background: #fff;
-            position: relative;
-        }
+    .resizer {
+      width: 6px;
+      height: 100%;
+      position: absolute;
+      right: -3px;
+      top: 0;
+      background: #666;
+      cursor: col-resize;
+      opacity: 0.2;
+      transition: opacity 0.2s;
+      z-index: 100;
+    }
 
-        .preview-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
+    .resizer:hover,
+    .resizer.active {
+      opacity: 0.4;
+    }
 
-        .resizer {
-            width: 6px;
-            height: 100%;
-            position: absolute;
-            right: -3px;
-            top: 0;
-            background: #666;
-            cursor: col-resize;
-            opacity: 0.2;
-            transition: opacity 0.2s;
-            z-index: 100;
-        }
+    .collapse-button {
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      background: #666;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      z-index: 101;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
 
-        .resizer:hover,
-        .resizer.active {
-            opacity: 0.4;
-        }
+    .collapse-button:hover {
+      background: #888;
+    }
 
-        .collapse-button {
-            position: absolute;
-            right: -12px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 24px;
-            height: 24px;
-            background: #666;
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            z-index: 101;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
+    .error-toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #dc3545;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-size: 14px;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
 
-        .collapse-button:hover {
-            background: #888;
-        }
+    .container.resizing {
+      cursor: col-resize;
+    }
 
-        .error-toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #dc3545;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            font-size: 14px;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+    .container.resizing .preview-frame {
+      pointer-events: none;
+    }
 
-        .container.resizing {
-            cursor: col-resize;
-        }
-
-        .container.resizing .preview-frame {
-            pointer-events: none;
-        }
-
-        .container.resizing .code-editor {
-            pointer-events: none;
-        }
-    </style>
+    .container.resizing .code-editor {
+      pointer-events: none;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container" id="container">
-        <div class="editor" id="editorContainer">
-            <textarea class="code-editor" id="codeEditor" spellcheck="false"><!DOCTYPE html>
+  <div class="container" id="container">
+    <div class="editor" id="editorContainer">
+      <textarea class="code-editor" id="codeEditor" spellcheck="false"><!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -198,163 +197,146 @@
     </script>
 </body>
 </html></textarea>
-            <div class="resizer" id="resizer"></div>
-            <button class="collapse-button" id="collapseButton">◀</button>
-        </div>
-        <div class="preview-pane">
-            <iframe class="preview-frame" id="previewFrame"></iframe>
-        </div>
+      <div class="resizer" id="resizer"></div>
+      <button class="collapse-button" id="collapseButton">◀</button>
     </div>
-    <div class="error-toast" id="errorToast"></div>
+    <div class="preview-pane">
+      <iframe class="preview-frame" id="previewFrame"></iframe>
+    </div>
+  </div>
+  <div class="error-toast" id="errorToast"></div>
 
-    <script>
-        const container = document.getElementById('container');
-        const editor = document.getElementById('codeEditor');
-        const preview = document.getElementById('previewFrame');
-        const resizer = document.getElementById('resizer');
-        const editorContainer = document.getElementById('editorContainer');
-        const errorToast = document.getElementById('errorToast');
-        const collapseButton = document.getElementById('collapseButton');
+  <script>
+    const container = document.getElementById('container');
+    const editor = document.getElementById('codeEditor');
+    const preview = document.getElementById('previewFrame');
+    const resizer = document.getElementById('resizer');
+    const editorContainer = document.getElementById('editorContainer');
+    const errorToast = document.getElementById('errorToast');
+    const collapseButton = document.getElementById('collapseButton');
+    let isEditorCollapsed = false;
+    let lastEditorWidth = '50%';
+    let updateTimeout;
+    let undoStack = [];
+    let redoStack = [];
 
-        let isEditorCollapsed = false;
-        let lastEditorWidth = '50%';
+    function saveState() {
+      undoStack.push(editor.value);
+      redoStack = [];
+    }
 
-        // Undo/Redo Stack
-        let undoStack = [];
-        let redoStack = [];
-
-        // Save the initial state of the editor
-        function saveState() {
-            undoStack.push(editor.value);
-            // Clear redo stack when new action is taken
-            redoStack = [];
-        }
-
-        // Undo function
-        function undo() {
-            if (undoStack.length > 0) {
-                const lastState = undoStack.pop();
-                redoStack.push(editor.value);
-                editor.value = lastState;
-                updatePreview();
-            }
-        }
-
-        // Redo function
-        function redo() {
-            if (redoStack.length > 0) {
-                const lastState = redoStack.pop();
-                undoStack.push(editor.value);
-                editor.value = lastState;
-                updatePreview();
-            }
-        }
-
-        // Initialize Resize
-        collapseButton.addEventListener('click', () => {
-            isEditorCollapsed = !isEditorCollapsed;
-            if (isEditorCollapsed) {
-                lastEditorWidth = editorContainer.style.width || '50%';
-                editorContainer.classList.add('collapsed');
-                collapseButton.textContent = '▶';
-            } else {
-                editorContainer.classList.remove('collapsed');
-                editorContainer.style.width = lastEditorWidth;
-                collapseButton.textContent = '◀';
-            }
-        });
-
-        // Handle Resize
-        function initResize(e) {
-            container.classList.add('resizing');
-            resizer.classList.add('active');
-            document.addEventListener('mousemove', resize);
-            document.addEventListener('mouseup', stopResize);
-            e.preventDefault();
-        }
-
-        function resize(e) {
-            const containerRect = container.getBoundingClientRect();
-            let newWidth = e.clientX - containerRect.left;
-            
-            const containerWidth = containerRect.width;
-            const widthPercentage = (newWidth / containerWidth) * 100;
-            
-            if (widthPercentage > 10 && widthPercentage < 90) {
-                editorContainer.style.width = `${widthPercentage}%`;
-                lastEditorWidth = `${widthPercentage}%`;
-            }
-        }
-
-        function stopResize() {
-            container.classList.remove('resizing');
-            resizer.classList.remove('active');
-            document.removeEventListener('mousemove', resize);
-            document.removeEventListener('mouseup', stopResize);
-        }
-
-        resizer.addEventListener('mousedown', initResize);
-
-        // Update preview content
-        function updatePreview() {
-            try {
-                const previewDoc = preview.contentDocument;
-                previewDoc.open();
-                previewDoc.write(editor.value);
-                previewDoc.close();
-                hideError();
-            } catch (err) {
-                showError(err.message);
-            }
-        }
-
-        function debounceUpdate() {
-            clearTimeout(updateTimeout);
-            updateTimeout = setTimeout(updatePreview, 300);
-        }
-
-        function showError(message) {
-            errorToast.textContent = message;
-            errorToast.style.display = 'block';
-            setTimeout(hideError, 3000);
-        }
-
-        function hideError() {
-            errorToast.style.display = 'none';
-        }
-
-        // Handle Tab key
-        function handleTab(e) {
-            if (e.key === 'Tab') {
-                e.preventDefault();
-                const start = this.selectionStart;
-                const end = this.selectionEnd;
-                const spaces = '    ';
-                this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
-                this.selectionStart = this.selectionEnd = start + spaces.length;
-                debounceUpdate();
-            }
-        }
-
-        editor.addEventListener('input', () => {
-            debounceUpdate();
-            saveState(); // Save state after every change
-        });
-        editor.addEventListener('keydown', handleTab);
-
-        // Handle undo/redo keybindings
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey || e.metaKey) {
-                if (e.key === 'z') {
-                    undo();
-                }
-                if ((e.key === 'y') || (e.key === 'Z' && e.shiftKey)) {
-                    redo();
-                }
-            }
-        });
-
+    function undo() {
+      if (undoStack.length > 0) {
+        const lastState = undoStack.pop();
+        redoStack.push(editor.value);
+        editor.value = lastState;
         updatePreview();
-    </script>
+      }
+    }
+
+    function redo() {
+      if (redoStack.length > 0) {
+        const lastState = redoStack.pop();
+        undoStack.push(editor.value);
+        editor.value = lastState;
+        updatePreview();
+      }
+    }
+    collapseButton.addEventListener('click', () => {
+      isEditorCollapsed = !isEditorCollapsed;
+      if (isEditorCollapsed) {
+        lastEditorWidth = editorContainer.style.width || '50%';
+        editorContainer.classList.add('collapsed');
+        collapseButton.textContent = '▶';
+      } else {
+        editorContainer.classList.remove('collapsed');
+        editorContainer.style.width = lastEditorWidth;
+        collapseButton.textContent = '◀';
+      }
+    });
+
+    function initResize(e) {
+      container.classList.add('resizing');
+      resizer.classList.add('active');
+      document.addEventListener('mousemove', resize);
+      document.addEventListener('mouseup', stopResize);
+      e.preventDefault();
+    }
+
+    function resize(e) {
+      const containerRect = container.getBoundingClientRect();
+      let newWidth = e.clientX - containerRect.left;
+      const containerWidth = containerRect.width;
+      const widthPercentage = (newWidth / containerWidth) * 100;
+      if (widthPercentage > 10 && widthPercentage < 90) {
+        editorContainer.style.width = `${widthPercentage}%`;
+        lastEditorWidth = `${widthPercentage}%`;
+      }
+    }
+
+    function stopResize() {
+      container.classList.remove('resizing');
+      resizer.classList.remove('active');
+      document.removeEventListener('mousemove', resize);
+      document.removeEventListener('mouseup', stopResize);
+    }
+    resizer.addEventListener('mousedown', initResize);
+
+    function updatePreview() {
+      try {
+        const previewDoc = preview.contentDocument;
+        previewDoc.open();
+        previewDoc.write(editor.value);
+        previewDoc.close();
+        hideError();
+      } catch (err) {
+        showError(err.message);
+      }
+    }
+
+    function debounceUpdate() {
+      clearTimeout(updateTimeout);
+      updateTimeout = setTimeout(updatePreview, 300);
+    }
+
+    function showError(message) {
+      errorToast.textContent = message;
+      errorToast.style.display = 'block';
+      setTimeout(hideError, 3000);
+    }
+
+    function hideError() {
+      errorToast.style.display = 'none';
+    }
+
+    function handleTab(e) {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        const spaces = '    ';
+        this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + spaces.length;
+        debounceUpdate();
+      }
+    }
+    editor.addEventListener('input', () => {
+      debounceUpdate();
+      saveState();
+    });
+    editor.addEventListener('keydown', handleTab);
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'z') {
+          undo();
+        }
+        if ((e.key === 'y') || (e.key === 'Z' && e.shiftKey)) {
+          redo();
+        }
+      }
+    });
+    updatePreview();
+  </script>
 </body>
+
 </html>
