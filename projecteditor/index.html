@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Page Editor</title>
+  <style>
+    :root {
+      --primary: #1E6BAF;
+      --secondary: #3469A4;
+      --bg: #F8F8F8;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      padding: 2rem;
+    }
+
+    .editor-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-weight: bold;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      resize: none; 
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--secondary);
+    }
+
+    .dynamic-list {
+      margin-top: 1rem;
+    }
+
+    .list-item {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 6px;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .list-item input,
+    .list-item textarea {
+      flex: 1;
+    }
+
+    .remove-btn {
+      background-color: #dc3545;
+      padding: 0.5rem 1rem;
+    }
+
+    .preview-btn {
+      display: block;
+      margin: 2rem auto;
+      font-size: 1.2rem;
+      padding: 1rem 2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="editor-container">
+    <div class="section">
+      <h2>Project Overview</h2>
+      <div class="input-group">
+        <label>Project Title</label>
+        <input type="text" id="projectTitle" value="Project Name: Project Description">
+      </div>
+      <div class="input-group">
+        <label>Project Description</label>
+        <textarea id="projectDescription" rows="4">Project description goes here...</textarea>
+      </div>
+      <div class="input-group">
+        <label>Hero Image URL</label>
+        <input type="text" id="heroImage" value="project-image.jpg">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Tech Stack</h2>
+      <div id="techStack" class="dynamic-list"></div>
+      <button onclick="addTechItem()">Add Technology</button>
+    </div>
+
+    <div class="section">
+      <h2>Gallery</h2>
+      <div id="gallery" class="dynamic-list"></div>
+      <button onclick="addGalleryItem()">Add Image</button>
+    </div>
+
+    <div class="section">
+      <h2>Timeline</h2>
+      <div id="timeline" class="dynamic-list"></div>
+      <button onclick="addTimelineItem()">Add Timeline Event</button>
+    </div>
+
+    <button class="preview-btn" onclick="updatePreview()">Update Preview</button>
+  </div>
+
+  <script>
+    function createInput(type, placeholder, value = '') {
+      const input = document.createElement(type === 'textarea' ? 'textarea' : 'input');
+      if (type !== 'textarea') input.type = type;
+      input.placeholder = placeholder;
+      input.value = value;
+      input.style.resize = 'none';  // Ensure these fields can't be resized either
+      return input;
+    }
+
+    function createRemoveButton(parentId, item) {
+      const btn = document.createElement('button');
+      btn.className = 'remove-btn';
+      btn.textContent = 'Remove';
+      btn.onclick = () => {
+        item.remove();
+        updatePreview();
+      };
+      return btn;
+    }
+
+    function addTechItem() {
+      const container = document.getElementById('techStack');
+      const item = document.createElement('div');
+      item.className = 'list-item';
+      const nameInput = createInput('text', 'Technology Name');
+      const descInput = createInput('textarea', 'Technology Description');
+      const removeBtn = createRemoveButton('techStack', item);
+      item.appendChild(nameInput);
+      item.appendChild(descInput);
+      item.appendChild(removeBtn);
+      container.appendChild(item);
+    }
+
+    function addGalleryItem() {
+      const container = document.getElementById('gallery');
+      const item = document.createElement('div');
+      item.className = 'list-item';
+      const urlInput = createInput('text', 'Image URL');
+      const altInput = createInput('text', 'Image Alt Text');
+      const removeBtn = createRemoveButton('gallery', item);
+      item.appendChild(urlInput);
+      item.appendChild(altInput);
+      item.appendChild(removeBtn);
+      container.appendChild(item);
+    }
+
+    function addTimelineItem() {
+      const container = document.getElementById('timeline');
+      const item = document.createElement('div');
+      item.className = 'list-item';
+      const titleInput = createInput('text', 'Event Title');
+      const descInput = createInput('textarea', 'Event Description');
+      const dateInput = createInput('text', 'Event Date');
+      const removeBtn = createRemoveButton('timeline', item);
+      item.appendChild(titleInput);
+      item.appendChild(descInput);
+      item.appendChild(dateInput);
+      item.appendChild(removeBtn);
+      container.appendChild(item);
+    }
+
+    function updatePreview() {
+      const data = {
+        title: document.getElementById('projectTitle').value,
+        description: document.getElementById('projectDescription').value,
+        heroImage: document.getElementById('heroImage').value,
+        techStack: Array.from(document.getElementById('techStack').children).map(item => ({
+          name: item.children[0].value,
+          description: item.children[1].value
+        })),
+        gallery: Array.from(document.getElementById('gallery').children).map(item => ({
+          url: item.children[0].value,
+          alt: item.children[1].value
+        })),
+        timeline: Array.from(document.getElementById('timeline').children).map(item => ({
+          title: item.children[0].value,
+          description: item.children[1].value,
+          date: item.children[2].value
+        }))
+      };
+      // Generate the custom HTML
+      const customHTML = `
+        <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${data.title} | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #F8F8F8;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: #1E6BAF;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #9de0fa;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #1E6BAF;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+
+    header nav a {
+      margin: 0 15px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .project-hero {
+      display: flex;
+      justify-content: space-between;
+      padding: 80px 30px 50px;
+      background-color: #F1F1F1;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .project-hero .text {
+      flex: 1;
+      max-width: 60%;
+    }
+
+    .project-hero .text h1 {
+      font-size: 3em;
+      color: #1E6BAF;
+      margin-bottom: 15px;
+      font-family: 'Georgia', serif;
+    }
+
+    .project-hero .text p {
+      font-size: 1.25em;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      color: #555;
+    }
+
+    .project-hero .image {
+      flex: 1;
+      max-width: 35%;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .project-hero .image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .technologies {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .technologies h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+    }
+
+    .technologies p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      color: #666;
+    }
+
+    .technologies .tech-icons {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .technologies .tech-icons div {
+      flex: 1;
+      min-width: 150px;
+      padding: 20px;
+      text-align: center;
+      background-color: #e2f7ff;
+      margin: 10px;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .technologies .tech-icons div:hover {
+      transform: scale(1.05);
+      background-color: #3469A4;
+      color: #fff;
+    }
+
+    .technologies .tech-icons div:hover h3,
+    .technologies .tech-icons div:hover p {
+      color: #fff;
+    }
+
+    /* Gallery Section Styles */
+    .gallery {
+      background-color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .gallery h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+    }
+
+    .gallery .gallery-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+
+    .gallery .gallery-images img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery .gallery-images img:hover {
+      transform: scale(1.05);
+    }
+
+    .timeline-section {
+      background-color: #F0F8FF;
+      padding: 40px 20px;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+
+    .timeline-section h2 {
+      font-size: 2.5em;
+      color: #1E6BAF;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      border-bottom: 2px solid #3469A4;
+      padding-bottom: 10px;
+    }
+
+    .timeline {
+      padding: 20px 10px;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .timeline-item .marker {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      background-color: #1E6BAF;
+      border-radius: 50%;
+      position: relative;
+      z-index: 1;
+      border: 4px solid #F0F8FF;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 20px;
+      width: 2px;
+      height: calc(100% - 20px);
+      background-color: #1E6BAF;
+      z-index: 0;
+    }
+
+    .timeline-item:last-child::before {
+      height: 0;
+    }
+
+    .timeline-item .content {
+      margin-left: 30px;
+      padding: 15px 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #3469A4;
+    }
+
+    .timeline-item .content h3 {
+      font-size: 1.4em;
+      color: #1E6BAF;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item .content p {
+      font-size: 1em;
+      color: #555;
+      margin: 0;
+      padding: 5px 0;
+    }
+
+    .timeline-item .date {
+      font-size: 0.9em;
+      color: #3469A4;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+
+    footer {
+      background-color: #1E6BAF;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    footer a {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      color: #F1F1F1;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="https://mateo-johnson.github.io/1">
+      <img src="https://mateo-johnson.github.io/assets/logo.png" alt="Mateo Johnson Logo" class="logo">
+    </a>
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#stack">Tech Stack</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#timeline">Timeline</a>
+    </nav>
+  </header>
+  <section class="project-hero">
+    <div class="text">
+      <h1>${data.title}</h1>
+      <p>${data.description}</p>
+    </div>
+    <div class="image"><img src="${data.heroImage}" alt="${data.title} Image"></div>
+  </section>
+  <section class="technologies" id="tech-stack">
+    <h2>Technologies Used</h2>
+    <div class="tech-icons">
+      ${data.techStack.map(tech => `
+      <div>
+        <h3>${tech.name}</h3>
+        <p>${tech.description}</p>
+      </div>
+      `).join('')}
+    </div>
+  </section>
+  <section class="gallery" id="gallery">
+    <h2>Project Gallery</h2>
+    <div class="gallery-images">
+      ${data.gallery.map(item => `<img src="${item.url}" alt="${item.alt}">`).join('')}
+    </div>
+  </section>
+  <section class="timeline-section" id="timeline">
+    <h2>Project Timeline</h2>
+    ${data.timeline.map(event => `
+    <div class="timeline-item">
+      <div class="marker"></div>
+      <div class="content">
+        <h3>${event.title}</h3>
+        <p>${event.description}</p>
+        <small>${event.date}</small>
+      </div>
+    </div>
+    `).join('')}
+  </section>
+</body>
+
+</html>`;
+      navigator.clipboard.writeText(customHTML).then(() => {
+        alert('HTML code copied to clipboard!');
+      }).catch(err => {
+        alert('Failed to copy: ' + err);
+      });
+    }
+  </script>
+
+</body>
+
+</html>
