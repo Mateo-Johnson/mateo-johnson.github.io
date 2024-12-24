@@ -11,6 +11,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sandbox | Mateo Johnson</title>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+
   <style>
     * {
       margin: 0;
@@ -138,6 +141,34 @@
     .container.resizing .code-editor {
       pointer-events: none;
     }
+
+    .file-controls {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 101;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .file-controls button {
+      padding: 8px 16px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .file-controls button:hover {
+      background-color: #0052a3;
+    }
+
+    #fileInput {
+      display: none;
+    }
   </style>
 </head>
 
@@ -210,7 +241,15 @@
       <iframe class="preview-frame" id="previewFrame"></iframe>
     </div>
   </div>
+
   <div class="error-toast" id="errorToast"></div>
+
+  <div class="file-controls">
+    <button id="downloadButton">Export</button>
+    <button id="uploadButton">Import</button>
+  </div>
+
+  <input type="file" id="fileInput" style="display:none;" />
 
   <script>
     const container = document.getElementById('container');
@@ -220,34 +259,76 @@
     const editorContainer = document.getElementById('editorContainer');
     const errorToast = document.getElementById('errorToast');
     const collapseButton = document.getElementById('collapseButton');
+    const downloadButton = document.getElementById('downloadButton');
+    const uploadButton = document.getElementById('uploadButton');
+    const fileInput = document.getElementById('fileInput');
     let isEditorCollapsed = false;
     let lastEditorWidth = '50%';
     let updateTimeout;
-    let undoStack = [];
-    let redoStack = [];
 
-    function saveState() {
-      undoStack.push(editor.value);
-      redoStack = [];
+    function showError(message) {
+      errorToast.textContent = message;
+      errorToast.style.display = 'block';
+      setTimeout(hideError, 3000);
     }
 
-    function undo() {
-      if (undoStack.length > 0) {
-        const lastState = undoStack.pop();
-        redoStack.push(editor.value);
-        editor.value = lastState;
-        updatePreview();
+    function hideError() {
+      errorToast.style.display = 'none';
+    }
+
+    function removeComments(code) {
+      return code.replace(/\/\/.*$/gm, '')
+                 .replace(/\/\*[\s\S]*?\*\//g, '');
+    }
+
+    function compressCode(code) {
+      const cleanedCode = removeComments(code);
+      const jsonString = JSON.stringify({ code: cleanedCode });
+      const compressedData = pako.gzip(jsonString, { to: 'string' });
+      return compressedData;
+    }
+
+    function decompressCode(compressedData) {
+      try {
+        const decompressedData = pako.ungzip(compressedData, { to: 'string' });
+        const parsedData = JSON.parse(decompressedData);
+        return parsedData.code;
+      } catch (err) {
+        showError("Error while decompressing code.");
+        return '';
       }
     }
 
-    function redo() {
-      if (redoStack.length > 0) {
-        const lastState = redoStack.pop();
-        undoStack.push(editor.value);
-        editor.value = lastState;
-        updatePreview();
+    downloadButton.addEventListener('click', () => {
+      const codeToSave = editor.value;
+      const compressedData = compressCode(codeToSave);
+      const blob = new Blob([compressedData], { type: 'application/octet-stream' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'code.sandbox';
+      link.click();
+    });
+
+    uploadButton.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const compressedData = e.target.result;
+          const code = decompressCode(compressedData);
+          if (code) {
+            editor.value = code;
+            updatePreview();
+          }
+        };
+        reader.readAsArrayBuffer(file);
       }
-    }
+    });
+
     collapseButton.addEventListener('click', () => {
       isEditorCollapsed = !isEditorCollapsed;
       if (isEditorCollapsed) {
@@ -260,33 +341,6 @@
         collapseButton.textContent = '◀';
       }
     });
-
-    function initResize(e) {
-      container.classList.add('resizing');
-      resizer.classList.add('active');
-      document.addEventListener('mousemove', resize);
-      document.addEventListener('mouseup', stopResize);
-      e.preventDefault();
-    }
-
-    function resize(e) {
-      const containerRect = container.getBoundingClientRect();
-      let newWidth = e.clientX - containerRect.left;
-      const containerWidth = containerRect.width;
-      const widthPercentage = (newWidth / containerWidth) * 100;
-      if (widthPercentage > 10 && widthPercentage < 90) {
-        editorContainer.style.width = `${widthPercentage}%`;
-        lastEditorWidth = `${widthPercentage}%`;
-      }
-    }
-
-    function stopResize() {
-      container.classList.remove('resizing');
-      resizer.classList.remove('active');
-      document.removeEventListener('mousemove', resize);
-      document.removeEventListener('mouseup', stopResize);
-    }
-    resizer.addEventListener('mousedown', initResize);
 
     function updatePreview() {
       try {
@@ -305,42 +359,7 @@
       updateTimeout = setTimeout(updatePreview, 300);
     }
 
-    function showError(message) {
-      errorToast.textContent = message;
-      errorToast.style.display = 'block';
-      setTimeout(hideError, 3000);
-    }
-
-    function hideError() {
-      errorToast.style.display = 'none';
-    }
-
-    function handleTab(e) {
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        const spaces = '    ';
-        this.value = this.value.substring(0, start) + spaces + this.value.substring(end);
-        this.selectionStart = this.selectionEnd = start + spaces.length;
-        debounceUpdate();
-      }
-    }
-    editor.addEventListener('input', () => {
-      debounceUpdate();
-      saveState();
-    });
-    editor.addEventListener('keydown', handleTab);
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey || e.metaKey) {
-        if (e.key === 'z') {
-          undo();
-        }
-        if ((e.key === 'y') || (e.key === 'Z' && e.shiftKey)) {
-          redo();
-        }
-      }
-    });
+    editor.addEventListener('input', debounceUpdate);
     updatePreview();
   </script>
 </body>
