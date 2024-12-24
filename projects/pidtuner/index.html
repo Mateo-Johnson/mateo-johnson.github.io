@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FRC PID Tuning Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .mechanism-select {
+            margin-bottom: 20px;
+        }
+
+        .parameters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .parameter-group {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .parameter-group h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #1e88e5;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #1565c0;
+        }
+
+        .simulation {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        #simulationCanvas {
+            border: 1px solid #ddd;
+            background-color: white;
+        }
+
+        .results {
+            flex-grow: 1;
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .error-graph {
+            margin-top: 20px;
+        }
+
+        .optimal-values {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FRC Robot PID Tuning Simulator</h1>
+        
+        <div class="mechanism-select">
+            <label for="mechanism">Select Mechanism:</label>
+            <select id="mechanism">
+                <option value="drivetrainPosition">Drivetrain Position</option>
+                <option value="drivetrainTurn">Drivetrain Turn</option>
+                <option value="elevator">Elevator</option>
+                <option value="arm">Arm</option>
+            </select>
+        </div>
+
+        <div class="parameters">
+            <div class="parameter-group">
+                <h3>PID Constants</h3>
+                <label>Proportional (kP):</label>
+                <input type="number" id="kP" value="0.1" step="0.01">
+                
+                <label>Integral (kI):</label>
+                <input type="number" id="kI" value="0.01" step="0.001">
+                
+                <label>Derivative (kD):</label>
+                <input type="number" id="kD" value="0.05" step="0.01">
+            </div>
+
+            <div class="parameter-group">
+                <h3>System Parameters</h3>
+                <label>Mass (kg):</label>
+                <input type="number" id="mass" value="20" min="0">
+                
+                <label>Moment of Inertia:</label>
+                <input type="number" id="inertia" value="2.5" min="0">
+                
+                <label>Motor Count:</label>
+                <input type="number" id="motorCount" value="4" min="1">
+            </div>
+
+            <div class="parameter-group">
+                <h3>Simulation Settings</h3>
+                <label>Target Position:</label>
+                <input type="number" id="targetPosition" value="2.0">
+                
+                <label>Max Velocity:</label>
+                <input type="number" id="maxVelocity" value="3.0" min="0">
+                
+                <label>Simulation Time (s):</label>
+                <input type="number" id="simTime" value="5.0" min="0.1">
+            </div>
+        </div>
+
+        <button onclick="startSimulation()">Run Simulation</button>
+        <button onclick="optimizePID()">Auto-Tune PID</button>
+
+        <div class="simulation">
+            <canvas id="simulationCanvas" width="600" height="400"></canvas>
+            
+            <div class="results">
+                <h3>Simulation Results</h3>
+                <div id="metrics"></div>
+                
+                <div class="error-graph">
+                    <canvas id="errorGraph" width="400" height="200"></canvas>
+                </div>
+
+                <div class="optimal-values">
+                    <h3>Recommended PID Values</h3>
+                    <div id="recommended"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class PIDController {
+            constructor(kP, kI, kD) {
+                this.kP = kP;
+                this.kI = kI;
+                this.kD = kD;
+                this.integral = 0;
+                this.previousError = 0;
+                this.dt = 0.02;
+            }
+
+            calculate(setpoint, measured) {
+                const error = setpoint - measured;
+                this.integral += error * this.dt;
+                const derivative = (error - this.previousError) / this.dt;
+                this.previousError = error;
+
+                return this.kP * error + this.kI * this.integral + this.kD * derivative;
+            }
+
+            reset() {
+                this.integral = 0;
+                this.previousError = 0;
+            }
+        }
+
+        class RobotSimulator {
+            constructor(mechanism, mass, inertia, motorCount) {
+                this.mechanism = mechanism;
+                this.mass = mass;
+                this.inertia = inertia;
+                this.motorCount = motorCount;
+                
+                this.position = 0;
+                this.velocity = 0;
+                this.acceleration = 0;
+                
+                this.maxVoltage = 12;
+                this.friction = 0.1;
+                this.dt = 0.02;
+            }
+
+            step(voltage) {
+                voltage = Math.max(-this.maxVoltage, Math.min(this.maxVoltage, voltage));
+                
+                let force = this.motorCount * (voltage / this.maxVoltage) * 
+                    (this.mechanism === 'drivetrainTurn' ? 20 : 40);
+                
+                force -= this.velocity * this.friction;
+                
+                if (this.mechanism === 'drivetrainTurn') {
+                    this.acceleration = force / this.inertia;
+                } else {
+                    this.acceleration = force / this.mass;
+                }
+                
+                this.velocity += this.acceleration * this.dt;
+                this.position += this.velocity * this.dt;
+                
+                return {
+                    position: this.position,
+                    velocity: this.velocity,
+                    acceleration: this.acceleration
+                };
+            }
+
+            reset() {
+                this.position = 0;
+                this.velocity = 0;
+                this.acceleration = 0;
+            }
+        }
+
+        let simulator;
+        let pid;
+        let animationFrame;
+        let simulationData = [];
+        
+        function startSimulation() {
+            cancelAnimationFrame(animationFrame);
+            simulationData = [];
+            
+            const mechanism = document.getElementById('mechanism').value;
+            const mass = parseFloat(document.getElementById('mass').value);
+            const inertia = parseFloat(document.getElementById('inertia').value);
+            const motorCount = parseInt(document.getElementById('motorCount').value);
+            
+            const kP = parseFloat(document.getElementById('kP').value);
+            const kI = parseFloat(document.getElementById('kI').value);
+            const kD = parseFloat(document.getElementById('kD').value);
+            
+            simulator = new RobotSimulator(mechanism, mass, inertia, motorCount);
+            pid = new PIDController(kP, kI, kD);
+            
+            runSimulation();
+        }
+
+        function runSimulation() {
+            const canvas = document.getElementById('simulationCanvas');
+            const ctx = canvas.getContext('2d');
+            const targetPosition = parseFloat(document.getElementById('targetPosition').value);
+            const simTime = parseFloat(document.getElementById('simTime').value);
+            
+            let time = 0;
+            
+            function simulate() {
+                const output = pid.calculate(targetPosition, simulator.position);
+                const state = simulator.step(output);
+                
+                simulationData.push({
+                    time: time,
+                    position: state.position,
+                    target: targetPosition,
+                    error: targetPosition - state.position
+                });
+                
+                drawSimulation(ctx, canvas.width, canvas.height);
+                
+                time += simulator.dt;
+                
+                if (time < simTime) {
+                    animationFrame = requestAnimationFrame(simulate);
+                } else {
+                    calculateMetrics();
+                }
+            }
+            
+            simulate();
+        }
+
+        function drawSimulation(ctx, width, height) {
+            ctx.clearRect(0, 0, width, height);
+        
+            ctx.strokeStyle = '#eee';
+            ctx.lineWidth = 1;
+        
+            for (let i = 0; i < width; i += 50) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, height);
+                ctx.stroke();
+            }
+        
+            for (let i = 0; i < height; i += 50) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(width, i);
+                ctx.stroke();
+            }
+        
+            const targetPosition = parseFloat(document.getElementById('targetPosition').value);
+            const targetY = height/2 - targetPosition * 50;
+        
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 10]);
+            ctx.beginPath();
+            ctx.moveTo(0, targetY);
+            ctx.lineTo(width, targetY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        
+            ctx.fillStyle = '#ff0000';
+            ctx.font = '14px Arial';
+            ctx.fillText(`Target: ${targetPosition}`, 10, targetY - 5);
+        
+            if (simulationData.length > 1) {
+                ctx.strokeStyle = '#0066ff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+            
+                for (let i = 0; i < simulationData.length; i++) {
+                    const x = (i / simulationData.length) * width;
+                    const y = height/2 - simulationData[i].position * 50;
+                
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+            
+                ctx.stroke();
+            }
+        
+            if (simulationData.length > 0) {
+                const currentPosition = simulationData[simulationData.length - 1].position;
+                ctx.fillStyle = '#0066ff';
+                ctx.fillText(`Current: ${currentPosition.toFixed(2)}`, width - 100, height - 10);
+            }
+        }
+
+        function calculateMetrics() {
+            let sumSquaredError = 0;
+            let maxError = 0;
+            let settlingTime = null;
+            const steadyStateThreshold = 0.05;
+            
+            simulationData.forEach((data, index) => {
+                const error = Math.abs(data.error);
+                sumSquaredError += error ** 2;
+                maxError = Math.max(maxError, error);
+                
+                if (settlingTime === null && error < steadyStateThreshold) {
+                    settlingTime = data.time;
+                }
+            });
+            
+            const mse = sumSquaredError / simulationData.length;
+            const rmse = Math.sqrt(mse);
+            
+            const metrics = `
+                <p>Mean Squared Error: ${mse.toFixed(4)}</p>
+                <p>Root Mean Squared Error: ${rmse.toFixed(4)}</p>
+                <p>Maximum Error: ${maxError.toFixed(4)}</p>
+                <p>Settling Time: ${settlingTime !== null ? settlingTime.toFixed(2) : 'N/A'} seconds</p>
+            `;
+            
+            document.getElementById('metrics').innerHTML = metrics;
+            
+            drawErrorGraph();
+        }
+
+        function drawErrorGraph() {
+            const canvas = document.getElementById('errorGraph');
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            ctx.clearRect(0, 0, width, height);
+        
+            ctx.strokeStyle = '#0066ff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+        
+            for (let i = 0; i < simulationData.length; i++) {
+                const x = (i / simulationData.length) * width;
+                const y = height / 2 - simulationData[i].error * 50;
+            
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+        
+            ctx.stroke();
+        }
+
+        function optimizePID() {
+            const kP = parseFloat(document.getElementById('kP').value);
+            const kI = parseFloat(document.getElementById('kI').value);
+            const kD = parseFloat(document.getElementById('kD').value);
+            
+            const mechanism = document.getElementById('mechanism').value;
+            const mass = parseFloat(document.getElementById('mass').value);
+            const inertia = parseFloat(document.getElementById('inertia').value);
+            const motorCount = parseInt(document.getElementById('motorCount').value);
+            
+            let bestParams = { kP, kI, kD };
+            let bestMSE = Infinity;
+            
+            for (let i = 0; i < 10; i++) {
+                const randomKp = kP + (Math.random() - 0.5) * 0.1;
+                const randomKi = kI + (Math.random() - 0.5) * 0.01;
+                const randomKd = kD + (Math.random() - 0.5) * 0.05;
+                
+                simulator = new RobotSimulator(mechanism, mass, inertia, motorCount);
+                pid = new PIDController(randomKp, randomKi, randomKd);
+                
+                const simulationResults = [];
+                for (let j = 0; j < 100; j++) {
+                    const output = pid.calculate(2.0, simulator.position);
+                    const state = simulator.step(output);
+                    simulationResults.push({
+                        time: j * 0.02,
+                        position: state.position,
+                        error: 2.0 - state.position
+                    });
+                }
+                
+                let sumSquaredError = 0;
+                simulationResults.forEach(data => {
+                    const error = Math.abs(data.error);
+                    sumSquaredError += error ** 2;
+                });
+                
+                const mse = sumSquaredError / simulationResults.length;
+                
+                if (mse < bestMSE) {
+                    bestMSE = mse;
+                    bestParams = { kP: randomKp, kI: randomKi, kD: randomKd };
+                }
+            }
+            
+            document.getElementById('recommended').innerHTML = `
+                <p>kP: ${bestParams.kP.toFixed(4)}</p>
+                <p>kI: ${bestParams.kI.toFixed(4)}</p>
+                <p>kD: ${bestParams.kD.toFixed(4)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
