@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Todo List | Mateo Johnson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List | Mateo Johnson</title>
     <style>
         :root {
             --highlight: #0e7be2;
@@ -87,21 +82,10 @@
         }
 
         .filters {
+            margin-bottom: 1rem;
             display: flex;
             gap: 1rem;
-            margin-bottom: 2rem;
             justify-content: center;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: 2px solid var(--highlight);
-            opacity: 0.6;
-        }
-
-        .filter-btn.active {
-            background: var(--highlight);
-            opacity: 1;
         }
 
         .todo-list {
@@ -115,14 +99,17 @@
             padding: 1rem;
             border-radius: 8px;
             display: flex;
-            align-items: center;
-            gap: 1rem;
+            flex-direction: column;
+            gap: 0.5rem;
             animation: slideIn 0.3s ease;
             transition: all 0.3s ease;
         }
 
-        .todo-item:hover {
-            transform: translateX(5px);
+        .todo-item .todo-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
         }
 
         .todo-item.completed {
@@ -161,7 +148,7 @@
             flex: 1;
         }
 
-        .delete-btn {
+        .delete-btn, .add-subtask-btn {
             background: transparent;
             color: #ff4444;
             border: 2px solid #ff4444;
@@ -171,6 +158,49 @@
         .delete-btn:hover {
             background: #ff4444;
             color: white;
+        }
+
+        .add-subtask-btn {
+            color: var(--highlight);
+            border-color: var(--highlight);
+        }
+
+        .add-subtask-btn:hover {
+            background: var(--highlight);
+            color: white;
+        }
+
+        .subtasks {
+            margin-left: 2rem;
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .subtask-item {
+            background: var(--bg-lighter);
+            padding: 0.75rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .subtask-item.completed {
+            opacity: 0.6;
+        }
+
+        .subtask-item.completed .todo-text {
+            text-decoration: line-through;
+        }
+
+        .subtask-input {
+            margin-left: 2rem;
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
         @keyframes slideIn {
@@ -184,69 +214,27 @@
             }
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .input-container {
-                flex-direction: column;
-            }
-
-            .filters {
-                flex-wrap: wrap;
-            }
-
-            .filter-btn {
-                flex: 1;
-                min-width: 100px;
-            }
-        }
-
         .empty-state {
             text-align: center;
             padding: 2rem;
             color: #666;
             font-style: italic;
         }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--bg-lighter);
-            border-radius: 3px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--highlight);
-            transition: width 0.3s ease;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Todo List</h1>
-        
+
+        <div class="filters">
+            <button onclick="todoApp.setFilter('all')">All</button>
+            <button onclick="todoApp.setFilter('active')">Active</button>
+            <button onclick="todoApp.setFilter('completed')">Completed</button>
+        </div>
+
         <div class="input-container">
             <input type="text" id="todoInput" placeholder="Add a new task..." autofocus>
             <button id="addBtn">Add Task</button>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" style="width: 0%"></div>
-        </div>
-
-        <div class="filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="active">Active</button>
-            <button class="filter-btn" data-filter="completed">Completed</button>
         </div>
 
         <div class="todo-list" id="todoList">
@@ -258,7 +246,7 @@
         class TodoApp {
             constructor() {
                 this.todos = JSON.parse(localStorage.getItem('todos')) || [];
-                this.currentFilter = 'all';
+                this.filter = 'all';
                 this.setupElements();
                 this.setupEventListeners();
                 this.render();
@@ -268,8 +256,6 @@
                 this.todoInput = document.getElementById('todoInput');
                 this.addBtn = document.getElementById('addBtn');
                 this.todoList = document.getElementById('todoList');
-                this.filterBtns = document.querySelectorAll('.filter-btn');
-                this.progressFill = document.querySelector('.progress-fill');
             }
 
             setupEventListeners() {
@@ -277,24 +263,17 @@
                 this.todoInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') this.addTodo();
                 });
-
-                this.filterBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        this.currentFilter = btn.dataset.filter;
-                        this.filterBtns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        this.render();
-                    });
-                });
             }
 
             addTodo() {
                 const text = this.todoInput.value.trim();
                 if (text) {
-                    this.todos.unshift({
+                    this.todos.push({
                         id: Date.now(),
                         text,
-                        completed: false
+                        completed: false,
+                        subtasks: [],
+                        showSubtasks: false
                     });
                     this.todoInput.value = '';
                     this.save();
@@ -311,9 +290,56 @@
                 }
             }
 
+            toggleSubtaskVisibility(id) {
+                const todo = this.todos.find(t => t.id === id);
+                if (todo) {
+                    todo.showSubtasks = !todo.showSubtasks;
+                    this.render();
+                }
+            }
+
             deleteTodo(id) {
                 this.todos = this.todos.filter(t => t.id !== id);
                 this.save();
+                this.render();
+            }
+
+            addSubtask(parentId) {
+                const parentTask = this.todos.find(t => t.id === parentId);
+                const inputDiv = document.getElementById(`subtaskInput-${parentId}`);
+                const input = inputDiv.querySelector('input');
+                const text = input.value.trim();
+                if (text) {
+                    parentTask.subtasks.push({
+                        id: Date.now(),
+                        text,
+                        completed: false
+                    });
+                    input.value = '';
+                    this.save();
+                    this.render();
+                }
+            }
+
+            toggleSubtask(parentId, subtaskId) {
+                const parentTask = this.todos.find(t => t.id === parentId);
+                const subtask = parentTask.subtasks.find(s => s.id === subtaskId);
+                if (subtask) {
+                    subtask.completed = !subtask.completed;
+                    this.save();
+                    this.render();
+                }
+            }
+
+            deleteSubtask(parentId, subtaskId) {
+                const parentTask = this.todos.find(t => t.id === parentId);
+                parentTask.subtasks = parentTask.subtasks.filter(s => s.id !== subtaskId);
+                this.save();
+                this.render();
+            }
+
+            setFilter(filter) {
+                this.filter = filter;
                 this.render();
             }
 
@@ -321,38 +347,43 @@
                 localStorage.setItem('todos', JSON.stringify(this.todos));
             }
 
-            updateProgress() {
-                if (this.todos.length === 0) {
-                    this.progressFill.style.width = '0%';
-                    return;
-                }
-                const completed = this.todos.filter(t => t.completed).length;
-                const percentage = (completed / this.todos.length) * 100;
-                this.progressFill.style.width = `${percentage}%`;
-            }
-
             render() {
-                let filteredTodos = this.todos;
-                if (this.currentFilter === 'active') {
-                    filteredTodos = this.todos.filter(t => !t.completed);
-                } else if (this.currentFilter === 'completed') {
-                    filteredTodos = this.todos.filter(t => t.completed);
-                }
+                const filteredTodos = this.todos.filter(todo => {
+                    if (this.filter === 'all') return true;
+                    if (this.filter === 'active') return !todo.completed;
+                    if (this.filter === 'completed') return todo.completed;
+                });
 
                 if (filteredTodos.length === 0) {
-                    this.todoList.innerHTML = '<div class="empty-state">No tasks found</div>';
-                } else {
-                    this.todoList.innerHTML = filteredTodos.map(todo => `
-                        <div class="todo-item ${todo.completed ? 'completed' : ''}" data-id="${todo.id}">
+                    this.todoList.innerHTML = '<div class="empty-state">No tasks yet. Add one above!</div>';
+                    return;
+                }
+
+                this.todoList.innerHTML = filteredTodos.map(todo => `
+                    <div class="todo-item ${todo.completed ? 'completed' : ''}">
+                        <div class="todo-header" onclick="todoApp.toggleSubtaskVisibility(${todo.id})">
                             <div class="checkbox ${todo.completed ? 'checked' : ''}" 
                                  onclick="todoApp.toggleTodo(${todo.id})"></div>
                             <span class="todo-text">${todo.text}</span>
+                            <button class="add-subtask-btn" onclick="todoApp.addSubtask(${todo.id})">Add Subtask</button>
                             <button class="delete-btn" onclick="todoApp.deleteTodo(${todo.id})">Delete</button>
                         </div>
-                    `).join('');
-                }
-
-                this.updateProgress();
+                        <div class="subtasks" style="display: ${todo.showSubtasks ? 'block' : 'none'};">
+                            ${todo.subtasks.map(subtask => `
+                                <div class="subtask-item ${subtask.completed ? 'completed' : ''}">
+                                    <div class="checkbox ${subtask.completed ? 'checked' : ''}" 
+                                         onclick="todoApp.toggleSubtask(${todo.id}, ${subtask.id})"></div>
+                                    <span class="todo-text">${subtask.text}</span>
+                                    <button class="delete-btn" onclick="todoApp.deleteSubtask(${todo.id}, ${subtask.id})">Delete</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="subtask-input" id="subtaskInput-${todo.id}" style="display: ${todo.showSubtasks ? 'flex' : 'none'};">
+                            <input type="text" placeholder="Add a subtask...">
+                            <button onclick="todoApp.addSubtask(${todo.id})">Add</button>
+                        </div>
+                    </div>
+                `).join('');
             }
         }
 
