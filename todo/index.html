@@ -274,13 +274,14 @@
             addTodo() {
                 const text = this.todoInput.value.trim();
                 if (text) {
-                    this.todos.push({
+                    const newTodo = {
                         id: Date.now(),
                         text,
                         completed: false,
-                        subtasks: [],
+                        subtasks: [], // Initialize with empty array
                         showSubtasks: false
-                    });
+                    };
+                    this.todos.push(newTodo);
                     this.todoInput.value = '';
                     this.save();
                     this.render();
@@ -310,12 +311,20 @@
                 this.render();
             }
 
-            addSubtask(parentId) {
+            addSubtask(parentId, event) {
+                // Prevent event bubbling
+                if (event) {
+                    event.stopPropagation();
+                }
+                
                 const parentTask = this.todos.find(t => t.id === parentId);
+                if (!parentTask) return;
+                
                 const inputDiv = document.getElementById(`subtaskInput-${parentId}`);
                 const input = inputDiv.querySelector('input');
                 const text = input.value.trim();
-                if (text) {
+                
+                if (text && parentTask.subtasks) {
                     parentTask.subtasks.push({
                         id: Date.now(),
                         text,
@@ -327,8 +336,15 @@
                 }
             }
 
-            toggleSubtask(parentId, subtaskId) {
+            toggleSubtask(parentId, subtaskId, event) {
+                // Prevent event bubbling
+                if (event) {
+                    event.stopPropagation();
+                }
+                
                 const parentTask = this.todos.find(t => t.id === parentId);
+                if (!parentTask || !parentTask.subtasks) return;
+                
                 const subtask = parentTask.subtasks.find(s => s.id === subtaskId);
                 if (subtask) {
                     subtask.completed = !subtask.completed;
@@ -337,8 +353,15 @@
                 }
             }
 
-            deleteSubtask(parentId, subtaskId) {
+            deleteSubtask(parentId, subtaskId, event) {
+                // Prevent event bubbling
+                if (event) {
+                    event.stopPropagation();
+                }
+                
                 const parentTask = this.todos.find(t => t.id === parentId);
+                if (!parentTask || !parentTask.subtasks) return;
+                
                 parentTask.subtasks = parentTask.subtasks.filter(s => s.id !== subtaskId);
                 this.save();
                 this.render();
@@ -371,22 +394,22 @@
                             <div class="checkbox ${todo.completed ? 'checked' : ''}" 
                                  onclick="todoApp.toggleTodo(${todo.id})"></div>
                             <span class="todo-text">${todo.text}</span>
-                            <button class="add-subtask-btn" onclick="todoApp.addSubtask(${todo.id})">Add Subtask</button>
-                            <button class="delete-btn" onclick="todoApp.deleteTodo(${todo.id})">Delete</button>
+                            <button class="add-subtask-btn" onclick="event.stopPropagation(); todoApp.toggleSubtaskVisibility(${todo.id})">Add Subtask</button>
+                            <button class="delete-btn" onclick="event.stopPropagation(); todoApp.deleteTodo(${todo.id})">Delete</button>
                         </div>
                         <div class="subtasks" style="display: ${todo.showSubtasks ? 'block' : 'none'};">
-                            ${todo.subtasks.map(subtask => `
+                            ${(todo.subtasks || []).map(subtask => `
                                 <div class="subtask-item ${subtask.completed ? 'completed' : ''}">
                                     <div class="checkbox ${subtask.completed ? 'checked' : ''}" 
-                                         onclick="todoApp.toggleSubtask(${todo.id}, ${subtask.id})"></div>
+                                         onclick="todoApp.toggleSubtask(${todo.id}, ${subtask.id}, event)"></div>
                                     <span class="todo-text">${subtask.text}</span>
-                                    <button class="delete-btn" onclick="todoApp.deleteSubtask(${todo.id}, ${subtask.id})">Delete</button>
+                                    <button class="delete-btn" onclick="todoApp.deleteSubtask(${todo.id}, ${subtask.id}, event)">Delete</button>
                                 </div>
                             `).join('')}
                         </div>
                         <div class="subtask-input" id="subtaskInput-${todo.id}" style="display: ${todo.showSubtasks ? 'flex' : 'none'};">
                             <input type="text" placeholder="Add a subtask...">
-                            <button onclick="todoApp.addSubtask(${todo.id})">Add</button>
+                            <button onclick="todoApp.addSubtask(${todo.id}, event)">Add</button>
                         </div>
                     </div>
                 `).join('');
@@ -396,5 +419,4 @@
         const todoApp = new TodoApp();
     </script>
 </body>
-  
 </html>
