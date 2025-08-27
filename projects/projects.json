@@ -1,1 +1,27 @@
-
+[
+  {
+    "title": "AI-Powered Portfolio Website",
+    "description": "A responsive personal portfolio designed with gold-accented minimalism, dynamic project loading, and smooth animations.",
+    "image": "images/portfolio-preview.jpg",
+    "tags": ["HTML", "CSS", "JavaScript", "Design"],
+    "link": "https://yourwebsite.com",
+    "code": [
+      {
+        "language": "HTML",
+        "snippet": "<header>\n  <div class='logo'>My Logo</div>\n</header>"
+      },
+      {
+        "language": "CSS",
+        "snippet": "header {\n  backdrop-filter: blur(20px);\n  border-bottom: 1px solid #D4AF37;\n}"
+      }
+    ]
+  },
+  {
+    "title": "Smart Home Dashboard",
+    "description": "A web app for monitoring and controlling IoT devices in real time, featuring data visualization and user-friendly design.",
+    "image": "images/smart-home.jpg",
+    "tags": ["React", "Node.js", "IoT"],
+    "link": "https://github.com/yourusername/smart-home-dashboard",
+    "code": []
+  }
+]
