@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills & Achievements | Mateo Johnson</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #FEFEFE;
+      color: #2C2C2C;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: #2C2C2C;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #D4AF37;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes goldShimmer {
+      0% {
+        background-position: -200% center;
+      }
+
+      100% {
+        background-position: 200% center;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 25px 40px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 15px 40px;
+      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #D4AF37;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShimmer 3s linear infinite;
+    }
+
+    header nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    header nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #555;
+      padding: 12px 20px;
+      border-radius: 25px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+      overflow: hidden;
+    }
+
+    header nav a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+      border-radius: 25px;
+      transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+
+    header nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #FFD700, #D4AF37);
+      border-radius: 1px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    header nav a:hover {
+      color: #D4AF37;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+    }
+
+    header nav a:hover::before {
+      left: 0;
+    }
+
+    header nav a:hover::after {
+      width: 60%;
+    }
+
+    header nav a.active {
+      color: #D4AF37;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+    }
+
+    header nav a.active::after {
+      width: 60%;
+    }
+
+    .page-hero {
+      padding: 140px 40px 80px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFFEF7 25%, #FFF8E1 50%, #FFFEF7 75%, #FFFFFF 100%);
+      text-align: center;
+      position: relative;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .page-hero h1 {
+      font-size: 4rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .page-hero p {
+      font-size: 1.3rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .skills-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .section {
+      margin-bottom: 100px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease-out;
+      position: relative;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      border: 2px solid #D4AF37;
+      border-top: none;
+      border-left: none;
+      transform: translateX(-50%) rotate(45deg);
+      animation: bounceArrow 2s ease-in-out infinite;
+      opacity: 0.7;
+    }
+
+    .section:not(:last-child) .section-indicator {
+      position: absolute;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+      animation: fadeInUp 1s ease-out 1s both;
+    }
+
+    .section-arrow {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #D4AF37;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+      transform-origin: center;
+      animation: bounceArrow 2s ease-in-out infinite;
+      display: inline-block;
+      margin: 0 auto;
+    }
+
+    .section-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .section-dot {
+      width: 4px;
+      height: 4px;
+      background: #D4AF37;
+      border-radius: 50%;
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    .section-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .section-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounceArrow {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translateY(8px) rotate(45deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes dotPulse {
+
+      0%,
+      100% {
+        opacity: 0.4;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.3);
+      }
+    }
+
+    .section h2 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #333;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, #FFD700, #D4AF37);
+      border-radius: 2px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(212, 175, 55, 0.05));
+      transition: left 0.6s ease;
+    }
+
+    .stat-card:hover::before {
+      left: 0;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+      border-color: #D4AF37;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #D4AF37;
+      display: block;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #FFD700, #D4AF37);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .skill-category {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      transition: all 0.4s ease;
+    }
+
+    .skill-category:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15);
+    }
+
+    .skill-category h3 {
+      font-size: 1.5rem;
+      color: #D4AF37;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-category h3::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, #FFD700, #D4AF37);
+      border-radius: 50%;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .skill-tag {
+      padding: 8px 16px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+      color: #666;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .skill-tag:hover {
+      background: linear-gradient(135deg, #FFD700, #D4AF37);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .award-card {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #D4AF37;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .award-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+      border-radius: 0 20px 0 50px;
+    }
+
+    .award-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+      border-left-color: #FFD700;
+    }
+
+    .award-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .award-org {
+      font-size: 1rem;
+      color: #D4AF37;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .award-description {
+      color: #666;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .experience-timeline {
+      position: relative;
+      margin: 2rem 0;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 30px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #FFD700, #D4AF37);
+    }
+
+    .experience-item {
+      position: relative;
+      margin-bottom: 3rem;
+      padding-left: 80px;
+    }
+
+    .experience-dot {
+      position: absolute;
+      left: 21px;
+      top: 10px;
+      width: 18px;
+      height: 18px;
+      background: linear-gradient(135deg, #FFD700, #D4AF37);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .experience-content {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .experience-content:hover {
+      transform: translateX(10px);
+      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+    }
+
+    .experience-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .experience-company {
+      color: #D4AF37;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .experience-description {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .page-hero {
+        padding: 120px 20px 60px;
+      }
+
+      .page-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .skills-container {
+        padding: 60px 20px;
+      }
+
+      .section h2 {
+        font-size: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .skills-grid,
+      .awards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-item {
+        padding-left: 60px;
+      }
+    }
+
+    .logo-img {
+      max-width: 60px;
+      max-height: 60px;
+      width: auto;
+      height: auto;
+      display: block;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      margin-top: 80px;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header">
+    <div class="logo">
+      <a href="/">
+        <img src="https://mateo-johnson.github.io/resources/logo.png" alt="Logo" class="logo-img">
+    </div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="#" class="active">Skills</a>
+      <a href="/projects">Projects</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="page-hero">
+    <h1>Skills & Achievements</h1>
+    <p>A comprehensive overview of my technical expertise, academic accomplishments, and professional experience in electrical engineering and robotics.</p>
+  </section>
+
+  <div class="skills-container">
+
+    <!-- Academic Stats Section -->
+    <section class="section" id="academics">
+      <h2>Academic Excellence</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-number">4.0</span>
+          <span class="stat-label">Unweighted GPA</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">4.23</span>
+          <span class="stat-label">Weighted GPA</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">33</span>
+          <span class="stat-label">ACT Score</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">Top 10%</span>
+          <span class="stat-label">Class Rank</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">8+</span>
+          <span class="stat-label">College Courses</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">200+</span>
+          <span class="stat-label">Service Hours/Year</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section class="section" id="skills">
+      <h2>Technical Expertise</h2>
+      <div class="skills-grid">
+        <div class="skill-category">
+          <h3>Programming Languages</h3>
+          <div class="skill-tags">
+            <div class="skill-tag">Python</div>
+            <div class="skill-tag">Java</div>
+            <div class="skill-tag">C++</div>
+            <div class="skill-tag">C</div>
+            <div class="skill-tag">C#</div>
+            <div class="skill-tag">JavaScript</div>
+            <div class="skill-tag">Swift</div>
+            <div class="skill-tag">HTML/CSS</div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Embedded Systems</h3>
+          <div class="skill-tags">
+            <div class="skill-tag">Microcontroller Programming</div>
+            <div class="skill-tag">PCB Design</div>
+            <div class="skill-tag">FPGA Development</div>
+            <div class="skill-tag">IoT Systems</div>
+            <div class="skill-tag">Dual-MCU Architecture</div>
+            <div class="skill-tag">Control Systems</div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Design & CAD</h3>
+          <div class="skill-tags">
+            <div class="skill-tag">Onshape</div>
+            <div class="skill-tag">Fusion360</div>
+            <div class="skill-tag">KiCAD</div>
+            <div class="skill-tag">EAGLE</div>
+            <div class="skill-tag">EasyEDA</div>
+            <div class="skill-tag">Technical Drawing</div>
+          </div>
+        </div>
+        <div class="skill-category">
+          <h3>Robotics & Hardware</h3>
+          <div class="skill-tags">
+            <div class="skill-tag">Swerve Drive Systems</div>
+            <div class="skill-tag">Motor Controllers</div>
+            <div class="skill-tag">Sensor Integration</div>
+            <div class="skill-tag">Flight Control</div>
+            <div class="skill-tag">3D Printing</div>
+            <div class="skill-tag">Pick & Place Systems</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Awards & Recognition Section -->
+    <section class="section" id="awards">
+      <h2>Awards & Recognition</h2>
+      <div class="awards-grid">
+        <div class="award-card">
+          <div class="award-title">ISEF 2025 Participant</div>
+          <div class="award-org">International Science and Engineering Fair</div>
+          <div class="award-description">Selected to compete in the Embedded Systems category with dual-MCU microcontroller research project.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">Melvin Scholar</div>
+          <div class="award-org">American Junior Academy of Science</div>
+          <div class="award-description">Recognition for outstanding research contributions and scientific excellence in engineering.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">Winner</div>
+          <div class="award-org">Buckeye Science and Engineering Fair</div>
+          <div class="award-description">First place recognition for innovative dual-MCU system design and implementation.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">Air Force Innovation Award</div>
+          <div class="award-org">Buckeye Science Fair</div>
+          <div class="award-description">Special recognition for engineering innovation and potential military applications.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">MIT Business Card Recipient</div>
+          <div class="award-org">ISEF 2025</div>
+          <div class="award-description">Personal recognition from MIT admissions officer for exceptional project presentation.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">Governor's Recognition</div>
+          <div class="award-org">State of Ohio</div>
+          <div class="award-description">Congratulatory recognition for ISEF 2025 participation representing Ohio.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Experience Section -->
+    <section class="section" id="experience">
+      <h2>Professional Experience</h2>
+      <div class="experience-timeline">
+        <div class="timeline-line"></div>
+
+        <div class="experience-item">
+          <div class="experience-dot"></div>
+          <div class="experience-content">
+            <div class="experience-title">eVTOL Research Assistant</div>
+            <div class="experience-company">Ohio State University</div>
+            <div class="experience-description">Conducted research on electric vertical takeoff and landing aircraft power systems design, focusing on efficiency optimization and control algorithms.</div>
+          </div>
+        </div>
+
+        <div class="experience-item">
+          <div class="experience-dot"></div>
+          <div class="experience-content">
+            <div class="experience-title">IT Specialist & Frontend Developer</div>
+            <div class="experience-company">Embold</div>
+            <div class="experience-description">Completed CompTIA certifications (ITF, A+, Network+, Security+), developed frontend interfaces, and implemented backend automation processes.</div>
+          </div>
+        </div>
+
+        <div class="experience-item">
+          <div class="experience-dot"></div>
+          <div class="experience-content">
+            <div class="experience-title">STEM Instructor</div>
+            <div class="experience-company">PAST Foundation</div>
+            <div class="experience-description">Led Arduino microcontroller camps, operated 3D printing operations, and developed STEM curriculum for diverse student populations.</div>
+          </div>
+        </div>
+
+        <div class="experience-item">
+          <div class="experience-dot"></div>
+          <div class="experience-content">
+            <div class="experience-title">Workforce Development Mentor</div>
+            <div class="experience-company">Various Organizations</div>
+            <div class="experience-description">Provided peer mentoring focused on children of color affinity groups and completed Leadership Excellence Certification.</div>
+          </div>
+        </div>
+
+        <div class="experience-item">
+          <div class="experience-dot"></div>
+          <div class="experience-content">
+            <div class="experience-title">Camp Counselor & CIT</div>
+            <div class="experience-company">Camp Wyandot</div>
+            <div class="experience-description">3 years of leadership experience including 2 years as Counselor in Training and 1 year as full counselor, developing youth mentorship skills.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="section" id="leadership">
+      <h2>Leadership & Impact</h2>
+      <div class="awards-grid">
+        <div class="award-card">
+          <div class="award-title">FRC Team Leader</div>
+          <div class="award-org">2 Years (11th/12th Grade)</div>
+          <div class="award-description">Led overall team strategy, mentored multiple FRC teams (1307, 6464, 5667, 9075), and conducted design and leadership conferences.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">Programming Manager</div>
+          <div class="award-org">Youngest in Team History</div>
+          <div class="award-description">Spearheaded programming language transition from Python to Java, implemented swerve drivetrain systems, and open-sourced team tools.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">Policy Engagement</div>
+          <div class="award-org">Ohio State Government</div>
+          <div class="award-description">Met with State Senator William DeMora to discuss STEM initiatives for low-income communities and policy development.</div>
+        </div>
+        <div class="award-card">
+          <div class="award-title">Community Outreach</div>
+          <div class="award-org">200+ Hours Annually</div>
+          <div class="award-description">Host STEM events and teach at local elementary schools, focusing on increasing diversity in engineering education.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Mateo Johnson. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Header scroll effect
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    // Section reveal on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.section').forEach(section => {
+      observer.observe(section);
+    });
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+    // Enhanced interactions
+    document.querySelectorAll('.skill-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 150);
+      });
+    });
+    // Staggered animations for cards
+    document.querySelectorAll('.stat-card, .award-card').forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
+    // Floating animation for experience dots
+    document.querySelectorAll('.experience-dot').forEach((dot, index) => {
+      dot.style.animationDelay = `${index * 0.5}s`;
+    });
+  </script>
+</body>
+
+</html>
