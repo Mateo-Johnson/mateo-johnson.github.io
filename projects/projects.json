@@ -2,7 +2,7 @@
   {
     "title": "AI-Powered Portfolio Website",
     "description": "A responsive personal portfolio designed with gold-accented minimalism, dynamic project loading, and smooth animations.",
-    "image": "images/portfolio-preview.jpg",
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "tags": ["HTML", "CSS", "JavaScript", "Design"],
     "link": "https://yourwebsite.com",
     "code": [
