@@ -59,13 +59,12 @@
     }
 
     .logo-img {
-    max-width: 60px; /* adjust to desired size */
-    max-height: 60px; /* adjust to desired size */
-    width: auto;
-    height: auto;
-    display: block;
+      max-width: 100px;
+      max-height: 100px;
+      width: auto;
+      height: auto;
+      display: block;
     }
-
 
     header nav {
       display: flex;
@@ -133,25 +132,13 @@
 
     /* Keyframes */
     @keyframes goldShimmer {
-      0% {
-        background-position: -200% center;
-      }
-
-      100% {
-        background-position: 200% center;
-      }
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
     }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Main Content */
@@ -258,6 +245,25 @@
       box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
     }
 
+    /* Code Blocks */
+    .project-code {
+      background: linear-gradient(135deg, #fff, #f9f9f9);
+      border-left: 4px solid #D4AF37;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      color: #2C2C2C;
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
+    }
+
+    .project-code code {
+      display: block;
+      white-space: pre-wrap;
+      color: #333;
+    }
+
     /* Footer */
     footer {
       background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
@@ -325,7 +331,15 @@
         header.classList.remove('scrolled');
       }
     });
-    // Load projects from external JSON file
+
+    // Escape HTML for code safety
+    function escapeHTML(str) {
+      return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+    }
+
+    // Load projects dynamically
     fetch('projects.json')
       .then(response => response.json())
       .then(projects => {
@@ -333,12 +347,19 @@
         projects.forEach(proj => {
           const card = document.createElement('div');
           card.className = 'project-card';
+
+          // Add code blocks if present
+          const codeBlocks = proj.code?.map(codeObj => `
+            <pre class="project-code"><code>${escapeHTML(codeObj.snippet)}</code></pre>
+          `).join('') || '';
+
           card.innerHTML = `
             <img src="${proj.image}" alt="${proj.title}" class="project-image">
             <div class="project-content">
               <h3 class="project-title">${proj.title}</h3>
               <p class="project-description">${proj.description}</p>
               <div class="project-tags">${proj.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
+              ${codeBlocks}
               <a href="${proj.link}" class="view-btn">View Project</a>
             </div>
           `;
@@ -347,7 +368,8 @@
         revealOnScroll();
       })
       .catch(error => console.error('Error loading projects:', error));
-    // Reveal animations for project cards
+
+    // Reveal animation on scroll
     const revealOnScroll = () => {
       const triggerBottom = window.innerHeight * 0.85;
       document.querySelectorAll('.project-card').forEach(card => {
@@ -357,6 +379,7 @@
         }
       });
     };
+
     window.addEventListener('scroll', revealOnScroll);
     window.addEventListener('load', revealOnScroll);
   </script>
