@@ -482,33 +482,64 @@
       gap: 2rem;
     }
 
-    .award-card {
-      background: rgba(255, 255, 255, 0.8);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid #D4AF37;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
+/* Awards Cards */
+.award-card {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #D4AF37;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-    .award-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
-      border-radius: 0 20px 0 50px;
-    }
+.award-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+  border-radius: 0 20px 0 50px;
+}
 
-    .award-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
-      border-left-color: #FFD700;
-    }
+.award-card:hover {
+  transform: translateY(-8px) rotate(-1deg);
+  box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
+  border-left-color: #FFD700;
+}
+
+/* Leadership Cards */
+.leadership-card {
+  background: linear-gradient(135deg, #FFF8E1, #FFE4B5); /* soft gradient for a warmer tone */
+  padding: 2rem;
+  border-radius: 25px; /* slightly more rounded */
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.25); /* stronger shadow for emphasis */
+  border-top: 4px solid #B8860B; /* different accent from award cards */
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.leadership-card::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: -10px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(184, 134, 11, 0.15));
+  border-radius: 50%; /* circular accent instead of rectangle */
+}
+
+.leadership-card:hover {
+  transform: translateY(-10px) scale(1.02); /* slightly bigger hover effect */
+  box-shadow: 0 30px 60px rgba(212, 175, 55, 0.3);
+  border-top-color: #FFD700;
+}
+
 
     .award-title {
       font-size: 1.3rem;
@@ -856,22 +887,22 @@
     <section class="section" id="leadership">
       <h2>Leadership & Impact</h2>
       <div class="awards-grid">
-        <div class="award-card">
+        <div class="leadership-card">
           <div class="award-title">FRC Team Leader</div>
           <div class="award-org">2 Years (11th/12th Grade)</div>
           <div class="award-description">Led overall team strategy, mentored multiple FRC teams (1307, 6464, 5667, 9075), and conducted design and leadership conferences.</div>
         </div>
-        <div class="award-card">
+        <div class="leadership-card">
           <div class="award-title">FRC Programming Manager</div>
           <div class="award-org">2 Years (9th/10th Grade)</div>
           <div class="award-description">Spearheaded programming language transition to Java, implemented swerve drivetrain systems, and open-sourced 10+ team tools as the youngest team manager.</div>
         </div>
-        <div class="award-card">
+        <div class="leadership-card">
           <div class="award-title">Policy Engagement</div>
           <div class="award-org">Ohio State Government</div>
           <div class="award-description">Met with State Senator William P. DeMora to discuss STEM initiatives for low-income communities and policy development.</div>
         </div>
-        <div class="award-card">
+        <div class="leadership-card">
           <div class="award-title">Community Outreach</div>
           <div class="award-org">150+ Hours Annually</div>
           <div class="award-description">Host STEM events and volunteer teach at local elementary schools, focusing on increasing diversity in engineering education.</div>
