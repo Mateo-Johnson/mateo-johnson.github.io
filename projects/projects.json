@@ -19,7 +19,7 @@
   {
     "title": "Smart Home Dashboard",
     "description": "A web app for monitoring and controlling IoT devices in real time, featuring data visualization and user-friendly design.",
-    "image": "images/smart-home.jpg",
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "tags": ["React", "Node.js", "IoT"],
     "link": "https://github.com/yourusername/smart-home-dashboard",
     "code": []
