@@ -21,6 +21,27 @@
     ]
   },
   {
+ "title": "Penny-Sized ESP32 Development Board",
+ "description": "An ultra-compact ESP32-S3 development board designed to be approximately the size of a penny while maintaining full functionality. This miniaturized board demonstrates advanced PCB design principles, component selection optimization, and space-efficient layout techniques. The project showcases expertise in high-density circuit design, signal integrity monitoring, and manufacturing constraints for small-form-factor electronics. Features include all essential GPIO breakouts, an integrated IMU, USB-C programming interface, and integrated antenna design within the compact footprint.",
+ "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+ "tags": [
+   "PCB Design",
+   "ESP32",
+   "Miniaturization",
+   "KiCAD",
+   "Embedded Systems",
+   "IoT",
+   "Hardware Design"
+ ],
+ "link": "https://github.com/Mateo-Johnson/penny-esp32",
+ "code": [
+   {
+     "language": "C++",
+     "snippet": "// Penny ESP32 - Blink Example\n// Demonstrates basic functionality on ultra-compact board\n\n#define LED_PIN 2\n#define BUTTON_PIN 0\n\nvoid setup() {\n  Serial.begin(115200);\n  pinMode(LED_PIN, OUTPUT);\n  pinMode(BUTTON_PIN, INPUT_PULLUP);\n  \n  Serial.println(\"Penny ESP32 - Ultra Compact Board Ready!\");\n  Serial.printf(\"Board Size: ~19mm diameter\\n\");\n}\n\nvoid loop() {\n  // Simple blink with button control\n  if (digitalRead(BUTTON_PIN) == LOW) {\n    digitalWrite(LED_PIN, HIGH);\n    Serial.println(\"LED ON - Button Pressed\");\n    delay(100);\n  } else {\n    digitalWrite(LED_PIN, LOW);\n    delay(500);\n  }\n  \n  // Demonstrate WiFi capability\n  static unsigned long lastWiFiCheck = 0;\n  if (millis() - lastWiFiCheck > 5000) {\n    Serial.printf(\"WiFi Status: %s\\n\", WiFi.status() == WL_CONNECTED ? \"Connected\" : \"Disconnected\");\n    lastWiFiCheck = millis();\n  }\n}"
+   }
+ ]
+},
+  {
     "title": "Differential Swerve Drive Module",
     "description": "A robotics project using CAD design, 3D printing and CNC machining to create a fully functional differential swerve drive module from scratch, as well as Java programming to implement autonomous navigation with the system, using real time rotary and motor encoder feedback. Calculus-based kinematics and physics principles were applied to optimize movement and turning.",
     "image": "https://mateo-johnson.github.io/resources/diffSwervecoverimage.png",
