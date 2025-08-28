@@ -198,17 +198,31 @@
     }
 
     .page-hero h1 {
-      font-size: 4rem;
+      font-size: 4.5rem;
+      text-align: center;
+      margin-bottom: 60px;
       font-weight: 300;
-      margin-bottom: 1rem;
       background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
       background-size: 200% auto;
       -webkit-background-clip: text;
-      background-clip: text;
       -webkit-text-fill-color: transparent;
-      letter-spacing: 2px;
-      animation: fadeInUp 1s ease-out;
+      animation: fadeInUp 1.2s ease-out forwards;
+      position: relative; 
     }
+    
+    .page-hero h1::after {
+  content: '';
+  position: absolute;
+  bottom: -15px; /* distance below text */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 3px; /* thickness */
+  background: linear-gradient(90deg, #FFD700, #D4AF37);
+  border-radius: 2px;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.5s forwards;
+}
 
     .page-hero p {
       font-size: 1.3rem;
