@@ -21,9 +21,9 @@
     ]
   },
   {
- "title": "Penny-Sized ESP32 Development Board",
+ "title": "Compact ESP32 Development Board",
  "description": "An ultra-compact ESP32-S3 development board designed to be approximately the size of a penny while maintaining full functionality. This miniaturized board demonstrates advanced PCB design principles, component selection optimization, and space-efficient layout techniques. The project showcases expertise in high-density circuit design, signal integrity monitoring, and manufacturing constraints for small-form-factor electronics. Features include all essential GPIO breakouts, an integrated IMU, USB-C programming interface, and integrated antenna design within the compact footprint.",
- "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+ "image": "http://mateo-johnson.github.io/resources/2025_08_28_0o8_Kleki.png",
  "tags": [
    "PCB Design",
    "ESP32",
