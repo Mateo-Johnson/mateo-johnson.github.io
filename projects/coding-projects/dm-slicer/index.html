@@ -5,8 +5,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">  
-  
+  <link rel="manifest" href="/site.webmanifest">
+
   <meta charset="UTF-8">
   <title>Slicer | Mateo Johnson</title>
   <style>
@@ -241,12 +241,10 @@
     <div class="preview">
       <canvas id="previewCanvas"></canvas>
     </div>
-<button onclick="addNewGroup()">Add New Color Group</button>
+    <button onclick="addNewGroup()">Add New Color Group</button>
     <div id="colorGroups" class="color-tools">
 
     </div>
-
-    
 
     <div class="button-group">
       <button onclick="generateGCode()">Generate GCode</button>
@@ -466,152 +464,151 @@
       updateColorGroupsUI();
     }
 
-function generateGCode() {
-  if (!originalImage || !validateDimensions()) return;
-
-  const width = parseInt(document.getElementById('width').value);
-  const height = parseInt(document.getElementById('height').value);
-  const speed = parseInt(document.getElementById('speed').value);
-  const imageData = ctx.getImageData(0, 0, width, height);
-  const data = imageData.data;
-  let gcode = [];
-
-  const drawingHeight = 4.3;  //in mm
-  const travelHeight = 10.0;  
-
-  gcode.push('; Start G-code');
-  gcode.push('M104 S0 ; Set extruder to 0');
-  gcode.push('M105 ; Await Temperature');
-  gcode.push('M109 S0 ; Set bed to 0');
-  gcode.push('M82 ; Absolute extrusion mode');
-  gcode.push('G28 ; Home');
-  gcode.push('G1 Z15.0 F6000 ; Move the platform down 15mm');
-  gcode.push('G92 E0');
-  gcode.push('G1 F1500 E-6.5');
-  gcode.push('M107 ; Turn fan off');
-  gcode.push(`G1 Z${travelHeight} F6000 ; Move Z to travel height`);
-
-  gcode.push('; Starting black outline trace');
-  generateOutlineGCode(data, width, height, gcode, speed, drawingHeight, travelHeight);
-
-  colorGroups.forEach((group, groupIndex) => {
-    if (group.colors.length === 0) return;
-
-    gcode.push(`\n; Starting ${group.name}`);
-    gcode.push(group.beforeCommands);
-    let isDrawing = false;
-    let lastX = null;
-    let lastY = null;
-
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      const alpha = data[i + 3];
-
-      if (alpha < 128) continue;
-
-      const color = { r, g, b };
-      let matchedColor = null;
-
-      group.colors.forEach(c => {
-        if (colorDistance(color, c) < parseInt(document.getElementById('colorThreshold').value)) {
-          matchedColor = c;
+    function generateGCode() {
+      if (!originalImage || !validateDimensions()) return;
+      const width = parseInt(document.getElementById('width').value);
+      const height = parseInt(document.getElementById('height').value);
+      const speed = parseInt(document.getElementById('speed').value);
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      let gcode = [];
+      const drawingHeight = 4.3; //in mm
+      const travelHeight = 10.0;
+      gcode.push('; Start G-code');
+      gcode.push('M104 S0 ; Set extruder to 0');
+      gcode.push('M105 ; Await Temperature');
+      gcode.push('M109 S0 ; Set bed to 0');
+      gcode.push('M82 ; Absolute extrusion mode');
+      gcode.push('G28 ; Home');
+      gcode.push('G1 Z15.0 F6000 ; Move the platform down 15mm');
+      gcode.push('G92 E0');
+      gcode.push('G1 F1500 E-6.5');
+      gcode.push('M107 ; Turn fan off');
+      gcode.push(`G1 Z${travelHeight} F6000 ; Move Z to travel height`);
+      gcode.push('; Starting black outline trace');
+      generateOutlineGCode(data, width, height, gcode, speed, drawingHeight, travelHeight);
+      colorGroups.forEach((group, groupIndex) => {
+        if (group.colors.length === 0) return;
+        gcode.push(`\n; Starting ${group.name}`);
+        gcode.push(group.beforeCommands);
+        let isDrawing = false;
+        let lastX = null;
+        let lastY = null;
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const alpha = data[i + 3];
+          if (alpha < 128) continue;
+          const color = {
+            r,
+            g,
+            b
+          };
+          let matchedColor = null;
+          group.colors.forEach(c => {
+            if (colorDistance(color, c) < parseInt(document.getElementById('colorThreshold').value)) {
+              matchedColor = c;
+            }
+          });
+          if (matchedColor) {
+            const x = (i / 4) % width;
+            const y = Math.floor(i / (4 * width));
+            if (lastX !== null && lastY !== null && isDrawing) {
+              gcode.push(`G1 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to next point while drawing`);
+            } else {
+              gcode.push(`G0 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to start position while drawing`);
+            }
+            lastX = x;
+            lastY = y;
+            isDrawing = true;
+          }
         }
+        gcode.push(group.afterCommands);
+        gcode.push(`; End of ${group.name}`);
       });
+      gcode.push(`G1 Z${travelHeight} F6000 ; Move Z to travel height`);
+      gcode.push('G28 X0 Y0');
+      gcode.push('M84');
+      gcode.push('M82');
+      document.getElementById('output').value = gcode.join('\n');
+    }
 
-      if (matchedColor) {
+    function generateOutlineGCode(data, width, height, gcode, speed, drawingHeight, travelHeight) {
+      let lastX = null;
+      let lastY = null;
+      let isDrawing = false;
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const alpha = data[i + 3];
+        if (alpha < 128) continue;
         const x = (i / 4) % width;
         const y = Math.floor(i / (4 * width));
-
-        if (lastX !== null && lastY !== null && isDrawing) {
-          gcode.push(`G1 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to next point while drawing`);
-        } else {
-          gcode.push(`G0 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to start position while drawing`);
+        if (isEdge(x, y, data, width, height)) {
+          if (lastX !== null && lastY !== null && isDrawing) {
+            gcode.push(`G1 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to next point while drawing`);
+          } else {
+            gcode.push(`G0 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to start position while drawing`);
+          }
+          lastX = x;
+          lastY = y;
+          isDrawing = true;
+        } else if (lastX !== null && lastY !== null) {
+          gcode.push(`G0 X${x} Y${y} Z${travelHeight} F${speed} ; Move to next position (without drawing)`);
         }
-
-        lastX = x;
-        lastY = y;
-        isDrawing = true;
       }
     }
 
-    gcode.push(group.afterCommands);
-    gcode.push(`; End of ${group.name}`);
-  });
-
-  gcode.push(`G1 Z${travelHeight} F6000 ; Move Z to travel height`);
-  gcode.push('G28 X0 Y0');
-  gcode.push('M84');
-  gcode.push('M82');
-
-  document.getElementById('output').value = gcode.join('\n');
-}
-
-function generateOutlineGCode(data, width, height, gcode, speed, drawingHeight, travelHeight) {
-  let lastX = null;
-  let lastY = null;
-  let isDrawing = false;
-
-  for (let i = 0; i < data.length; i += 4) {
-    const r = data[i];
-    const g = data[i + 1];
-    const b = data[i + 2];
-    const alpha = data[i + 3];
-
-    if (alpha < 128) continue; 
-
-    const x = (i / 4) % width;
-    const y = Math.floor(i / (4 * width));
-
-    if (isEdge(x, y, data, width, height)) {
-      if (lastX !== null && lastY !== null && isDrawing) {
-        gcode.push(`G1 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to next point while drawing`);
-      } else {
-        gcode.push(`G0 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to start position while drawing`);
+    function isEdge(x, y, data, width, height) {
+      const threshold = 50;
+      const currentIndex = (y * width + x) * 4;
+      const currentColor = {
+        r: data[currentIndex],
+        g: data[currentIndex + 1],
+        b: data[currentIndex + 2]
+      };
+      const neighbors = [{
+          x: x - 1,
+          y: y
+        },
+        {
+          x: x + 1,
+          y: y
+        },
+        {
+          x: x,
+          y: y - 1
+        },
+        {
+          x: x,
+          y: y + 1
+        },
+      ];
+      for (const neighbor of neighbors) {
+        if (neighbor.x >= 0 && neighbor.x < width && neighbor.y >= 0 && neighbor.y < height) {
+          const neighborIndex = (neighbor.y * width + neighbor.x) * 4;
+          const neighborColor = {
+            r: data[neighborIndex],
+            g: data[neighborIndex + 1],
+            b: data[neighborIndex + 2]
+          };
+          if (colorDistance(currentColor, neighborColor) > threshold) {
+            return true;
+          }
+        }
       }
-
-      lastX = x;
-      lastY = y;
-      isDrawing = true;
-    } else if (lastX !== null && lastY !== null) {
-      gcode.push(`G0 X${x} Y${y} Z${travelHeight} F${speed} ; Move to next position (without drawing)`);
+      return false;
     }
-  }
-}
-    
-function isEdge(x, y, data, width, height) {
-  const threshold = 50;
-  const currentIndex = (y * width + x) * 4;
-  const currentColor = { r: data[currentIndex], g: data[currentIndex + 1], b: data[currentIndex + 2] };
 
-  const neighbors = [
-    { x: x - 1, y: y }, 
-    { x: x + 1, y: y }, 
-    { x: x, y: y - 1 },
-    { x: x, y: y + 1 },
-  ];
-
-  for (const neighbor of neighbors) {
-    if (neighbor.x >= 0 && neighbor.x < width && neighbor.y >= 0 && neighbor.y < height) {
-      const neighborIndex = (neighbor.y * width + neighbor.x) * 4;
-      const neighborColor = { r: data[neighborIndex], g: data[neighborIndex + 1], b: data[neighborIndex + 2] };
-      if (colorDistance(currentColor, neighborColor) > threshold) {
-        return true;
-      }
+    function colorDistance(color1, color2) {
+      const rDiff = color1.r - color2.r;
+      const gDiff = color1.g - color2.g;
+      const bDiff = color1.b - color2.b;
+      return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff);
     }
-  }
-  return false;
-}
-
-function colorDistance(color1, color2) {
-  const rDiff = color1.r - color2.r;
-  const gDiff = color1.g - color2.g;
-  const bDiff = color1.b - color2.b;
-  return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff);
-}
-
   </script>
 </body>
-  
+
 </html>
