@@ -1,7 +1,7 @@
 [
   {
     "title": "Dual-MCU Circuit Boards",
-    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using an ESP32-S3 module and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>. This project ",
+    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using an ESP32-S3 module and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>. Project participating in Buckeye Science & Engineering Fair 2026 and Regeneron Science Talent Search 2025.",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "tags": ["Embedded Systems", "KiCAD", "EasyEDA", "ESP32", "K210", "Microcontrollers", "Edge Computing"],
     "link": "https://yourwebsite.com",
@@ -22,7 +22,7 @@
   },
   {
     "title": "Rocket Stabilization System",
-    "description": "A custom flight control system for model rockets, using a GY-521 IMU in addition to other sensors to maintain stability in flight. Consisted of a custom SAMD21 control board, sensor array and TVC gimbal. Built with principles from OSU Physics and Engineering courses.",
+    "description": "A custom flight control system for model rockets, using a GY-521 IMU in addition to other sensors to maintain stability in flight. Consisted of a custom SAMD21 control board, sensor array and TVC gimbal. Built with principles from OSU Physics and Engineering courses. This project participated in Buckeye Science & Engineering Fair 2025 as well as Regeneron International Science & Engineering Fair 2025.",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "tags": ["Embedded Systems", "Aerospace", "Microcontrollers", "IMU", "PID Control", "CAD"],
     "link": "https://github.com/yourusername/rocket-stabilization-system",
