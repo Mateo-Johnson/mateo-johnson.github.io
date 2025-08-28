@@ -12,7 +12,7 @@
       "Microcontrollers",
       "Edge Computing"
     ],
-    "link": "https://yourwebsite.com",
+    "link": "https://github.com/Mateo-Johnson/ISEF26",
     "code": [
       {
         "language": "C++",
@@ -23,7 +23,7 @@
   {
     "title": "Differential Swerve Drive Module",
     "description": "A robotics project using CAD design, 3D printing and CNC machining to create a fully functional differential swerve drive module from scratch, as well as the programming ti implement autonomous navigation with a differential swerve drive system. Calculus-based kinematics and physics principles were applied to optimize movement and turning.",
-    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+    "image": "https://mateo-johnson.github.io/resources/diffSwervecoverimage.png",
     "tags": [
       "Robotics",
       "FRC",
