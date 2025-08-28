@@ -387,12 +387,12 @@
       color: #333;
     }
 
-    .coding-projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 40px;
-      margin-bottom: 60px;
-    }
+.coding-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  justify-content: center; 
+}
 
     .coding-card {
       background: #fff;
@@ -405,6 +405,7 @@
       position: relative;
       opacity: 0;
       transform: translateY(40px);
+      margin: 0 auto;
     }
 
     .coding-card.visible {
