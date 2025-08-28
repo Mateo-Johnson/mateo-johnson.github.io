@@ -1,0 +1,13 @@
+[
+  {
+    "title": "Interactive Animation",
+    "image": "https://via.placeholder.com/400x250/B8860B/FFFFFF?text=Demo+1",
+    "description": "A canvas-based animation demonstrating smooth movement and particle effects.",
+    "tags": ["JavaScript", "Canvas", "Animation"],
+    "link": "https://github.com/your-username/demo",
+    "demo": {
+      "type": "canvas",
+      "code": "const ctx = canvas.getContext('2d'); let x = 0; function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#B8860B'; ctx.beginPath(); ctx.arc(x, canvas.height/2, 20, 0, Math.PI * 2); ctx.fill(); x = (x + 2) % canvas.width; requestAnimationFrame(animate); } animate();"
+    }
+  }
+]
