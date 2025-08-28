@@ -1,8 +1,8 @@
-[ 
+[
   {
     "title": "Conway's Game of Life",
     "description": "A full Conway's Game of Life Simulation with full customizability",
-    "tags": ["JavaScript", "CSS", "HTML"],
+    "tags": ["JavaScript", "CSS", "HTML", "Simulation", "Cellular Automata", "Game of Life", "Interactive"],
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "https://mateo-johnson.github.io/projects/coding-projects/GOL",
     "link": "https://mateo-johnson.github.io/projects/coding-projects/GOL"
@@ -10,7 +10,7 @@
   {
     "title": "Code Snippet Display",
     "description": "A code display tool for creating visually pleasing code snippets",
-    "tags": ["JavaScript", "CSS", "HTML"],
+    "tags": ["JavaScript", "CSS", "HTML", "Code Snippets", "UI", "Frontend Tool", "Syntax Highlighting", "Developer Tool"],
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/codedisplay",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/codedisplay"
@@ -18,7 +18,7 @@
   {
     "title": "Custom Flower Generator",
     "description": "A tool to generate custom flowers using CSS doodles",
-    "tags": ["JavaScript", "CSS", "HTML"],
+    "tags": ["JavaScript", "CSS", "HTML", "CSS Doodles", "Creative Coding", "Generative Art", "Graphics"],
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/flowergen",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/flowergen"
@@ -26,7 +26,7 @@
   {
     "title": "Fluid Simulator",
     "description": "A computational fluid simulator, built for simple 2D fluid dynamics operations",
-    "tags": ["JavaScript", "CSS", "HTML"],
+    "tags": ["JavaScript", "CSS", "HTML", "Simulation", "Fluid Dynamics", "Physics", "Interactive"],
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/fluidsim",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/fluidsim"
@@ -34,7 +34,7 @@
   {
     "title": "Minesweeper",
     "description": "A simple minesweeper game, created as a logic test and a example of a changeable color scheme.",
-    "tags": ["JavaScript", "CSS", "HTML"],
+    "tags": ["JavaScript", "CSS", "HTML", "Game", "Logic Puzzle", "Interactive", "Frontend Game"],
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/minesweeper",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/minesweeper"
@@ -42,7 +42,7 @@
   {
     "title": "Drawing Machine Slicer",
     "description": "A simple slicer for a custom multi-color drawing machine, including image processing and tool switching code.",
-    "tags": ["JavaScript", "CSS", "HTML"],
+    "tags": ["JavaScript", "CSS", "HTML", "Graphics Tool", "Image Processing", "Creative Coding", "Drawing Machine", "Interactive"],
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/dm-slicer",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/dm-slicer"
