@@ -618,174 +618,173 @@
   </footer>
 
   <script>
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
-      const header = document.getElementById('header');
-      if (window.scrollY > 50) header.classList.add('scrolled');
-      else header.classList.remove('scrolled');
+  // Header scroll effect
+  window.addEventListener('scroll', function() {
+    const header = document.getElementById('header');
+    if (window.scrollY > 50) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  });
+
+  // Escape HTML for code blocks
+  function escapeHTML(str) {
+    return str.replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;");
+  }
+
+  // Reveal animation on scroll
+  const revealOnScroll = () => {
+    const triggerBottom = window.innerHeight * 0.85;
+    document.querySelectorAll('.project-card, .coding-card').forEach(card => {
+      const cardTop = card.getBoundingClientRect().top;
+      if (cardTop < triggerBottom) card.classList.add('visible');
     });
-    // Escape HTML for code blocks
-    function escapeHTML(str) {
-      return str.replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-    }
-    // Reveal animation on scroll
-    const revealOnScroll = () => {
-      const triggerBottom = window.innerHeight * 0.85;
-      document.querySelectorAll('.project-card, .coding-card').forEach(card => {
-        const cardTop = card.getBoundingClientRect().top;
-        if (cardTop < triggerBottom) card.classList.add('visible');
-      });
-    };
-    window.addEventListener('scroll', revealOnScroll);
-    window.addEventListener('load', revealOnScroll);
-    // Load coding projects from JSON
-    fetch('coding-projects.json')
-      .then(response => response.json())
-      .then(codingProjects => {
-        const grid = document.getElementById('codingProjectsGrid');
-        codingProjects.forEach(proj => {
-          const card = document.createElement('div');
-          card.className = 'coding-card';
-          const content = document.createElement('div');
-          content.className = 'coding-card-content';
-          // Project image
-          const img = document.createElement('img');
-          img.src = proj.image;
-          img.alt = proj.title;
-          img.className = 'coding-demo-image';
-          content.appendChild(img);
-          // Title
-          const title = document.createElement('h3');
-          title.className = 'coding-card-title';
-          title.textContent = proj.title;
-          content.appendChild(title);
-          // Description
-          const desc = document.createElement('p');
-          desc.className = 'coding-card-description';
-          desc.innerHTML = proj.description;
-          content.appendChild(desc);
-          // Tags
-          const tagsDiv = document.createElement('div');
-          tagsDiv.className = 'coding-card-tags';
-          tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
-          content.appendChild(tagsDiv);
-          // Demo iframe
-          if (proj.demoUrl) {
-            const iframe = document.createElement('iframe');
-            iframe.className = 'coding-demo-iframe';
-            iframe.src = proj.demoUrl;
-            iframe.title = `${proj.title} Demo`;
-            iframe.frameBorder = '0';
-            iframe.allowFullscreen = true;
-            content.appendChild(iframe);
-          }
-          // View button
-          const viewBtn = document.createElement('a');
-          viewBtn.href = proj.link || proj.demoUrl;
-          viewBtn.className = 'coding-view-btn';
-          viewBtn.textContent = 'View Demo';
-          viewBtn.target = '_blank';
-          content.appendChild(viewBtn);
-          card.appendChild(content);
-          // Toggle expand/collapse
-          card.addEventListener('click', (e) => {
-            // Don't toggle if clicking on iframe or button
-            if (e.target.tagName !== 'IFRAME' && e.target.tagName !== 'A') {
-              card.classList.toggle('expanded');
+  };
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+
+  // Load coding projects from JSON with lazy-loading iframes
+  fetch('coding-projects.json')
+    .then(response => response.json())
+    .then(codingProjects => {
+      const grid = document.getElementById('codingProjectsGrid');
+      codingProjects.forEach(proj => {
+        const card = document.createElement('div');
+        card.className = 'coding-card';
+
+        const content = document.createElement('div');
+        content.className = 'coding-card-content';
+
+        // Project image
+        const img = document.createElement('img');
+        img.src = proj.image;
+        img.alt = proj.title;
+        img.className = 'coding-demo-image';
+        content.appendChild(img);
+
+        // Title
+        const title = document.createElement('h3');
+        title.className = 'coding-card-title';
+        title.textContent = proj.title;
+        content.appendChild(title);
+
+        // Description
+        const desc = document.createElement('p');
+        desc.className = 'coding-card-description';
+        desc.innerHTML = proj.description;
+        content.appendChild(desc);
+
+        // Tags
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'coding-card-tags';
+        tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
+        content.appendChild(tagsDiv);
+
+        // Iframe element (lazy-load)
+        let iframe;
+        if (proj.demoUrl) {
+          iframe = document.createElement('iframe');
+          iframe.className = 'coding-demo-iframe';
+          iframe.dataset.src = proj.demoUrl; // store URL for lazy-load
+          iframe.title = `${proj.title} Demo`;
+          iframe.frameBorder = '0';
+          iframe.allowFullscreen = true;
+          content.appendChild(iframe);
+        }
+
+        // View button
+        const viewBtn = document.createElement('a');
+        viewBtn.href = proj.link || proj.demoUrl;
+        viewBtn.className = 'coding-view-btn';
+        viewBtn.textContent = 'View Demo';
+        viewBtn.target = '_blank';
+        content.appendChild(viewBtn);
+
+        card.appendChild(content);
+
+        // Toggle expand/collapse & lazy-load iframe
+        card.addEventListener('click', (e) => {
+          if (e.target.tagName !== 'IFRAME' && e.target.tagName !== 'A') {
+            card.classList.toggle('expanded');
+            if (card.classList.contains('expanded') && iframe && !iframe.src) {
+              iframe.src = iframe.dataset.src; // load demo when expanded
             }
+          }
+        });
+
+        grid.appendChild(card);
+      });
+      revealOnScroll();
+    })
+    .catch(error => console.error('Error loading coding projects:', error));
+
+  // Load regular projects from JSON
+  fetch('projects.json')
+    .then(response => response.json())
+    .then(projects => {
+      const grid = document.getElementById('projectsGrid');
+      projects.forEach(proj => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+
+        const content = document.createElement('div');
+        content.className = 'project-content';
+
+        // Project image
+        const img = document.createElement('img');
+        img.src = proj.image;
+        img.alt = proj.title;
+        img.className = 'project-image';
+        content.appendChild(img);
+
+        // Title
+        const title = document.createElement('h3');
+        title.className = 'project-title';
+        title.textContent = proj.title;
+        content.appendChild(title);
+
+        // Description
+        const desc = document.createElement('p');
+        desc.className = 'project-description';
+        desc.innerHTML = proj.description;
+        content.appendChild(desc);
+
+        // Tags
+        const tagsDiv = document.createElement('div');
+        tagsDiv.className = 'project-tags';
+        tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
+        content.appendChild(tagsDiv);
+
+        // Optional code blocks
+        if (proj.code) {
+          proj.code.forEach(codeObj => {
+            const codeBlock = document.createElement('pre');
+            codeBlock.className = 'project-code';
+            const codeElem = document.createElement('code');
+            codeElem.innerHTML = escapeHTML(codeObj.snippet);
+            codeBlock.appendChild(codeElem);
+            content.appendChild(codeBlock);
           });
-          grid.appendChild(card);
-        });
-        revealOnScroll();
-      })
-      .catch(error => {
-        console.error('Error loading coding projects:', error);
-        // Fallback sample data if JSON fails
-        const sampleCodingProjects = [{
-            title: "Interactive Calculator",
-            description: "A fully functional calculator with advanced operations and history",
-            tags: ["JavaScript", "CSS", "HTML"],
-            image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Calculator+Demo",
-            demoUrl: "https://codepen.io/pen/calculator-demo",
-            link: "https://github.com/your-username/calculator"
-          },
-          {
-            title: "Weather Dashboard",
-            description: "Real-time weather data with interactive maps and forecasts",
-            tags: ["React", "API", "Charts"],
-            image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Weather+App",
-            demoUrl: "https://codepen.io/pen/weather-dashboard",
-            link: "https://github.com/your-username/weather-app"
-          }
-        ];
-        // Create fallback cards
-        const grid = document.getElementById('codingProjectsGrid');
-        sampleCodingProjects.forEach(proj => {
-          // Similar card creation logic here if needed
-        });
+        }
+
+        // View button
+        const viewBtn = document.createElement('a');
+        viewBtn.href = proj.link;
+        viewBtn.className = 'view-btn';
+        viewBtn.textContent = 'View Project';
+        content.appendChild(viewBtn);
+
+        card.appendChild(content);
+
+        // Toggle expand/collapse
+        card.addEventListener('click', () => card.classList.toggle('expanded'));
+
+        grid.appendChild(card);
       });
-    // Load regular projects
-    fetch('projects.json')
-      .then(response => response.json())
-      .then(projects => {
-        const grid = document.getElementById('projectsGrid');
-        projects.forEach(proj => {
-          const card = document.createElement('div');
-          card.className = 'project-card';
-          const content = document.createElement('div');
-          content.className = 'project-content';
-          const img = document.createElement('img');
-          img.src = proj.image;
-          img.alt = proj.title;
-          img.className = 'project-image';
-          content.appendChild(img);
-          const title = document.createElement('h3');
-          title.className = 'project-title';
-          title.textContent = proj.title;
-          content.appendChild(title);
-          const desc = document.createElement('p');
-          desc.className = 'project-description';
-          desc.innerHTML = proj.description;
-          content.appendChild(desc);
-          const tagsDiv = document.createElement('div');
-          tagsDiv.className = 'project-tags';
-          tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
-          content.appendChild(tagsDiv);
-          if (proj.code) {
-            proj.code.forEach(codeObj => {
-              const codeBlock = document.createElement('pre');
-              codeBlock.className = 'project-code';
-              const codeElem = document.createElement('code');
-              codeElem.innerHTML = escapeHTML(codeObj.snippet);
-              codeBlock.appendChild(codeElem);
-              content.appendChild(codeBlock);
-            });
-          }
-          const viewBtn = document.createElement('a');
-          viewBtn.href = proj.link;
-          viewBtn.className = 'view-btn';
-          viewBtn.textContent = 'View Project';
-          content.appendChild(viewBtn);
-          card.appendChild(content);
-          card.addEventListener('click', () => card.classList.toggle('expanded'));
-          grid.appendChild(card);
-        });
-        revealOnScroll();
-      })
-      .catch(error => {
-        console.error('Error loading projects:', error);
-        // If projects.json fails, create some sample projects
-        const sampleProjects = [{
-          title: "Portfolio Website",
-          description: "Personal portfolio showcasing projects and skills",
-          tags: ["HTML", "CSS", "JavaScript"],
-          image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Portfolio"
-        }];
-        // Create sample project cards here if needed
-      });
-  </script>
+      revealOnScroll();
+    })
+    .catch(error => console.error('Error loading projects:', error));
+</script>
 </body>
 
 </html>
