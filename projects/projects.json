@@ -1,14 +1,22 @@
 [
   {
     "title": "Dual-MCU Circuit Boards",
-    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using an ESP32-S3 module and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>. Project participating in Buckeye Science & Engineering Fair 2026 and Regeneron Science Talent Search 2025.",
+    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using UART communication between an ESP32-S3 chip and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>. Project participating in Buckeye Science & Engineering Fair 2026 and Regeneron Science Talent Search 2025.",
     "image": "https://mateo-johnson.github.io/resources/dualMCUcoverimage.png",
-    "tags": ["Embedded Systems", "KiCAD", "EasyEDA", "ESP32", "K210", "Microcontrollers", "Edge Computing"],
+    "tags": [
+      "Embedded Systems",
+      "KiCAD",
+      "EasyEDA",
+      "ESP32",
+      "K210",
+      "Microcontrollers",
+      "Edge Computing"
+    ],
     "link": "https://yourwebsite.com",
     "code": [
       {
         "language": "C++",
-        "snippet": "<header>\n  <div class='logo'>My Logo</div>\n</header>"
+        "snippet": "#include <HardwareSerial.h>\n\nHardwareSerial mySerial(1); // use UART1\n\n// Pin assignments \n#define RX_PIN   9\n#define TX_PIN   10\n#define RTS_PIN  7\n#define CTS_PIN  8\n\nvoid setup() {\n  Serial.begin(115200);\n\n  // Start UART1 with flow control\n  mySerial.begin(115200, SERIAL_8N1, RX_PIN, TX_PIN, true, RTS_PIN, CTS_PIN);\n\n  Serial.println(\"ESP32-S3 UART (with RTS/CTS) Ready\");\n}\n\nvoid loop() {\n  // Send test data\n  String message = \"Sensor packet: IMU_AX=0.12\\n\";\n  mySerial.print(message);\n\n  // Listen for response\n  if (mySerial.available()) {\n    String response = mySerial.readStringUntil('\\n');\n    Serial.println(\"Got from MCU: \" + response);\n  }\n\n  delay(1000);\n}\n"
       }
     ]
   },
@@ -16,7 +24,13 @@
     "title": "Differential Swerve Drive Module",
     "description": "A robotics project using CAD design, 3D printing and CNC machining to create a fully functional differential swerve drive module from scratch, as well as the programming ti implement autonomous navigation with a differential swerve drive system. Calculus-based kinematics and physics principles were applied to optimize movement and turning.",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
-    "tags": ["Robotics", "FRC", "CAD", "Microcontrollers", "Swerve Drive"],
+    "tags": [
+      "Robotics",
+      "FRC",
+      "CAD",
+      "Microcontrollers",
+      "Swerve Drive"
+    ],
     "link": "https://github.com/yourusername/swerve-drive-robot",
     "code": []
   },
@@ -24,7 +38,14 @@
     "title": "Rocket Stabilization System",
     "description": "A custom flight control system for model rockets, using a GY-521 IMU in addition to other sensors to maintain stability in flight. Consisted of a custom SAMD21 control board, sensor array and TVC gimbal. Built with principles from OSU Physics and Engineering courses. This project participated in Buckeye Science & Engineering Fair 2025 as well as Regeneron International Science & Engineering Fair 2025.",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
-    "tags": ["Embedded Systems", "Aerospace", "Microcontrollers", "IMU", "PID Control", "CAD"],
+    "tags": [
+      "Embedded Systems",
+      "Aerospace",
+      "Microcontrollers",
+      "IMU",
+      "PID Control",
+      "CAD"
+    ],
     "link": "https://github.com/yourusername/rocket-stabilization-system",
     "code": []
   },
@@ -32,7 +53,13 @@
     "title": "DIY Pick-and-Place Machine",
     "description": "A custom-built pick-and-place machine for electronics assembly. Designed for automated toolhead switching and precision control.",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
-    "tags": ["Embedded Systems", "PCB Design", "Robotics", "Automation", "CAD"],
+    "tags": [
+      "Embedded Systems",
+      "PCB Design",
+      "Robotics",
+      "Automation",
+      "CAD"
+    ],
     "link": "https://github.com/yourusername/pnp-machine",
     "code": []
   }
