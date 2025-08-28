@@ -1,18 +1,14 @@
 [
   {
-    "title": "AI-Powered Portfolio Website",
-    "description": "A responsive personal portfolio designed with gold-accented minimalism, dynamic project loading, and smooth animations.",
+    "title": "Dual-MCU Circuit Boards",
+    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using an ESP32-S3 module and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://yourwebsite.com' target='_blank'>here</a>.",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
-    "tags": ["HTML", "CSS", "JavaScript", "Design"],
+    "tags": ["Embedded Systems", "KiCAD", "EasyEDA"],
     "link": "https://yourwebsite.com",
     "code": [
       {
-        "language": "HTML",
+        "language": "C++",
         "snippet": "<header>\n  <div class='logo'>My Logo</div>\n</header>"
-      },
-      {
-        "language": "CSS",
-        "snippet": "header {\n  backdrop-filter: blur(20px);\n  border-bottom: 1px solid #D4AF37;\n}"
       }
     ]
   },
