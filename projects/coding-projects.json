@@ -1,4 +1,4 @@
-[
+[ http://mateo-johnson.github.io/projects/coding-projects/fluidsim
   {
     "title": "Conway's Game of Life",
     "description": "A full Conway's Game of Life Simulation with full customizability",
@@ -22,5 +22,13 @@
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/flowergen",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/flowergen"
+  },
+  {
+    "title": "Fluid Simulator",
+    "description": "A computational fluid simulator, built for simple 2D fluid dynamics operations",
+    "tags": ["JavaScript", "CSS", "HTML"],
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+    "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/fluidsim",
+    "link": "http://mateo-johnson.github.io/projects/coding-projects/fluidsim"
   }
 ]
