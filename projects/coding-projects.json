@@ -30,7 +30,7 @@
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/fluidsim",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/fluidsim"
-  }
+  },
   {
     "title": "Minesweeper",
     "description": "A simple minesweeper game, created as a logic test and a example of a changeable color scheme.",
@@ -38,5 +38,13 @@
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/minesweeper",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/minesweeper"
+  },
+  {
+    "title": "Drawing Machine Slicer",
+    "description": "A simple slicer for a custom multi-color drawing machine, including image processing and tool switching code.",
+    "tags": ["JavaScript", "CSS", "HTML"],
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+    "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/dm-slicer",
+    "link": "http://mateo-johnson.github.io/projects/coding-projects/dm-slicer"
   }
 ]
