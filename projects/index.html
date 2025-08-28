@@ -216,11 +216,37 @@
       animation: fadeInUp 1s ease-out 0.5s forwards;
     }
 
+    /* Section Headers */
+    .section-header {
+      font-size: 2.5rem;
+      text-align: center;
+      margin: 80px 0 40px;
+      font-weight: 400;
+      background: linear-gradient(135deg, #333 0%, #D4AF37 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, #FFD700, #D4AF37);
+      border-radius: 1px;
+    }
+
     /* Projects Grid */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 40px;
+      margin-bottom: 60px;
     }
 
     /* Collapsible Project Cards with Hover Effects */
@@ -353,6 +379,137 @@
       color: #333;
     }
 
+    /* Coding Projects Section */
+    .coding-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .coding-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      max-height: 350px;
+      cursor: pointer;
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .coding-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: all 0.8s ease;
+    }
+
+    .coding-card.expanded {
+      max-height: 3000px;
+    }
+
+    .coding-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+    }
+
+    .coding-demo-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .coding-card:hover .coding-demo-image {
+      transform: scale(1.05);
+      filter: brightness(1.05);
+    }
+
+    .coding-card-content {
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .coding-card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .coding-card-description,
+    .coding-card-tags,
+    .coding-demo-iframe,
+    .coding-view-btn {
+      opacity: 0;
+      max-height: 0;
+      transition: opacity 0.5s ease, max-height 0.5s ease;
+    }
+
+    .coding-card.expanded .coding-card-description,
+    .coding-card.expanded .coding-card-tags,
+    .coding-card.expanded .coding-demo-iframe,
+    .coding-card.expanded .coding-view-btn {
+      opacity: 1;
+      max-height: 500px;
+      margin-top: 10px;
+    }
+
+    .coding-card-tags span {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 8px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+      color: #D4AF37;
+      transition: all 0.3s ease, transform 0.3s ease;
+    }
+
+    .coding-card-tags span:hover {
+      transform: translateY(-2px) scale(1.05);
+      background: linear-gradient(135deg, #FFD700, #D4AF37);
+      color: #fff;
+    }
+
+    .coding-demo-iframe {
+      width: 100%;
+      height: 300px;
+      border: 3px solid #D4AF37;
+      border-radius: 10px;
+      margin: 15px 0;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .coding-view-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      background: linear-gradient(135deg, #FFD700, #D4AF37);
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .coding-view-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+      background: linear-gradient(135deg, #D4AF37, #B8860B);
+    }
+
+
+
     footer {
       background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
       color: #fff;
@@ -372,6 +529,10 @@
         font-size: 2.2rem;
       }
 
+      .section-header {
+        font-size: 1.8rem;
+      }
+
       header {
         padding: 20px;
         flex-direction: column;
@@ -381,6 +542,10 @@
       header nav {
         gap: 1rem;
         justify-content: center;
+      }
+
+      .coding-projects-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -430,6 +595,9 @@
   <main>
     <h1>My Projects</h1>
     <div class="projects-grid" id="projectsGrid"></div>
+
+    <h2 class="section-header">Interactive Coding Demos</h2>
+    <div class="coding-projects-grid" id="codingProjectsGrid"></div>
   </main>
 
   <footer>
@@ -443,23 +611,128 @@
       if (window.scrollY > 50) header.classList.add('scrolled');
       else header.classList.remove('scrolled');
     });
+
     // Escape HTML for code blocks
     function escapeHTML(str) {
       return str.replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
     }
+
     // Reveal animation on scroll
     const revealOnScroll = () => {
       const triggerBottom = window.innerHeight * 0.85;
-      document.querySelectorAll('.project-card').forEach(card => {
+      document.querySelectorAll('.project-card, .coding-card').forEach(card => {
         const cardTop = card.getBoundingClientRect().top;
         if (cardTop < triggerBottom) card.classList.add('visible');
       });
     };
     window.addEventListener('scroll', revealOnScroll);
     window.addEventListener('load', revealOnScroll);
-    // Load projects dynamically
+
+    // Load coding projects from JSON
+    fetch('coding-projects.json')
+      .then(response => response.json())
+      .then(codingProjects => {
+        const grid = document.getElementById('codingProjectsGrid');
+        
+        codingProjects.forEach(proj => {
+          const card = document.createElement('div');
+          card.className = 'coding-card';
+          
+          const content = document.createElement('div');
+          content.className = 'coding-card-content';
+          
+          // Project image
+          const img = document.createElement('img');
+          img.src = proj.image;
+          img.alt = proj.title;
+          img.className = 'coding-demo-image';
+          content.appendChild(img);
+          
+          // Title
+          const title = document.createElement('h3');
+          title.className = 'coding-card-title';
+          title.textContent = proj.title;
+          content.appendChild(title);
+          
+          // Description
+          const desc = document.createElement('p');
+          desc.className = 'coding-card-description';
+          desc.innerHTML = proj.description;
+          content.appendChild(desc);
+          
+          // Tags
+          const tagsDiv = document.createElement('div');
+          tagsDiv.className = 'coding-card-tags';
+          tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
+          content.appendChild(tagsDiv);
+          
+          // Demo iframe
+          if (proj.demoUrl) {
+            const iframe = document.createElement('iframe');
+            iframe.className = 'coding-demo-iframe';
+            iframe.src = proj.demoUrl;
+            iframe.title = `${proj.title} Demo`;
+            iframe.frameBorder = '0';
+            iframe.allowFullscreen = true;
+            content.appendChild(iframe);
+          }
+          
+          // View button
+          const viewBtn = document.createElement('a');
+          viewBtn.href = proj.link || proj.demoUrl;
+          viewBtn.className = 'coding-view-btn';
+          viewBtn.textContent = 'View Demo';
+          viewBtn.target = '_blank';
+          content.appendChild(viewBtn);
+          
+          card.appendChild(content);
+          
+          // Toggle expand/collapse
+          card.addEventListener('click', (e) => {
+            // Don't toggle if clicking on iframe or button
+            if (e.target.tagName !== 'IFRAME' && e.target.tagName !== 'A') {
+              card.classList.toggle('expanded');
+            }
+          });
+          
+          grid.appendChild(card);
+        });
+        
+        revealOnScroll();
+      })
+      .catch(error => {
+        console.error('Error loading coding projects:', error);
+        
+        // Fallback sample data if JSON fails
+        const sampleCodingProjects = [
+          {
+            title: "Interactive Calculator",
+            description: "A fully functional calculator with advanced operations and history",
+            tags: ["JavaScript", "CSS", "HTML"],
+            image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Calculator+Demo",
+            demoUrl: "https://codepen.io/pen/calculator-demo",
+            link: "https://github.com/your-username/calculator"
+          },
+          {
+            title: "Weather Dashboard",
+            description: "Real-time weather data with interactive maps and forecasts",
+            tags: ["React", "API", "Charts"],
+            image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Weather+App",
+            demoUrl: "https://codepen.io/pen/weather-dashboard",
+            link: "https://github.com/your-username/weather-app"
+          }
+        ];
+        
+        // Create fallback cards
+        const grid = document.getElementById('codingProjectsGrid');
+        sampleCodingProjects.forEach(proj => {
+          // Similar card creation logic here if needed
+        });
+      });
+
+    // Load regular projects
     fetch('projects.json')
       .then(response => response.json())
       .then(projects => {
@@ -467,31 +740,31 @@
         projects.forEach(proj => {
           const card = document.createElement('div');
           card.className = 'project-card';
-          // Create project content container
+          
           const content = document.createElement('div');
           content.className = 'project-content';
-          // Project image
+          
           const img = document.createElement('img');
           img.src = proj.image;
           img.alt = proj.title;
           img.className = 'project-image';
           content.appendChild(img);
-          // Title
+          
           const title = document.createElement('h3');
           title.className = 'project-title';
           title.textContent = proj.title;
           content.appendChild(title);
-          // Description with HTML
+          
           const desc = document.createElement('p');
           desc.className = 'project-description';
           desc.innerHTML = proj.description;
           content.appendChild(desc);
-          // Tags
+          
           const tagsDiv = document.createElement('div');
           tagsDiv.className = 'project-tags';
           tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
           content.appendChild(tagsDiv);
-          // Code blocks
+          
           if (proj.code) {
             proj.code.forEach(codeObj => {
               const codeBlock = document.createElement('pre');
@@ -502,20 +775,32 @@
               content.appendChild(codeBlock);
             });
           }
-          // View button
+          
           const viewBtn = document.createElement('a');
           viewBtn.href = proj.link;
           viewBtn.className = 'view-btn';
           viewBtn.textContent = 'View Project';
           content.appendChild(viewBtn);
+          
           card.appendChild(content);
-          // Toggle expand/collapse
           card.addEventListener('click', () => card.classList.toggle('expanded'));
           grid.appendChild(card);
         });
         revealOnScroll();
       })
-      .catch(error => console.error('Error loading projects:', error));
+      .catch(error => {
+        console.error('Error loading projects:', error);
+        // If projects.json fails, create some sample projects
+        const sampleProjects = [
+          {
+            title: "Portfolio Website",
+            description: "Personal portfolio showcasing projects and skills",
+            tags: ["HTML", "CSS", "JavaScript"],
+            image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Portfolio"
+          }
+        ];
+        // Create sample project cards here if needed
+      });
   </script>
 </body>
 
