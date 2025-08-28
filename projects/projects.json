@@ -44,7 +44,7 @@
   {
     "title": "NODE-C1: Kendryte K210 AI Module",
     "description": "A compute expansion module for the EDGE and CORE modules, built around the Kendryte K210 (MAIX M1) AI chip. Designed for embedded machine learning and computer vision applications, the module provides independent compute power alongside an ESP32-S3 host. Featuring dual-core RISC-V processors, hardware-accelerated neural network inference, this module enables real-time object detection and classification in edge devices. It communicates with the main system via UART and can be programmed through its dedicated USB-C port.",
-    "image": "https://mateo-johnson.github.io/resources/2025_08_28_0uc_Kleki.png",
+    "image": "https://mateo-johnson.github.io/resources/nodeC1coverimage.png",
     "tags": [
       "Edge AI",
       "RISC-V",
