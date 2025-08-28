@@ -22,7 +22,7 @@
   },
   {
     "title": "Differential Swerve Drive Module",
-    "description": "A robotics project using CAD design, 3D printing and CNC machining to create a fully functional differential swerve drive module from scratch, as well as the programming ti implement autonomous navigation with a differential swerve drive system. Calculus-based kinematics and physics principles were applied to optimize movement and turning.",
+    "description": "A robotics project using CAD design, 3D printing and CNC machining to create a fully functional differential swerve drive module from scratch, as well as programming to implement autonomous navigation with the system, using real time rotary and motor encoder feedback. Calculus-based kinematics and physics principles were applied to optimize movement and turning.",
     "image": "https://mateo-johnson.github.io/resources/diffSwervecoverimage.png",
     "tags": [
       "Robotics",
