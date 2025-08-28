@@ -216,29 +216,37 @@
       animation: fadeInUp 1s ease-out 0.5s forwards;
     }
 
-    /* Section Headers */
     .section-header {
-      font-size: 2.5rem;
+      font-size: 4.5rem;
       text-align: center;
       margin: 80px 0 40px;
-      font-weight: 400;
-      background: linear-gradient(135deg, #333 0%, #D4AF37 100%);
+      font-weight: 300;
+      /* same as main title */
+      /* Gradient text like main h1 */
+      background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
       background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      /* Fade-in animation like main h1 */
+      animation: fadeInUp 1.2s ease-out forwards;
       position: relative;
     }
 
     .section-header::after {
       content: '';
       position: absolute;
-      bottom: -10px;
+      bottom: -15px;
+      /* match h1 underline */
       left: 50%;
       transform: translateX(-50%);
-      width: 80px;
-      height: 2px;
+      width: 120px;
+      /* match h1 underline width */
+      height: 3px;
+      /* match h1 underline height */
       background: linear-gradient(90deg, #FFD700, #D4AF37);
-      border-radius: 1px;
+      border-radius: 2px;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 0.5s forwards;
     }
 
     /* Projects Grid */
@@ -379,7 +387,6 @@
       color: #333;
     }
 
-    /* Coding Projects Section */
     .coding-projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -417,8 +424,10 @@
 
     .coding-demo-image {
       width: 100%;
-      height: 250px;
+      aspect-ratio: 16 / 9;
+      max-width: 500px;
       object-fit: cover;
+      border-radius: 10px;
       transition: transform 0.4s ease, filter 0.4s ease;
     }
 
@@ -480,7 +489,8 @@
 
     .coding-demo-iframe {
       width: 100%;
-      height: 300px;
+      aspect-ratio: 16 / 9;
+      max-width: 500px;
       border: 3px solid #D4AF37;
       border-radius: 10px;
       margin: 15px 0;
@@ -508,8 +518,6 @@
       background: linear-gradient(135deg, #D4AF37, #B8860B);
     }
 
-
-
     footer {
       background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
       color: #fff;
@@ -527,6 +535,10 @@
 
       main h1 {
         font-size: 2.2rem;
+      }
+
+      main h2 {
+        font-size 4.5rem;
       }
 
       .section-header {
@@ -596,7 +608,7 @@
     <h1>My Projects</h1>
     <div class="projects-grid" id="projectsGrid"></div>
 
-    <h2 class="section-header">Interactive Coding Demos</h2>
+    <h2 class="section-header">Coding Demos</h2>
     <div class="coding-projects-grid" id="codingProjectsGrid"></div>
   </main>
 
@@ -611,14 +623,12 @@
       if (window.scrollY > 50) header.classList.add('scrolled');
       else header.classList.remove('scrolled');
     });
-
     // Escape HTML for code blocks
     function escapeHTML(str) {
       return str.replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
     }
-
     // Reveal animation on scroll
     const revealOnScroll = () => {
       const triggerBottom = window.innerHeight * 0.85;
@@ -629,45 +639,37 @@
     };
     window.addEventListener('scroll', revealOnScroll);
     window.addEventListener('load', revealOnScroll);
-
     // Load coding projects from JSON
     fetch('coding-projects.json')
       .then(response => response.json())
       .then(codingProjects => {
         const grid = document.getElementById('codingProjectsGrid');
-        
         codingProjects.forEach(proj => {
           const card = document.createElement('div');
           card.className = 'coding-card';
-          
           const content = document.createElement('div');
           content.className = 'coding-card-content';
-          
           // Project image
           const img = document.createElement('img');
           img.src = proj.image;
           img.alt = proj.title;
           img.className = 'coding-demo-image';
           content.appendChild(img);
-          
           // Title
           const title = document.createElement('h3');
           title.className = 'coding-card-title';
           title.textContent = proj.title;
           content.appendChild(title);
-          
           // Description
           const desc = document.createElement('p');
           desc.className = 'coding-card-description';
           desc.innerHTML = proj.description;
           content.appendChild(desc);
-          
           // Tags
           const tagsDiv = document.createElement('div');
           tagsDiv.className = 'coding-card-tags';
           tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
           content.appendChild(tagsDiv);
-          
           // Demo iframe
           if (proj.demoUrl) {
             const iframe = document.createElement('iframe');
@@ -678,7 +680,6 @@
             iframe.allowFullscreen = true;
             content.appendChild(iframe);
           }
-          
           // View button
           const viewBtn = document.createElement('a');
           viewBtn.href = proj.link || proj.demoUrl;
@@ -686,9 +687,7 @@
           viewBtn.textContent = 'View Demo';
           viewBtn.target = '_blank';
           content.appendChild(viewBtn);
-          
           card.appendChild(content);
-          
           // Toggle expand/collapse
           card.addEventListener('click', (e) => {
             // Don't toggle if clicking on iframe or button
@@ -696,18 +695,14 @@
               card.classList.toggle('expanded');
             }
           });
-          
           grid.appendChild(card);
         });
-        
         revealOnScroll();
       })
       .catch(error => {
         console.error('Error loading coding projects:', error);
-        
         // Fallback sample data if JSON fails
-        const sampleCodingProjects = [
-          {
+        const sampleCodingProjects = [{
             title: "Interactive Calculator",
             description: "A fully functional calculator with advanced operations and history",
             tags: ["JavaScript", "CSS", "HTML"],
@@ -724,14 +719,12 @@
             link: "https://github.com/your-username/weather-app"
           }
         ];
-        
         // Create fallback cards
         const grid = document.getElementById('codingProjectsGrid');
         sampleCodingProjects.forEach(proj => {
           // Similar card creation logic here if needed
         });
       });
-
     // Load regular projects
     fetch('projects.json')
       .then(response => response.json())
@@ -740,31 +733,25 @@
         projects.forEach(proj => {
           const card = document.createElement('div');
           card.className = 'project-card';
-          
           const content = document.createElement('div');
           content.className = 'project-content';
-          
           const img = document.createElement('img');
           img.src = proj.image;
           img.alt = proj.title;
           img.className = 'project-image';
           content.appendChild(img);
-          
           const title = document.createElement('h3');
           title.className = 'project-title';
           title.textContent = proj.title;
           content.appendChild(title);
-          
           const desc = document.createElement('p');
           desc.className = 'project-description';
           desc.innerHTML = proj.description;
           content.appendChild(desc);
-          
           const tagsDiv = document.createElement('div');
           tagsDiv.className = 'project-tags';
           tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
           content.appendChild(tagsDiv);
-          
           if (proj.code) {
             proj.code.forEach(codeObj => {
               const codeBlock = document.createElement('pre');
@@ -775,13 +762,11 @@
               content.appendChild(codeBlock);
             });
           }
-          
           const viewBtn = document.createElement('a');
           viewBtn.href = proj.link;
           viewBtn.className = 'view-btn';
           viewBtn.textContent = 'View Project';
           content.appendChild(viewBtn);
-          
           card.appendChild(content);
           card.addEventListener('click', () => card.classList.toggle('expanded'));
           grid.appendChild(card);
@@ -791,14 +776,12 @@
       .catch(error => {
         console.error('Error loading projects:', error);
         // If projects.json fails, create some sample projects
-        const sampleProjects = [
-          {
-            title: "Portfolio Website",
-            description: "Personal portfolio showcasing projects and skills",
-            tags: ["HTML", "CSS", "JavaScript"],
-            image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Portfolio"
-          }
-        ];
+        const sampleProjects = [{
+          title: "Portfolio Website",
+          description: "Personal portfolio showcasing projects and skills",
+          tags: ["HTML", "CSS", "JavaScript"],
+          image: "https://via.placeholder.com/400x250/D4AF37/fff?text=Portfolio"
+        }];
         // Create sample project cards here if needed
       });
   </script>
