@@ -22,7 +22,7 @@
   },
   {
  "title": "Compact ESP32 Development Board",
- "description": "An ultra-compact ESP32-S3 development board designed to be approximately the size of a penny while maintaining full functionality. This miniaturized board demonstrates advanced PCB design principles, component selection optimization, and space-efficient layout techniques. The project showcases expertise in high-density circuit design, signal integrity monitoring, and manufacturing constraints for small-form-factor electronics. Features include all essential GPIO breakouts, an integrated IMU, USB-C programming interface, and integrated antenna design within the compact footprint. This board has been used in a small, centimeter accurate room-scale tracking system.",
+ "description": "Part of the same series as the EDGE-A/B, the CORE is an ultra-compact ESP32-S3 development board designed to be approximately the size of a penny while maintaining full functionality. This miniaturized board demonstrates advanced PCB design principles, component selection optimization, and space-efficient layout techniques. The project showcases expertise in high-density circuit design, signal integrity monitoring, and manufacturing constraints for small-form-factor electronics. Features include all essential GPIO breakouts, an integrated IMU, USB-C programming interface, and integrated antenna design within the compact footprint. This board has been used in a small, centimeter accurate room-scale tracking system.",
  "image": "http://mateo-johnson.github.io/resources/smallESP32coverimage.png",
  "tags": [
    "PCB Design",
@@ -33,7 +33,7 @@
    "IoT",
    "Hardware Design"
  ],
- "link": "https://github.com/Mateo-Johnson/penny-esp32",
+ "link": "n/a",
  "code": [
    {
      "language": "C++",
@@ -41,6 +41,49 @@
    }
  ]
 },
+  {
+    "title": "NODE-C1: Kendryte K210 AI Module",
+    "description": "A compute expansion module for the EDGE and CORE modules, built around the Kendryte K210 (MAIX M1) AI chip. Designed for embedded machine learning and computer vision applications, the module provides independent compute power alongside an ESP32-S3 host. Featuring dual-core RISC-V processors, hardware-accelerated neural network inference, this module enables real-time object detection and classification in edge devices. It communicates with the main system via UART and can be programmed through its dedicated USB-C port.",
+    "image": "https://mateo-johnson.github.io/resources/nodeC1coverimage.png",
+    "tags": [
+      "Edge AI",
+      "RISC-V",
+      "K210",
+      "Machine Learning",
+      "Computer Vision",
+      "Embedded Systems"
+    ],
+    "link": "n/a",
+    "code": []
+  },
+  {
+    "title": "NODE-N2: LoRa Networking Module",
+    "description": "A communication expansion module for the EDGE and CORE modules, using the SX1276 LoRa transceiver for long-range, low-power wireless networking. This module is designed for IoT telemetry, environmental monitoring, and distributed robotics applications. It enables secure peer-to-peer or gateway-based networking with configurable bandwidth and spreading factors, communicating with the board via SPI. Optimized for integration with ESP32-based systems, this module supports kilometer-scale data transmission while maintaining ultra-low power draw.",
+    "image": "https://mateo-johnson.github.io/resources/nodeN2coverimage.png",
+    "tags": [
+      "LoRa",
+      "IoT",
+      "Networking",
+      "Wireless Communication",
+      "Embedded Systems"
+    ],
+    "link": "n/a",
+    "code": []
+  },
+  {
+    "title": "NODE-M1: Motor Control Module",
+    "description": "A compact motor control module for the EDGE and CORE modules, using the DRV8833PW dual H-Bridge motor driver IC. Configured to control a single DC motor with three input signals (SLEEP, AIN1, AIN2), this module provides reliable low-voltage motor control for robotics and embedded systems. Designed for integration with higher-level compute modules, NODE-M1 enables precise PWM-based motor actuation through simple I/O communication.",
+    "image": "https://mateo-johnson.github.io/resources/nodeM1coverimage.png",
+    "tags": [
+      "Motor Control",
+      "DRV8833",
+      "PWM",
+      "Robotics",
+      "Embedded Systems"
+    ],
+    "link": "n/a",
+    "code": []
+  },
   {
     "title": "Differential Swerve Drive Module",
     "description": "A robotics project using CAD design, 3D printing and CNC machining to create a fully functional differential swerve drive module from scratch, as well as Java programming to implement autonomous navigation with the system, using real time rotary and motor encoder feedback. Calculus-based kinematics and physics principles were applied to optimize movement and turning.",
@@ -52,7 +95,7 @@
       "Microcontrollers",
       "Swerve Drive"
     ],
-    "link": "https://github.com/yourusername/swerve-drive-robot",
+    "link": "n/a",
     "code": []
   },
   {
@@ -67,7 +110,7 @@
       "PID Control",
       "CAD"
     ],
-    "link": "https://github.com/yourusername/rocket-stabilization-system",
+    "link": "https://github.com/Mateo-Johnson/DESIGN-24-25-Final-Project",
     "code": []
   },
   {
@@ -81,7 +124,7 @@
       "Automation",
       "CAD"
     ],
-    "link": "https://github.com/yourusername/pnp-machine",
+    "link": "n/a",
     "code": []
   }
 ]
