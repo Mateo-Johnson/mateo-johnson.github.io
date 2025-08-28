@@ -35,6 +35,7 @@
         opacity: 0;
         transform: translateY(40px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -46,6 +47,7 @@
         opacity: 0;
         transform: translateX(-50px);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -57,6 +59,7 @@
         opacity: 0;
         transform: translateX(50px);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -67,6 +70,7 @@
       0% {
         background-position: -200% center;
       }
+
       100% {
         background-position: 200% center;
       }
@@ -76,24 +80,31 @@
       0% {
         background-position: -400% center;
       }
+
       100% {
         background-position: 400% center;
       }
     }
 
     @keyframes pulse {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: scale(1);
       }
+
       50% {
         transform: scale(1.05);
       }
     }
 
     @keyframes float {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0px);
       }
+
       50% {
         transform: translateY(-10px);
       }
@@ -223,7 +234,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-image: 
+      background-image:
         radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 40% 40%, rgba(255, 223, 0, 0.05) 0%, transparent 50%);
@@ -231,9 +242,12 @@
     }
 
     @keyframes gradientShift {
-      0%, 100% {
+
+      0%,
+      100% {
         background-position: 0% 50%;
       }
+
       50% {
         background-position: 100% 50%;
       }
@@ -585,7 +599,7 @@
       left: 0;
     }
 
-footer {
+    footer {
       background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
       color: #fff;
       padding: 60px 40px;
@@ -651,7 +665,7 @@ footer {
 </head>
 
 <body>
-<header id="header">
+  <header id="header">
     <div class="logo">
       <a href="/">
         <img src="https://mateo-johnson.github.io/resources/logo.png" alt="Logo" class="logo-img">
@@ -675,7 +689,7 @@ footer {
   <section class="contact-content">
     <div class="contact-info">
       <h2 class="section-title">Get In Touch</h2>
-      
+
       <div class="contact-method">
         <div class="contact-method-icon">@</div>
         <h3>Email</h3>
@@ -710,7 +724,7 @@ footer {
     <div class="contact-form-container">
       <form class="contact-form" action="#" method="POST">
         <h2 class="section-title">Send a Message</h2>
-        
+
         <div class="form-group">
           <label for="name">Your Name</label>
           <input type="text" id="name" name="name" required>
@@ -750,61 +764,50 @@ footer {
         header.classList.remove('scrolled');
       }
     });
-
     // Form handling
     const contactForm = document.querySelector('.contact-form');
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      
       // Get form data
       const formData = new FormData(this);
       const name = formData.get('name');
       const email = formData.get('email');
       const subject = formData.get('subject');
       const message = formData.get('message');
-      
       // Create mailto link
       const mailtoLink = `mailto:mjohnson012908@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-      
       // Open email client
       window.location.href = mailtoLink;
-      
       // Show success message
       const submitBtn = this.querySelector('.submit-btn');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Message Prepared!';
       submitBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-      
       setTimeout(() => {
         submitBtn.textContent = originalText;
         submitBtn.style.background = 'linear-gradient(135deg, #FFD700, #D4AF37)';
       }, 3000);
     });
-
     // Enhanced input focus effects
     const inputs = document.querySelectorAll('.form-group input, .form-group textarea');
     inputs.forEach(input => {
       input.addEventListener('focus', function() {
         this.parentElement.style.transform = 'translateY(-2px)';
       });
-      
       input.addEventListener('blur', function() {
         this.parentElement.style.transform = 'translateY(0)';
       });
     });
-
     // Contact method hover effects
     const contactMethods = document.querySelectorAll('.contact-method');
     contactMethods.forEach(method => {
       method.addEventListener('mouseenter', function() {
         this.style.animation = 'pulse 0.6s ease-in-out';
       });
-      
       method.addEventListener('animationend', function() {
         this.style.animation = '';
       });
     });
-
     // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
@@ -818,16 +821,13 @@ footer {
         }
       });
     });
-
     // Social link animations
     const socialLinks = document.querySelectorAll('.social-link');
     socialLinks.forEach((link, index) => {
       link.style.animationDelay = `${index * 0.1}s`;
-      
       link.addEventListener('mouseenter', function() {
         this.style.animation = 'pulse 0.6s ease-in-out';
       });
-      
       link.addEventListener('animationend', function() {
         this.style.animation = '';
       });
