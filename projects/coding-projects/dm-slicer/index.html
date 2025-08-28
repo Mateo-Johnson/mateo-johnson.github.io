@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">  
+  
+  <meta charset="UTF-8">
+  <title>Slicer | Mateo Johnson</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f3f4f6;
+      color: #1f2937;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+
+    .controls {
+      display: grid;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .control-group {
+      background: #f9fafb;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .preview {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    canvas {
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      max-width: 100%;
+    }
+
+    #output {
+      width: 100%;
+      height: 200px;
+      font-family: ui-monospace, monospace;
+      padding: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #f9fafb;
+      margin-top: 1.5rem;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button.secondary {
+      background: #6b7280;
+    }
+
+    button.secondary:hover {
+      background: #4b5563;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #374151;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 0.5rem;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+
+    input[type="number"],
+    input[type="range"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+
+    .error {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .color-tools {
+      margin: 1.5rem 0;
+    }
+
+    .color-group {
+      border: 1px solid #e5e7eb;
+      padding: 1.25rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      background: #f9fafb;
+    }
+
+    .group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .color-samples {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 6px;
+    }
+
+    .color-sample {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #e5e7eb;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .color-sample:hover {
+      transform: scale(1.1);
+    }
+
+    .tool-commands {
+      width: 100%;
+      font-family: ui-monospace, monospace;
+      padding: 0.75rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      margin: 0.5rem 0;
+      background: white;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    input[type="number"],
+    input[type="range"] {
+      width: 97%;
+      padding: 0.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Slicer - Drawing Machine</h1>
+    <p class="subtitle">Bed Size: 150x150mm</p>
+
+    <div class="controls">
+      <div class="control-group">
+        <label for="imageInput">Select Image:</label>
+        <input type="file" id="imageInput" accept="image/*">
+      </div>
+
+      <div class="control-group">
+        <label for="width">Width (mm):</label>
+        <input type="number" id="width" value="100" min="10" max="150">
+        <div id="widthError" class="error">Width must be between 10 and 150mm</div>
+      </div>
+
+      <div class="control-group">
+        <label for="height">Height (mm):</label>
+        <input type="number" id="height" value="100" min="10" max="150">
+        <div id="heightError" class="error">Height must be between 10 and 150mm</div>
+      </div>
+
+      <div class="control-group">
+        <label for="colorThreshold">Color Detection Threshold (0-255):</label>
+        <input type="range" id="colorThreshold" min="0" max="255" value="50">
+        <div class="value-display" id="thresholdValue">50</div>
+      </div>
+
+      <div class="control-group">
+        <label for="speed">Drawing Speed (mm/min):</label>
+        <input type="number" id="speed" value="1000" min="100" max="6000">
+      </div>
+    </div>
+
+    <div class="preview">
+      <canvas id="previewCanvas"></canvas>
+    </div>
+<button onclick="addNewGroup()">Add New Color Group</button>
+    <div id="colorGroups" class="color-tools">
+
+    </div>
+
+    
+
+    <div class="button-group">
+      <button onclick="generateGCode()">Generate GCode</button>
+      <button onclick="downloadGCode()" class="secondary">Download GCode</button>
+    </div>
+
+    <textarea id="output" readonly></textarea>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('previewCanvas');
+    const ctx = canvas.getContext('2d');
+    let originalImage = null;
+    let detectedColors = [];
+    let colorGroups = [];
+
+    function createNewGroup(name = `Group ${colorGroups.length + 1}`) {
+      return {
+        id: Date.now(),
+        name: name,
+        colors: [],
+        beforeCommands: `; Tool pickup commands for ${name}\nG0 Z5 ; Lift to safe height\n; Add your tool pickup commands here\nG0 Z0 ; Lower to drawing height`,
+        afterCommands: `; Tool return commands for ${name}\nG0 Z5 ; Lift to safe height\n; Add your tool return commands here`
+      };
+    }
+
+    function rgbToHex(r, g, b) {
+      return '#' + [r, g, b].map(x => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+      }).join('');
+    }
+
+    function colorDistance(color1, color2) {
+      return Math.sqrt(
+        Math.pow(color1.r - color2.r, 2) +
+        Math.pow(color1.g - color2.g, 2) +
+        Math.pow(color1.b - color2.b, 2)
+      );
+    }
+
+    function addNewGroup() {
+      colorGroups.push(createNewGroup());
+      updateColorGroupsUI();
+    }
+
+    function updateColorGroupsUI() {
+      const container = document.getElementById('colorGroups');
+      container.innerHTML = '<h3>Color Groups:</h3>';
+      colorGroups.forEach((group, groupIndex) => {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'color-group';
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'group-header';
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.value = group.name;
+        nameInput.onchange = (e) => {
+          group.name = e.target.value;
+        };
+        const removeGroupBtn = document.createElement('button');
+        removeGroupBtn.textContent = 'Remove Group';
+        removeGroupBtn.className = 'secondary';
+        removeGroupBtn.onclick = () => {
+          colorGroups = colorGroups.filter(g => g.id !== group.id);
+          updateColorGroupsUI();
+        };
+        headerDiv.appendChild(nameInput);
+        headerDiv.appendChild(removeGroupBtn);
+        groupDiv.appendChild(headerDiv);
+        const samplesDiv = document.createElement('div');
+        samplesDiv.className = 'color-samples';
+        group.colors.forEach(color => {
+          const sample = document.createElement('div');
+          sample.className = 'color-sample';
+          sample.style.backgroundColor = rgbToHex(color.r, color.g, color.b);
+          sample.onclick = () => {
+            group.colors = group.colors.filter(c => c !== color);
+            updateColorGroupsUI();
+          };
+          samplesDiv.appendChild(sample);
+        });
+        groupDiv.appendChild(samplesDiv);
+        const colorSelect = document.createElement('select');
+        colorSelect.multiple = true;
+        detectedColors.forEach((color, index) => {
+          if (!colorGroups.some(g => g.colors.includes(color))) {
+            const option = document.createElement('option');
+            option.value = index;
+            option.text = `Color ${index + 1}`;
+            option.style.backgroundColor = rgbToHex(color.r, color.g, color.b);
+            colorSelect.appendChild(option);
+          }
+        });
+        const addColorBtn = document.createElement('button');
+        addColorBtn.textContent = 'Add Selected Colors';
+        addColorBtn.onclick = () => {
+          Array.from(colorSelect.selectedOptions).forEach(option => {
+            group.colors.push(detectedColors[option.value]);
+          });
+          updateColorGroupsUI();
+        };
+        groupDiv.appendChild(colorSelect);
+        groupDiv.appendChild(addColorBtn);
+        const beforeLabel = document.createElement('label');
+        beforeLabel.textContent = 'Commands Before Drawing:';
+        groupDiv.appendChild(beforeLabel);
+        const beforeCommands = document.createElement('textarea');
+        beforeCommands.className = 'tool-commands';
+        beforeCommands.rows = 3;
+        beforeCommands.value = group.beforeCommands;
+        beforeCommands.onchange = (e) => {
+          group.beforeCommands = e.target.value;
+        };
+        groupDiv.appendChild(beforeCommands);
+        const afterLabel = document.createElement('label');
+        afterLabel.textContent = 'Commands After Drawing:';
+        groupDiv.appendChild(afterLabel);
+        const afterCommands = document.createElement('textarea');
+        afterCommands.className = 'tool-commands';
+        afterCommands.rows = 3;
+        afterCommands.value = group.afterCommands;
+        afterCommands.onchange = (e) => {
+          group.afterCommands = e.target.value;
+        };
+        groupDiv.appendChild(afterCommands);
+        container.appendChild(groupDiv);
+      });
+    }
+
+    function downloadGCode() {
+      const gcode = document.getElementById('output').value;
+      if (!gcode) return;
+      const blob = new Blob([gcode], {
+        type: 'text/plain'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'drawing.gcode';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function detectColors(imageData) {
+      const data = imageData.data;
+      const colors = new Set();
+      const threshold = parseInt(document.getElementById('colorThreshold').value);
+      for (let i = 0; i < data.length; i += 4) {
+        if (data[i + 3] < 128) continue;
+        const color = {
+          r: data[i],
+          g: data[i + 1],
+          b: data[i + 2]
+        };
+        let found = false;
+        for (const existing of colors) {
+          if (colorDistance(color, existing) < threshold) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          colors.add(color);
+        }
+      }
+      return Array.from(colors);
+    }
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          originalImage = img;
+          updatePreview();
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+    document.getElementById('colorThreshold').addEventListener('input', function(e) {
+      document.getElementById('thresholdValue').textContent = e.target.value;
+    });
+
+    function validateDimensions() {
+      const width = parseInt(document.getElementById('width').value);
+      const height = parseInt(document.getElementById('height').value);
+      const widthError = document.getElementById('widthError');
+      const heightError = document.getElementById('heightError');
+      widthError.style.display = (width < 10 || width > 150) ? 'block' : 'none';
+      heightError.style.display = (height < 10 || height > 150) ? 'block' : 'none';
+      const isWidthValid = width >= 10 && width <= 150;
+      const isHeightValid = height >= 10 && height <= 150;
+      return isWidthValid && isHeightValid;
+    }
+    ['width', 'height', 'colorThreshold'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        validateDimensions();
+        if (originalImage) updatePreview();
+      });
+    });
+
+    function updatePreview() {
+      if (!originalImage) return;
+      const width = parseInt(document.getElementById('width').value);
+      const height = parseInt(document.getElementById('height').value);
+      const aspectRatio = originalImage.width / originalImage.height;
+      canvas.width = width;
+      canvas.height = height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(originalImage, 0, 0, width, height);
+      const imageData = ctx.getImageData(0, 0, width, height);
+      detectedColors = detectColors(imageData);
+      updateColorGroupsUI();
+    }
+
+function generateGCode() {
+  if (!originalImage || !validateDimensions()) return;
+
+  const width = parseInt(document.getElementById('width').value);
+  const height = parseInt(document.getElementById('height').value);
+  const speed = parseInt(document.getElementById('speed').value);
+  const imageData = ctx.getImageData(0, 0, width, height);
+  const data = imageData.data;
+  let gcode = [];
+
+  const drawingHeight = 4.3;  //in mm
+  const travelHeight = 10.0;  
+
+  gcode.push('; Start G-code');
+  gcode.push('M104 S0 ; Set extruder to 0');
+  gcode.push('M105 ; Await Temperature');
+  gcode.push('M109 S0 ; Set bed to 0');
+  gcode.push('M82 ; Absolute extrusion mode');
+  gcode.push('G28 ; Home');
+  gcode.push('G1 Z15.0 F6000 ; Move the platform down 15mm');
+  gcode.push('G92 E0');
+  gcode.push('G1 F1500 E-6.5');
+  gcode.push('M107 ; Turn fan off');
+  gcode.push(`G1 Z${travelHeight} F6000 ; Move Z to travel height`);
+
+  gcode.push('; Starting black outline trace');
+  generateOutlineGCode(data, width, height, gcode, speed, drawingHeight, travelHeight);
+
+  colorGroups.forEach((group, groupIndex) => {
+    if (group.colors.length === 0) return;
+
+    gcode.push(`\n; Starting ${group.name}`);
+    gcode.push(group.beforeCommands);
+    let isDrawing = false;
+    let lastX = null;
+    let lastY = null;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const alpha = data[i + 3];
+
+      if (alpha < 128) continue;
+
+      const color = { r, g, b };
+      let matchedColor = null;
+
+      group.colors.forEach(c => {
+        if (colorDistance(color, c) < parseInt(document.getElementById('colorThreshold').value)) {
+          matchedColor = c;
+        }
+      });
+
+      if (matchedColor) {
+        const x = (i / 4) % width;
+        const y = Math.floor(i / (4 * width));
+
+        if (lastX !== null && lastY !== null && isDrawing) {
+          gcode.push(`G1 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to next point while drawing`);
+        } else {
+          gcode.push(`G0 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to start position while drawing`);
+        }
+
+        lastX = x;
+        lastY = y;
+        isDrawing = true;
+      }
+    }
+
+    gcode.push(group.afterCommands);
+    gcode.push(`; End of ${group.name}`);
+  });
+
+  gcode.push(`G1 Z${travelHeight} F6000 ; Move Z to travel height`);
+  gcode.push('G28 X0 Y0');
+  gcode.push('M84');
+  gcode.push('M82');
+
+  document.getElementById('output').value = gcode.join('\n');
+}
+
+function generateOutlineGCode(data, width, height, gcode, speed, drawingHeight, travelHeight) {
+  let lastX = null;
+  let lastY = null;
+  let isDrawing = false;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const alpha = data[i + 3];
+
+    if (alpha < 128) continue; 
+
+    const x = (i / 4) % width;
+    const y = Math.floor(i / (4 * width));
+
+    if (isEdge(x, y, data, width, height)) {
+      if (lastX !== null && lastY !== null && isDrawing) {
+        gcode.push(`G1 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to next point while drawing`);
+      } else {
+        gcode.push(`G0 X${x} Y${y} Z${drawingHeight} F${speed} ; Move to start position while drawing`);
+      }
+
+      lastX = x;
+      lastY = y;
+      isDrawing = true;
+    } else if (lastX !== null && lastY !== null) {
+      gcode.push(`G0 X${x} Y${y} Z${travelHeight} F${speed} ; Move to next position (without drawing)`);
+    }
+  }
+}
+    
+function isEdge(x, y, data, width, height) {
+  const threshold = 50;
+  const currentIndex = (y * width + x) * 4;
+  const currentColor = { r: data[currentIndex], g: data[currentIndex + 1], b: data[currentIndex + 2] };
+
+  const neighbors = [
+    { x: x - 1, y: y }, 
+    { x: x + 1, y: y }, 
+    { x: x, y: y - 1 },
+    { x: x, y: y + 1 },
+  ];
+
+  for (const neighbor of neighbors) {
+    if (neighbor.x >= 0 && neighbor.x < width && neighbor.y >= 0 && neighbor.y < height) {
+      const neighborIndex = (neighbor.y * width + neighbor.x) * 4;
+      const neighborColor = { r: data[neighborIndex], g: data[neighborIndex + 1], b: data[neighborIndex + 2] };
+      if (colorDistance(currentColor, neighborColor) > threshold) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function colorDistance(color1, color2) {
+  const rDiff = color1.r - color2.r;
+  const gDiff = color1.g - color2.g;
+  const bDiff = color1.b - color2.b;
+  return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff);
+}
+
+  </script>
+</body>
+  
+</html>
