@@ -231,7 +231,6 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease;
       max-height: 350px;
-      /* collapsed height */
       cursor: pointer;
       position: relative;
       opacity: 0;
@@ -246,7 +245,6 @@
 
     .project-card.expanded {
       max-height: 3000px;
-      /* expanded height */
     }
 
     .project-card:hover {
@@ -365,7 +363,6 @@
       z-index: 1;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       main {
         padding: 140px 20px 60px;
@@ -413,17 +410,19 @@
 
   <script>
     // Header scroll effect
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
       const header = document.getElementById('header');
       if (window.scrollY > 50) header.classList.add('scrolled');
       else header.classList.remove('scrolled');
     });
-    // Escape HTML
+
+    // Escape HTML for code blocks
     function escapeHTML(str) {
       return str.replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
     }
+
     // Reveal animation on scroll
     const revealOnScroll = () => {
       const triggerBottom = window.innerHeight * 0.85;
@@ -434,6 +433,7 @@
     };
     window.addEventListener('scroll', revealOnScroll);
     window.addEventListener('load', revealOnScroll);
+
     // Load projects dynamically
     fetch('projects.json')
       .then(response => response.json())
@@ -442,21 +442,60 @@
         projects.forEach(proj => {
           const card = document.createElement('div');
           card.className = 'project-card';
-          const codeBlocks = proj.code?.map(codeObj => `
-            <pre class="project-code"><code>${escapeHTML(codeObj.snippet)}</code></pre>
-          `).join('') || '';
-          card.innerHTML = `
-            <img src="${proj.image}" alt="${proj.title}" class="project-image">
-            <div class="project-content">
-              <h3 class="project-title">${proj.title}</h3>
-              <p class="project-description">${proj.description}</p>
-              <div class="project-tags">${proj.tags.map(tag => `<span>${tag}</span>`).join('')}</div>
-              ${codeBlocks}
-              <a href="${proj.link}" class="view-btn">View Project</a>
-            </div>
-          `;
+
+          // Create project content container
+          const content = document.createElement('div');
+          content.className = 'project-content';
+
+          // Project image
+          const img = document.createElement('img');
+          img.src = proj.image;
+          img.alt = proj.title;
+          img.className = 'project-image';
+          content.appendChild(img);
+
+          // Title
+          const title = document.createElement('h3');
+          title.className = 'project-title';
+          title.textContent = proj.title;
+          content.appendChild(title);
+
+          // Description with HTML
+          const desc = document.createElement('p');
+          desc.className = 'project-description';
+          desc.innerHTML = proj.description;
+          content.appendChild(desc);
+
+          // Tags
+          const tagsDiv = document.createElement('div');
+          tagsDiv.className = 'project-tags';
+          tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
+          content.appendChild(tagsDiv);
+
+          // Code blocks
+          if (proj.code) {
+            proj.code.forEach(codeObj => {
+              const codeBlock = document.createElement('pre');
+              codeBlock.className = 'project-code';
+              const codeElem = document.createElement('code');
+              codeElem.innerHTML = escapeHTML(codeObj.snippet);
+              codeBlock.appendChild(codeElem);
+              content.appendChild(codeBlock);
+            });
+          }
+
+          // View button
+          const viewBtn = document.createElement('a');
+          viewBtn.href = proj.link;
+          viewBtn.className = 'view-btn';
+          viewBtn.textContent = 'View Project';
+          content.appendChild(viewBtn);
+
+          card.appendChild(content);
+
           // Toggle expand/collapse
           card.addEventListener('click', () => card.classList.toggle('expanded'));
+
           grid.appendChild(card);
         });
         revealOnScroll();
