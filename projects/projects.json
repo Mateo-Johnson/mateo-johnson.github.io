@@ -22,7 +22,7 @@
   },
   {
  "title": "Compact ESP32 Development Board",
- "description": "An ultra-compact ESP32-S3 development board designed to be approximately the size of a penny while maintaining full functionality. This miniaturized board demonstrates advanced PCB design principles, component selection optimization, and space-efficient layout techniques. The project showcases expertise in high-density circuit design, signal integrity monitoring, and manufacturing constraints for small-form-factor electronics. Features include all essential GPIO breakouts, an integrated IMU, USB-C programming interface, and integrated antenna design within the compact footprint.",
+ "description": "An ultra-compact ESP32-S3 development board designed to be approximately the size of a penny while maintaining full functionality. This miniaturized board demonstrates advanced PCB design principles, component selection optimization, and space-efficient layout techniques. The project showcases expertise in high-density circuit design, signal integrity monitoring, and manufacturing constraints for small-form-factor electronics. Features include all essential GPIO breakouts, an integrated IMU, USB-C programming interface, and integrated antenna design within the compact footprint. This board has been used in a small, centimeter accurate room-scale tracking system.",
  "image": "http://mateo-johnson.github.io/resources/smallESP32coverimage.png",
  "tags": [
    "PCB Design",
