@@ -100,7 +100,7 @@
   },
   {
     "title": "Rocket Stabilization System",
-    "description": "A custom flight control system for model rockets, using a GY-521 IMU in addition to other sensors to maintain stability in flight. Consisted of a custom SAMD21 control board, sensor array and TVC gimbal. Built with principles from OSU Physics and Engineering courses. This project participated in Buckeye Science & Engineering Fair 2025 as well as Regeneron International Science & Engineering Fair 2025.",
+    "description": "A custom flight control system for model rockets, using a GY-521 IMU in addition to other sensors to maintain stability in flight. Consisted of a custom SAMD21 control board, sensor array and TVC gimbal. Built with principles from OSU Physics and Engineering courses. This project won a Grand Award and Air Force Engineering Innovation award at Buckeye Science & Engineering Fair 2025 as well qualifying for Regeneron International Science & Engineering Fair 2025.",
     "image": "https://mateo-johnson.github.io/resources/rocketcoverimage.png",
     "tags": [
       "Embedded Systems",
