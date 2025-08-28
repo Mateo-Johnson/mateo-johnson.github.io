@@ -1,10 +1,18 @@
 [
   {
-    "title": "Interactive Calculator",
-    "description": "A fully functional calculator with advanced operations",
+    "title": "Conway's Game of Life",
+    "description": "A full Conway's Game of Life Simulation with full customizability",
     "tags": ["JavaScript", "CSS", "HTML"],
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "https://mateo-johnson.github.io/projects/coding-projects/GOL",
     "link": "https://mateo-johnson.github.io/projects/coding-projects/GOL"
+  },
+  {
+    "title": "Code Snippet Display",
+    "description": "A code display tool for creating visually pleasing code snippets",
+    "tags": ["JavaScript", "CSS", "HTML"],
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+    "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/codedisplay",
+    "link": "http://mateo-johnson.github.io/projects/coding-projects/codedisplay"
   }
 ]
