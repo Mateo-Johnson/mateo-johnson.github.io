@@ -14,5 +14,13 @@
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/codedisplay",
     "link": "http://mateo-johnson.github.io/projects/coding-projects/codedisplay"
+  },
+  {
+    "title": "Custom Flower Generator",
+    "description": "A tool to generate custom flowers using CSS doodles",
+    "tags": ["JavaScript", "CSS", "HTML"],
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+    "demoUrl": "http://mateo-johnson.github.io/projects/coding-projects/flowergen",
+    "link": "http://mateo-johnson.github.io/projects/coding-projects/flowergen"
   }
 ]
