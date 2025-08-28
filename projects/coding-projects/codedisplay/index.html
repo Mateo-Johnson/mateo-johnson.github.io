@@ -1,116 +1,138 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<style>
-  .code-window {
-    background: #1e1e1e;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    overflow: hidden;
-    font-family: 'Consolas', 'Monaco', monospace;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
 
-  .toolbar {
-    background: #2d2d2d;
-    padding: 8px 16px;
-    display: flex;
-    justify-content: flex-end;
-  }
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
 
-  .copy-btn {
-    background: #333;
-    color: #999;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    transition: all 0.2s;
-    font-family: system-ui, -apple-system, sans-serif;
-  }
+  <style>
+    .code-window {
+      background: #1e1e1e;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      overflow: hidden;
+      font-family: 'Consolas', 'Monaco', monospace;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-  .copy-btn:hover {
-    background: #404040;
-    color: #fff;
-  }
+    .toolbar {
+      background: #2d2d2d;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
 
-  .copy-btn svg {
-    width: 14px;
-    height: 14px;
-  }
+    .copy-btn {
+      background: #333;
+      color: #999;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      transition: all 0.2s;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
 
-  .copy-btn.copied {
-    background: #2d5a27;
-    color: #fff;
-  }
+    .copy-btn:hover {
+      background: #404040;
+      color: #fff;
+    }
 
-  .code-content {
-    padding: 16px;
-    margin: 0;
-    line-height: 1.5;
-    color: #d4d4d4;
-  }
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
+    }
 
-  /* Syntax highlighting */
-  .preprocessor { color: #569cd6; }
-  .string { color: #ce9178; }
-  .keyword { color: #569cd6; }
-  .class-name { color: #4ec9b0; }
-  .angle-brackets { color: #808080; }
-</style>
+    .copy-btn.copied {
+      background: #2d5a27;
+      color: #fff;
+    }
+
+    .code-content {
+      padding: 16px;
+      margin: 0;
+      line-height: 1.5;
+      color: #d4d4d4;
+    }
+
+    /* Syntax highlighting */
+    .preprocessor {
+      color: #569cd6;
+    }
+
+    .string {
+      color: #ce9178;
+    }
+
+    .keyword {
+      color: #569cd6;
+    }
+
+    .class-name {
+      color: #4ec9b0;
+    }
+
+    .angle-brackets {
+      color: #808080;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="code-window">
-  <div class="toolbar">
-    <button class="copy-btn" onclick="copyCode(this)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-      </svg>
-      Copy code
-    </button>
-  </div>
-  <pre class="code-content"><span class="preprocessor">#include</span> <span class="string">"I2Cdev.h"</span>
+  <div class="code-window">
+    <div class="toolbar">
+      <button class="copy-btn" onclick="copyCode(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        Copy code
+      </button>
+    </div>
+    <pre class="code-content"><span class="preprocessor">#include</span> <span class="string">"I2Cdev.h"</span>
 <span class="preprocessor">#include</span> <span class="string">"MPU6050_6Axis_MotionApps20.h"</span>
 <span class="preprocessor">#include</span> <span class="angle-brackets">&lt;</span><span class="class-name">Servo.h</span><span class="angle-brackets">&gt;</span>
 
 <span class="class-name">MPU6050</span> mpu;
 
 <span class="preprocessor">#define</span> <span class="keyword">OUTPUT_READABLE_YAWPITCHROLL</span></pre>
-</div>
+  </div>
 
-<script>
-function copyCode(button) {
-  const code = document.querySelector('.code-content').textContent;
-  navigator.clipboard.writeText(code).then(() => {
-    button.classList.add('copied');
-    button.innerHTML = `
+  <script>
+    function copyCode(button) {
+      const code = document.querySelector('.code-content').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        button.classList.add('copied');
+        button.innerHTML = `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="20 6 9 17 4 12"></polyline>
       </svg>
       Copied!
     `;
-    
-    setTimeout(() => {
-      button.classList.remove('copied');
-      button.innerHTML = `
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
         </svg>
         Copy code
       `;
-    }, 2000);
-  });
-}
-</script>
+        }, 2000);
+      });
+    }
+  </script>
 
 </body>
+
 </html>
