@@ -1,7 +1,7 @@
 [
   {
     "title": "Dual-MCU Circuit Boards",
-    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using an ESP32-S3 module and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>.",
+    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using an ESP32-S3 module and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>. This project ",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
     "tags": ["Embedded Systems", "KiCAD", "EasyEDA", "ESP32", "K210", "Microcontrollers", "Edge Computing"],
     "link": "https://yourwebsite.com",
@@ -13,11 +13,27 @@
     ]
   },
   {
-    "title": "Smart Home Dashboard",
-    "description": "A web app for monitoring and controlling IoT devices in real time, featuring data visualization and user-friendly design.",
+    "title": "Differential Swerve Drive Module",
+    "description": "A robotics project using CAD design, 3D printing and CNC machining to create a fully functional differential swerve drive module from scratch, as well as the programming ti implement autonomous navigation with a differential swerve drive system. Calculus-based kinematics and physics principles were applied to optimize movement and turning.",
     "image": "https://blocks.astratic.com/img/general-img-landscape.png",
-    "tags": ["React", "Node.js", "IoT"],
-    "link": "https://github.com/yourusername/smart-home-dashboard",
+    "tags": ["Robotics", "FRC", "CAD", "Microcontrollers", "Swerve Drive"],
+    "link": "https://github.com/yourusername/swerve-drive-robot",
+    "code": []
+  },
+  {
+    "title": "Rocket Stabilization System",
+    "description": "A custom flight control system for model rockets, using a GY-521 IMU in addition to other sensors to maintain stability in flight. Consisted of a custom SAMD21 control board, sensor array and TVC gimbal. Built with principles from OSU Physics and Engineering courses.",
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+    "tags": ["Embedded Systems", "Aerospace", "Microcontrollers", "IMU", "PID Control", "CAD"],
+    "link": "https://github.com/yourusername/rocket-stabilization-system",
+    "code": []
+  },
+  {
+    "title": "DIY Pick-and-Place Machine",
+    "description": "A custom-built pick-and-place machine for electronics assembly. Designed for automated toolhead switching and precision control.",
+    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
+    "tags": ["Embedded Systems", "PCB Design", "Robotics", "Automation", "CAD"],
+    "link": "https://github.com/yourusername/pnp-machine",
     "code": []
   }
 ]
