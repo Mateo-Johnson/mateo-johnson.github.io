@@ -536,6 +536,25 @@
     }
 
     @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+        /* single column that fits screen */
+      }
+
+      .coding-projects-grid {
+        grid-template-columns: 1fr;
+        /* single column */
+      }
+
+      .project-image,
+      .coding-demo-image,
+      .coding-demo-iframe {
+        max-width: 100%;
+        /* scale with screen */
+        height: auto;
+        /* keep aspect ratio */
+      }
+
       main {
         padding: 140px 20px 60px;
       }
