@@ -220,12 +220,10 @@
       content: '';
       position: absolute;
       bottom: -15px;
-      /* distance below text */
       left: 50%;
       transform: translateX(-50%);
       width: 120px;
       height: 3px;
-      /* thickness */
       background: linear-gradient(90deg, #FFD700, #D4AF37);
       border-radius: 2px;
       opacity: 0;
@@ -504,7 +502,6 @@
       gap: 2rem;
     }
 
-    /* Awards Cards */
     .award-card {
       background: rgba(255, 255, 255, 0.85);
       padding: 2rem;
@@ -533,17 +530,12 @@
       border-left-color: #FFD700;
     }
 
-    /* Leadership Cards */
     .leadership-card {
       background: linear-gradient(135deg, #FFF8E1, #FFE4B5);
-      /* soft gradient for a warmer tone */
       padding: 2rem;
       border-radius: 25px;
-      /* slightly more rounded */
       box-shadow: 0 20px 50px rgba(212, 175, 55, 0.25);
-      /* stronger shadow for emphasis */
       border-top: 4px solid #B8860B;
-      /* different accent from award cards */
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
@@ -558,12 +550,10 @@
       height: 50px;
       background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(184, 134, 11, 0.15));
       border-radius: 50%;
-      /* circular accent instead of rectangle */
     }
 
     .leadership-card:hover {
       transform: translateY(-10px) scale(1.02);
-      /* slightly bigger hover effect */
       box-shadow: 0 30px 60px rgba(212, 175, 55, 0.3);
       border-top-color: #FFD700;
     }
@@ -652,7 +642,6 @@
       line-height: 1.6;
     }
 
-    /* Mobile Responsiveness */
     @media (max-width: 768px) {
       header {
         padding: 20px;
@@ -725,12 +714,11 @@
 
   <section class="page-hero">
     <h1>Skills & Achievements</h1>
-    <p>A comprehensive overview of my technical expertise, academic accomplishments, and professional experience in electrical engineering and robotics.</p>
+    <p>An overview of my academic accomplishments, technical expertise, and professional experience in electrical engineering and robotics.</p>
   </section>
 
   <div class="skills-container">
 
-    <!-- Academic Stats Section -->
     <section class="section" id="academics">
       <h2>Academic Excellence</h2>
       <div class="stats-grid">
@@ -757,7 +745,6 @@
       </div>
     </section>
 
-    <!-- Technical Skills Section -->
     <section class="section" id="skills">
       <h2>Technical Expertise</h2>
       <div class="skills-grid">
@@ -799,7 +786,7 @@
         <div class="skill-category">
           <h3>Robotics & Hardware</h3>
           <div class="skill-tags">
-            <div class="skill-tag">Swerve Drive Systems</div>
+            <div class="skill-tag">Swerve Drive</div>
             <div class="skill-tag">Motor Controllers</div>
             <div class="skill-tag">Sensor Integration</div>
             <div class="skill-tag">Rocketry & Flight Control</div>
@@ -810,7 +797,6 @@
       </div>
     </section>
 
-    <!-- Awards & Recognition Section -->
     <section class="section" id="awards">
       <h2>Awards & Recognition</h2>
       <div class="awards-grid">
@@ -830,29 +816,28 @@
           <div class="award-description">First place recognition for innovative dual-MCU system design and implementation.</div>
         </div>
         <div class="award-card">
-          <div class="award-title">Air Force Innovation Award</div>
+          <div class="award-title">Air Force Innovation in Engineering Award</div>
           <div class="award-org">Buckeye Science & Engineering Fair</div>
           <div class="award-description">Special recognition for engineering innovation at BSEF 2025.</div>
         </div>
         <div class="award-card">
           <div class="award-title">Attorney General's Recognition </div>
           <div class="award-org">State of Ohio</div>
-          <div class="award-description">Congratulatory recognition for ISEF 2025 participation representing Ohio.</div>
+          <div class="award-description">Recognition for ISEF 2025 participation representing Ohio.</div>
         </div>
         <div class="award-card">
           <div class="award-title">Governor's Recognition</div>
           <div class="award-org">State of Ohio</div>
-          <div class="award-description">Congratulatory recognition for ISEF 2025 participation representing Ohio.</div>
+          <div class="award-description">Recognition for ISEF 2025 participation representing Ohio.</div>
         </div>
         <div class="award-card">
           <div class="award-title">Connect & Lead Leadership Conference</div>
           <div class="award-org">High School Representative</div>
-          <div class="award-description">Selected inaugural delegate to Ohio’s Connect & Lead Leadership Conference, focused on cultivating leadership in high school students.</div>
+          <div class="award-description">Inaugural delegate for Ohio’s Connect & Lead Leadership Conference, focused on cultivating leadership in high school students.</div>
         </div>
       </div>
     </section>
 
-    <!-- Professional Experience Section -->
     <section class="section" id="experience">
       <h2>Professional Experience</h2>
       <div class="experience-timeline">
@@ -861,18 +846,18 @@
         <div class="experience-item">
           <div class="experience-dot"></div>
           <div class="experience-content">
-            <div class="experience-title">eVTOL Research Assistant</div>
+            <div class="experience-title">eVTOL Research Intern</div>
             <div class="experience-company">Ohio State University</div>
-            <div class="experience-description">Conducted research on electric vertical takeoff and landing aircraft power systems design, focusing on efficiency optimization and control algorithms.</div>
+            <div class="experience-description">5-week Intership conducting research on electric vertical takeoff and landing aircraft power systems design, focusing on efficiency optimization and control algorithms.</div>
           </div>
         </div>
 
         <div class="experience-item">
           <div class="experience-dot"></div>
           <div class="experience-content">
-            <div class="experience-title">IT Specialist & Frontend Developer</div>
+            <div class="experience-title">IT Specialist &  Developer</div>
             <div class="experience-company">Embold</div>
-            <div class="experience-description">Completed CompTIA certification work (ITF, A+, Network+, Security+), developed frontend interfaces, and implemented backend automation processes.</div>
+            <div class="experience-description">Completed CompTIA certification work (ITF, A+, Network+, Security+), developed frontend interfaces / backend automation processes.</div>
           </div>
         </div>
 
@@ -881,7 +866,7 @@
           <div class="experience-content">
             <div class="experience-title">Summer STEM Instructor</div>
             <div class="experience-company">PAST Foundation</div>
-            <div class="experience-description">Led Arduino microcontroller camps, operated 3D printing operations, and developed STEM curriculum for diverse student populations.</div>
+            <div class="experience-description">Led Arduino robotics camps, operated 3D printing operations, and developed STEM curriculum for diverse student populations.</div>
           </div>
         </div>
 
@@ -890,7 +875,7 @@
           <div class="experience-content">
             <div class="experience-title">3D Printing Course Instructor</div>
             <div class="experience-company">Wickliffe Progressive Elementary</div>
-            <div class="experience-description">Taught a after-school 6 week 3D printing class, focusing on 3D design, printer knowledge and design process thinking.</div>
+            <div class="experience-description">Planned, taught and evaluated an after-school 6 week 3D printing class, focusing on 3D design, printer knowledge and design process thinking.</div>
           </div>
         </div>
 
@@ -899,7 +884,7 @@
           <div class="experience-content">
             <div class="experience-title">Workforce Development Mentor</div>
             <div class="experience-company">Various Organizations</div>
-            <div class="experience-description">Provided peer mentoring focused on children of color affinity groups and completed Leadership Excellence Certification at the PAST foundation.</div>
+            <div class="experience-description">Provided peer mentoring focused on children of color affinity groups in my neighborhood and completed Leadership Excellence Certification at the PAST foundation.</div>
           </div>
         </div>
 
@@ -908,25 +893,24 @@
           <div class="experience-content">
             <div class="experience-title">Camp Counselor & CIT</div>
             <div class="experience-company">Camp Wyandot</div>
-            <div class="experience-description">3 years of leadership experience including 2 years as Counselor in Training and 1 year as full counselor, developing youth mentorship skills.</div>
+            <div class="experience-description">3 years of leadership experience, including 2 years as Counselor in Training (CIT) and 1 year as full counselor, developing youth mentorship skills.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Leadership Section -->
     <section class="section" id="leadership">
       <h2>Leadership & Impact</h2>
       <div class="awards-grid">
         <div class="leadership-card">
           <div class="award-title">FRC Team Leader</div>
           <div class="award-org">2 Years (11th/12th Grade)</div>
-          <div class="award-description">Led overall team strategy, mentored multiple FRC teams (1307, 6464, 5667, 9075), and conducted design and leadership conferences.</div>
+          <div class="award-description">Led overall robot design and team strategy, mentored multiple FRC teams in programming, design and leadership (1307, 6464, 5667, 9075).</div>
         </div>
         <div class="leadership-card">
-          <div class="award-title">FRC Team Programming Manager</div>
+          <div class="award-title">FRC Programming Manager</div>
           <div class="award-org">2 Years (9th/10th Grade)</div>
-          <div class="award-description">Spearheaded programming language transition to Java, implemented swerve drivetrain systems, and open-sourced 10+ team tools as the youngest team manager.</div>
+          <div class="award-description">Led codebase language change to Java, implemented swerve drivetrain systems, and created 10+ open-source team tools as the youngest team manager.</div>
         </div>
         <div class="leadership-card">
           <div class="award-title">Civic Engagement</div>
@@ -948,7 +932,6 @@
   </footer>
 
   <script>
-    // Header scroll effect
     window.addEventListener('scroll', function() {
       const header = document.getElementById('header');
       if (window.scrollY > 50) {
@@ -957,7 +940,7 @@
         header.classList.remove('scrolled');
       }
     });
-    // Section reveal on scroll
+    //0.2 doesnt work, but 0.1 looks ok
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
@@ -972,7 +955,7 @@
     document.querySelectorAll('.section').forEach(section => {
       observer.observe(section);
     });
-    // Smooth scrolling for navigation links
+    //smooth scroll from stack overflow lol
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -985,23 +968,21 @@
         }
       });
     });
-    // Enhanced interactions
     document.querySelectorAll('.skill-tag').forEach(tag => {
       tag.addEventListener('click', function() {
-        this.style.transform = 'scale(0.95)';
+        this.style.transform = 'scale(0.95)'; //a little bit smaller, rememebr to check if this looks ok
         setTimeout(() => {
           this.style.transform = '';
         }, 150);
       });
     });
-    // Staggered animations for cards
     document.querySelectorAll('.stat-card, .award-card').forEach((card, index) => {
       card.style.animationDelay = `${index * 0.1}s`;
     });
-    // Floating animation for experience dots
-    document.querySelectorAll('.experience-dot').forEach((dot, index) => {
-      dot.style.animationDelay = `${index * 0.5}s`;
-    });
+    //floating animation? looks kinda strange but i like. tested with and without, without looks better i think
+    // document.querySelectorAll('.experience-dot').forEach((dot, index) => {
+    //   dot.style.animationDelay = `${index * 0.5}s`;
+    // });
   </script>
 </body>
 
