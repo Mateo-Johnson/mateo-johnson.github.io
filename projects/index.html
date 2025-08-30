@@ -688,7 +688,19 @@
       // Check if there's more content below the current viewport
       const hasMoreContent = (scrollTop + windowHeight) < (documentHeight - 100);
       
-      if (hasMoreContent) {
+      // Check if arrow overlaps with text content
+      const arrowRect = scrollArrow.getBoundingClientRect();
+      const elementsUnderArrow = document.elementsFromPoint(arrowRect.left + arrowRect.width/2, arrowRect.top + arrowRect.height/2);
+      
+      // Hide if overlapping with text elements (excluding body, html, and the arrow itself)
+      const isOverText = elementsUnderArrow.some(el => 
+        el !== scrollArrow && 
+        el.tagName !== 'BODY' && 
+        el.tagName !== 'HTML' &&
+        (el.textContent && el.textContent.trim().length > 0)
+      );
+      
+      if (hasMoreContent && !isOverText) {
         scrollArrow.classList.add('show');
       } else {
         scrollArrow.classList.remove('show');
