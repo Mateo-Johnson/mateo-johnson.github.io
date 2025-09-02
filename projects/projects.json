@@ -112,19 +112,5 @@
     ],
     "link": "https://github.com/Mateo-Johnson/DESIGN-24-25-Final-Project",
     "code": []
-  },
-  {
-    "title": "DIY Pick-and-Place Machine",
-    "description": "A custom-built pick-and-place machine for electronics assembly. Designed for automated toolhead switching and precision control.",
-    "image": "https://blocks.astratic.com/img/general-img-landscape.png",
-    "tags": [
-      "Embedded Systems",
-      "PCB Design",
-      "Robotics",
-      "Automation",
-      "CAD"
-    ],
-    "link": "n/a",
-    "code": []
   }
 ]
