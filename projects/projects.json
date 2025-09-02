@@ -1,7 +1,7 @@
 [
   {
-    "title": "Dual-MCU Circuit Boards",
-    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using UART communication between an ESP32-S3 chip and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>. This project will be participating in Buckeye Science & Engineering Fair 2026 and Regeneron Science Talent Search 2025.",
+    "title": "Dual-MCU Development Boards",
+    "description": "A set of dual-MCU boards, named the EDGE-A and EDGE-B using UART communication between an ESP32-S3 chip and a RP2354B / Kendryte K210 depending on the model. These boards have integrated sensor arrays containing IMUs, Microphones, ToF and dual inbuilt DC motor controllers. These systems saw significant gains when compared to single-MCU microcontrollers. The research paper can be found <a href='https://mateo-johnson.github.io/resources/dualMCUreport.pdf' target='_blank'>here</a>. This project will is sponsored by Sipeed and EasyEDA, and will be participating in Buckeye Science & Engineering Fair 2026 and Regeneron Science Talent Search 2025.",
     "image": "https://mateo-johnson.github.io/resources/dualMCUcoverimage.png",
     "tags": [
       "Embedded Systems",
