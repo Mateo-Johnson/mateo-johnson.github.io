@@ -1,805 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects | Mateo Johnson</title>
-  <style>
-    /* Reset & Global */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #FFFEF7 0%, #FFF8E1 50%, #FFFEF7 100%);
-      color: #2C2C2C;
-      overflow-x: hidden;
-      line-height: 1.6;
-      position: relative;
-    }
-
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image:
-        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255, 223, 0, 0.03) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s ease;
-    }
-
-    /* Header Styles */
-    @keyframes goldShimmer {
-      0% {
-        background-position: -200% center;
-      }
-
-      100% {
-        background-position: 200% center;
-      }
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 25px 40px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-      position: sticky;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    header.scrolled {
-      padding: 15px 40px;
-      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);
-      background: rgba(255, 255, 255, 0.98);
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #D4AF37;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: goldShimmer 3s linear infinite;
-    }
-
-    .logo-img {
-      max-width: 60px;
-      max-height: 60px;
-      width: auto;
-      height: auto;
-      display: block;
-    }
-
-    header nav {
-      display: flex;
-      gap: 2rem;
-    }
-
-    header nav a {
-      font-weight: 600;
-      font-size: 1rem;
-      position: relative;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: #555;
-      padding: 12px 20px;
-      border-radius: 25px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      background: transparent;
-      overflow: hidden;
-    }
-
-    header nav a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
-      border-radius: 25px;
-      transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: -1;
-    }
-
-    header nav a::after {
-      content: '';
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, #FFD700, #D4AF37);
-      border-radius: 1px;
-      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    header nav a:hover {
-      color: #D4AF37;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
-    }
-
-    header nav a:hover::before {
-      left: 0;
-    }
-
-    header nav a:hover::after {
-      width: 60%;
-    }
-
-    header nav a:active {
-      transform: translateY(-1px);
-    }
-
-    header nav a.active {
-      color: #D4AF37;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
-    }
-
-    header nav a.active::after {
-      width: 60%;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Main Content */
-    main {
-      position: relative;
-      padding: 180px 20px 80px;
-      max-width: 1200px;
-      margin: 0 auto;
-      z-index: 1;
-    }
-
-    main h1 {
-      font-size: 4.5rem;
-      text-align: center;
-      margin-bottom: 60px;
-      font-weight: 300;
-      background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: fadeInUp 1.2s ease-out forwards;
-      position: relative;
-    }
-
-    main h1::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 3px;
-      background: linear-gradient(90deg, #FFD700, #D4AF37);
-      border-radius: 2px;
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 0.5s forwards;
-    }
-
-    .section-header {
-      font-size: 4.5rem;
-      text-align: center;
-      margin: 80px 0 40px;
-      font-weight: 300;
-      /* same as main title */
-      /* Gradient text like main h1 */
-      background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      /* Fade-in animation like main h1 */
-      animation: fadeInUp 1.2s ease-out forwards;
-      position: relative;
-    }
-
-    .section-header::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      /* match h1 underline */
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      /* match h1 underline width */
-      height: 3px;
-      /* match h1 underline height */
-      background: linear-gradient(90deg, #FFD700, #D4AF37);
-      border-radius: 2px;
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 0.5s forwards;
-    }
-
-    /* Projects Grid */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-      gap: 40px;
-      margin-bottom: 60px;
-    }
-
-    /* Collapsible Project Cards with Hover Effects */
-    .project-card {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease;
-      max-height: 350px;
-      cursor: pointer;
-      position: relative;
-      opacity: 0;
-      transform: translateY(40px);
-    }
-
-    .project-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: all 0.8s ease;
-    }
-
-    .project-card.expanded {
-      max-height: 3000px;
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
-    }
-
-    .project-image {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      transition: transform 0.4s ease, filter 0.4s ease;
-    }
-
-    .project-card:hover .project-image {
-      transform: scale(1.05);
-      filter: brightness(1.05);
-    }
-
-    .project-content {
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    .project-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .project-description,
-    .project-tags,
-    .project-code,
-    .view-btn {
-      opacity: 0;
-      max-height: 0;
-      transition: opacity 0.5s ease, max-height 0.5s ease;
-    }
-
-    .project-card.expanded .project-description,
-    .project-card.expanded .project-tags,
-    .project-card.expanded .project-code,
-    .project-card.expanded .view-btn {
-      opacity: 1;
-      max-height: 500px;
-      margin-top: 10px;
-    }
-
-    .project-tags span {
-      display: inline-block;
-      margin-right: 10px;
-      margin-bottom: 8px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
-      color: #D4AF37;
-      transition: all 0.3s ease, transform 0.3s ease;
-    }
-
-    .project-tags span:hover {
-      transform: translateY(-2px) scale(1.05);
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      color: #fff;
-    }
-
-    .view-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      color: #fff;
-      text-decoration: none;
-      transition: all 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .view-btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-      background: linear-gradient(135deg, #D4AF37, #B8860B);
-    }
-
-    .project-code {
-      background: linear-gradient(135deg, #fff, #f9f9f9);
-      border-left: 4px solid #D4AF37;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 10px;
-      overflow-x: auto;
-      font-family: 'Courier New', Courier, monospace;
-      color: #2C2C2C;
-      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
-    }
-
-    .project-code code {
-      display: block;
-      white-space: pre-wrap;
-      color: #333;
-    }
-
-    .coding-projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-      gap: 40px;
-      justify-content: center;
-    }
-
-    .coding-card {
-      background: #fff;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, transform 0.3s ease;
-      max-height: 350px;
-      cursor: pointer;
-      position: relative;
-      opacity: 0;
-      transform: translateY(40px);
-      margin: 0 auto;
-    }
-
-    .coding-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: all 0.8s ease;
-    }
-
-    .coding-card.expanded {
-      max-height: 3000px;
-    }
-
-    .coding-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
-    }
-
-    .coding-demo-iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      max-width: 500px;
-      border: none;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      background: #fff;
-      transition: transform 0.4s ease, filter 0.4s ease;
-    }
-    
-    .coding-card:hover .coding-demo-iframe {
-      transform: scale(1.05);
-      filter: brightness(1.05);
-    }
-    
-    .coding-card-content {
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    .coding-card-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .coding-card-description,
-    .coding-card-tags,
-    .coding-demo-iframe,
-    .coding-view-btn {
-      opacity: 0;
-      max-height: 0;
-      transition: opacity 0.5s ease, max-height 0.5s ease;
-    }
-
-    .coding-card.expanded .coding-card-description,
-    .coding-card.expanded .coding-card-tags,
-    .coding-card.expanded .coding-demo-iframe,
-    .coding-card.expanded .coding-view-btn {
-      opacity: 1;
-      max-height: 500px;
-      margin-top: 10px;
-    }
-
-    .coding-card-tags span {
-      display: inline-block;
-      margin-right: 10px;
-      margin-bottom: 8px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
-      color: #D4AF37;
-      transition: all 0.3s ease, transform 0.3s ease;
-    }
-
-    .coding-card-tags span:hover {
-      transform: translateY(-2px) scale(1.05);
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      color: #fff;
-    }
-
-    .coding-demo-iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      max-width: 500px;
-      border: 3px solid #D4AF37;
-      border-radius: 10px;
-      margin: 15px 0;
-      background: #fff;
-      transition: all 0.3s ease;
-    }
-
-    .coding-view-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      color: #fff;
-      text-decoration: none;
-      transition: all 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .coding-view-btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-      background: linear-gradient(135deg, #D4AF37, #B8860B);
-    }
-
-    footer {
-      background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
-      color: #fff;
-      padding: 60px 20px;
-      text-align: center;
-      margin-top: 80px;
-      position: relative;
-      z-index: 1;
-    }
-
-    @media (max-width: 768px) {
-      .projects-grid {
-        grid-template-columns: 1fr;
-        /* single column that fits screen */
-      }
-
-      .coding-projects-grid {
-        grid-template-columns: 1fr;
-        /* single column */
-      }
-
-      .project-image,
-      .coding-demo-image,
-      .coding-demo-iframe {
-        max-width: 100%;
-        /* scale with screen */
-        height: auto;
-        /* keep aspect ratio */
-      }
-
-      main {
-        padding: 140px 20px 60px;
-      }
-
-      main h1 {
-        font-size: 2.2rem;
-      }
-
-      main h2 {
-        font-size 4.5rem;
-      }
-
-      .section-header {
-        font-size: 1.8rem;
-      }
-
-      header {
-        padding: 20px;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      header nav {
-        gap: 1rem;
-        justify-content: center;
-      }
-
-      .coding-projects-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .project-description a {
-      position: relative;
-      color: #D4AF37;
-      font-weight: 600;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .project-description a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      transition: width 0.3s ease;
-      border-radius: 1px;
-    }
-
-    .project-description a:hover {
-      color: #B8860B;
-    }
-
-    .project-description a:hover::after {
-      width: 100%;
-    }
-  </style>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Mateo Johnson</title>
+    <style>
+        /* Reset & Global */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #FFFEF7 0%, #FFF8E1 50%, #FFFEF7 100%);
+            color: #2C2C2C;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                              radial-gradient(circle at 40% 40%, rgba(255, 223, 0, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        /* Header Styles */
+        @keyframes goldShimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            position: sticky;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 15px 40px;
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #D4AF37;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShimmer 3s linear infinite;
+        }
+
+        .logo-img {
+            max-width: 60px;
+            max-height: 60px;
+            width: auto;
+            height: auto;
+            display: block;
+        }
+
+        header nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        header nav a {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #555;
+            padding: 12px 20px;
+            border-radius: 25px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent;
+            overflow: hidden;
+        }
+
+        header nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+            border-radius: 25px;
+            transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        header nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FFD700, #D4AF37);
+            border-radius: 1px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        header nav a:hover {
+            color: #D4AF37;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        header nav a:hover::before {
+            left: 0;
+        }
+
+        header nav a:hover::after {
+            width: 60%;
+        }
+
+        header nav a:active {
+            transform: translateY(-1px);
+        }
+
+        header nav a.active {
+            color: #D4AF37;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+        }
+
+        header nav a.active::after {
+            width: 60%;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            padding: 180px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 1;
+        }
+
+        main h1 {
+            font-size: 4.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 300;
+            background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1.2s ease-out forwards;
+            position: relative;
+        }
+
+        main h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #D4AF37);
+            border-radius: 2px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .section-header {
+            font-size: 4.5rem;
+            text-align: center;
+            margin: 80px 0 40px;
+            font-weight: 300;
+            background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1.2s ease-out forwards;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #D4AF37);
+            border-radius: 2px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* Collapsible Project Cards with Iframe Covers */
+        .project-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+            max-height: 350px;
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+
+        .project-card.expanded {
+            max-height: 3000px;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Cover iframe styling - replaces project-image */
+        .project-cover-iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+            pointer-events: none; /* Prevent interaction when collapsed */
+            transition: transform 0.4s ease, filter 0.4s ease;
+            background: #f8f8f8;
+        }
+
+        .project-card:hover .project-cover-iframe {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+
+        .project-card.expanded .project-cover-iframe {
+            pointer-events: auto; /* Enable interaction when expanded */
+        }
+
+        .project-content {
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .project-description, .project-tags, .project-code, .view-btn {
+            opacity: 0;
+            max-height: 0;
+            transition: opacity 0.5s ease, max-height 0.5s ease;
+        }
+
+        .project-card.expanded .project-description,
+        .project-card.expanded .project-tags,
+        .project-card.expanded .project-code,
+        .project-card.expanded .view-btn {
+            opacity: 1;
+            max-height: 500px;
+            margin-top: 10px;
+        }
+
+        .project-tags span {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+            color: #D4AF37;
+            transition: all 0.3s ease, transform 0.3s ease;
+        }
+
+        .project-tags span:hover {
+            transform: translateY(-2px) scale(1.05);
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            color: #fff;
+        }
+
+        .view-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .view-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            background: linear-gradient(135deg, #D4AF37, #B8860B);
+        }
+
+        .project-code {
+            background: linear-gradient(135deg, #fff, #f9f9f9);
+            border-left: 4px solid #D4AF37;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            color: #2C2C2C;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.1);
+        }
+
+        .project-code code {
+            display: block;
+            white-space: pre-wrap;
+            color: #333;
+        }
+
+        .coding-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .coding-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: max-height 0.5s ease, opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+            max-height: 350px;
+            cursor: pointer;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            margin: 0 auto;
+        }
+
+        .coding-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+
+        .coding-card.expanded {
+            max-height: 3000px;
+        }
+
+        .coding-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Cover iframe for coding demos - replaces coding-demo-image */
+        .coding-cover-iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+            pointer-events: none; /* Prevent interaction when collapsed */
+            transition: transform 0.4s ease, filter 0.4s ease;
+            background: #f8f8f8;
+        }
+
+        .coding-card:hover .coding-cover-iframe {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+
+        .coding-card.expanded .coding-cover-iframe {
+            pointer-events: auto; /* Enable interaction when expanded */
+        }
+
+        .coding-card-content {
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .coding-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .coding-card-description, .coding-card-tags, .coding-demo-iframe, .coding-view-btn {
+            opacity: 0;
+            max-height: 0;
+            transition: opacity 0.5s ease, max-height 0.5s ease;
+        }
+
+        .coding-card.expanded .coding-card-description,
+        .coding-card.expanded .coding-card-tags,
+        .coding-card.expanded .coding-demo-iframe,
+        .coding-card.expanded .coding-view-btn {
+            opacity: 1;
+            max-height: 500px;
+            margin-top: 10px;
+        }
+
+        .coding-card-tags span {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
+            color: #D4AF37;
+            transition: all 0.3s ease, transform 0.3s ease;
+        }
+
+        .coding-card-tags span:hover {
+            transform: translateY(-2px) scale(1.05);
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            color: #fff;
+        }
+
+        .coding-demo-iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            max-width: 500px;
+            border: 3px solid #D4AF37;
+            border-radius: 10px;
+            margin: 15px 0;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .coding-view-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .coding-view-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            background: linear-gradient(135deg, #D4AF37, #B8860B);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
+            color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .coding-projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-cover-iframe, .coding-cover-iframe, .coding-demo-iframe {
+                max-width: 100%;
+                height: auto;
+            }
+
+            main {
+                padding: 140px 20px 60px;
+            }
+
+            main h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-header {
+                font-size: 1.8rem;
+            }
+
+            header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            header nav {
+                gap: 1rem;
+                justify-content: center;
+            }
+        }
+
+        .project-description a {
+            position: relative;
+            color: #D4AF37;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .project-description a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #FFD700, #D4AF37);
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .project-description a:hover {
+            color: #B8860B;
+        }
+
+        .project-description a:hover::after {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-  <header id="header">
-    <div class="logo">
-      <a href="/"><img src="https://mateo-johnson.github.io/resources/logo.png" alt="Logo" class="logo-img"></a>
-    </div>
-    <nav>
-      <a href="/skills">Skills</a>
-      <a href="#" class="active">Projects</a>
-      <a href="/contact">Contact</a>
-    </nav>
-  </header>
+    <header id="header">
+        <div class="logo">
+            <a href="/"><img src="https://mateo-johnson.github.io/resources/logo.png" alt="Logo" class="logo-img"></a>
+        </div>
+        <nav>
+            <a href="/skills">Skills</a>
+            <a href="#" class="active">Projects</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
 
-  <main>
-    <h1>My Projects</h1>
-    <div class="projects-grid" id="projectsGrid"></div>
+    <main>
+        <h1>My Projects</h1>
+        <div class="projects-grid" id="projectsGrid"></div>
+        <h2 class="section-header">Web Design Demos</h2>
+        <div class="coding-projects-grid" id="codingProjectsGrid"></div>
+    </main>
 
-    <h2 class="section-header">Web Design Demos</h2>
-    <div class="coding-projects-grid" id="codingProjectsGrid"></div>
-  </main>
+    <footer>
+        <p>&copy; 2025 Mateo Johnson. All Rights Reserved.</p>
+    </footer>
 
-  <footer>
-    <p>&copy; 2025 Mateo Johnson. All Rights Reserved.</p>
-  </footer>
-
-  <script>
-  // Header scroll effect
-  window.addEventListener('scroll', function() {
-    const header = document.getElementById('header');
-    if (window.scrollY > 50) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-  });
-
-  // Escape HTML for code blocks
-  function escapeHTML(str) {
-    return str.replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
-
-  // Reveal animation on scroll
-  const revealOnScroll = () => {
-    const triggerBottom = window.innerHeight * 0.85;
-    document.querySelectorAll('.project-card, .coding-card').forEach(card => {
-      const cardTop = card.getBoundingClientRect().top;
-      if (cardTop < triggerBottom) card.classList.add('visible');
-    });
-  };
-  window.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('load', revealOnScroll);
-
-  // Load coding projects (live iframe cover, no lazy load)
-  fetch('coding-projects.json')
-    .then(response => response.json())
-    .then(codingProjects => {
-      const grid = document.getElementById('codingProjectsGrid');
-      codingProjects.forEach(proj => {
-        const card = document.createElement('div');
-        card.className = 'coding-card';
-
-        const content = document.createElement('div');
-        content.className = 'coding-card-content';
-
-        // Live demo iframe as cover
-        if (proj.demoUrl) {
-          const iframe = document.createElement('iframe');
-          iframe.className = 'coding-demo-iframe';
-          iframe.src = proj.demoUrl;
-          iframe.title = `${proj.title} Demo`;
-          iframe.frameBorder = '0';
-          iframe.allowFullscreen = true;
-          content.appendChild(iframe);
-        }
-
-        // Title
-        const title = document.createElement('h3');
-        title.className = 'coding-card-title';
-        title.textContent = proj.title;
-        content.appendChild(title);
-
-        // Description
-        const desc = document.createElement('p');
-        desc.className = 'coding-card-description';
-        desc.innerHTML = proj.description;
-        content.appendChild(desc);
-
-        // Tags
-        const tagsDiv = document.createElement('div');
-        tagsDiv.className = 'coding-card-tags';
-        tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
-        content.appendChild(tagsDiv);
-
-        // View button
-        const viewBtn = document.createElement('a');
-        viewBtn.href = proj.link || proj.demoUrl;
-        viewBtn.className = 'coding-view-btn';
-        viewBtn.textContent = 'View Demo';
-        viewBtn.target = '_blank';
-        content.appendChild(viewBtn);
-
-        card.appendChild(content);
-
-        // Toggle expand/collapse (only affects description/tags/button, iframe always visible)
-        card.addEventListener('click', (e) => {
-          if (e.target.tagName !== 'IFRAME' && e.target.tagName !== 'A') {
-            card.classList.toggle('expanded');
-          }
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
         });
 
-        grid.appendChild(card);
-      });
-      revealOnScroll();
-    })
-    .catch(error => console.error('Error loading coding projects:', error));
-
-  // Load regular projects
-  fetch('projects.json')
-    .then(response => response.json())
-    .then(projects => {
-      const grid = document.getElementById('projectsGrid');
-      projects.forEach(proj => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-
-        const content = document.createElement('div');
-        content.className = 'project-content';
-
-        // Project image
-        const img = document.createElement('img');
-        img.src = proj.image;
-        img.alt = proj.title;
-        img.className = 'project-image';
-        content.appendChild(img);
-
-        // Title
-        const title = document.createElement('h3');
-        title.className = 'project-title';
-        title.textContent = proj.title;
-        content.appendChild(title);
-
-        // Description
-        const desc = document.createElement('p');
-        desc.className = 'project-description';
-        desc.innerHTML = proj.description;
-        content.appendChild(desc);
-
-        // Tags
-        const tagsDiv = document.createElement('div');
-        tagsDiv.className = 'project-tags';
-        tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
-        content.appendChild(tagsDiv);
-
-        // Optional code blocks
-        if (proj.code) {
-          proj.code.forEach(codeObj => {
-            const codeBlock = document.createElement('pre');
-            codeBlock.className = 'project-code';
-            const codeElem = document.createElement('code');
-            codeElem.innerHTML = escapeHTML(codeObj.snippet);
-            codeBlock.appendChild(codeElem);
-            content.appendChild(codeBlock);
-          });
+        // Escape HTML for code blocks
+        function escapeHTML(str) {
+            return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
         }
 
-        // View button
-        const viewBtn = document.createElement('a');
-        viewBtn.href = proj.link;
-        viewBtn.className = 'view-btn';
-        viewBtn.textContent = 'View Project';
-        content.appendChild(viewBtn);
+        // Reveal animation on scroll
+        const revealOnScroll = () => {
+            const triggerBottom = window.innerHeight * 0.85;
+            document.querySelectorAll('.project-card, .coding-card').forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < triggerBottom) card.classList.add('visible');
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
 
-        card.appendChild(content);
+        // Load coding projects from JSON with iframe covers
+        fetch('coding-projects.json')
+            .then(response => response.json())
+            .then(codingProjects => {
+                const grid = document.getElementById('codingProjectsGrid');
+                codingProjects.forEach(proj => {
+                    const card = document.createElement('div');
+                    card.className = 'coding-card';
 
-        // Toggle expand/collapse
-        card.addEventListener('click', () => card.classList.toggle('expanded'));
+                    // Use iframe as cover if demoUrl exists, otherwise fallback to image
+                    if (proj.demoUrl) {
+                        const coverIframe = document.createElement('iframe');
+                        coverIframe.src = proj.demoUrl;
+                        coverIframe.className = 'coding-cover-iframe';
+                        coverIframe.title = `${proj.title} Preview`;
+                        coverIframe.frameBorder = '0';
+                        coverIframe.allowFullscreen = true;
+                        card.appendChild(coverIframe);
+                    } else if (proj.image) {
+                        // Fallback to image if no demoUrl
+                        const img = document.createElement('img');
+                        img.src = proj.image;
+                        img.alt = proj.title;
+                        img.className = 'coding-demo-image';
+                        card.appendChild(img);
+                    }
 
-        grid.appendChild(card);
-      });
-      revealOnScroll();
-    })
-    .catch(error => console.error('Error loading projects:', error));
-</script>
+                    const content = document.createElement('div');
+                    content.className = 'coding-card-content';
+
+                    // Title
+                    const title = document.createElement('h3');
+                    title.className = 'coding-card-title';
+                    title.textContent = proj.title;
+                    content.appendChild(title);
+
+                    // Description
+                    const desc = document.createElement('p');
+                    desc.className = 'coding-card-description';
+                    desc.innerHTML = proj.description;
+                    content.appendChild(desc);
+
+                    // Tags
+                    const tagsDiv = document.createElement('div');
+                    tagsDiv.className = 'coding-card-tags';
+                    tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
+                    content.appendChild(tagsDiv);
+
+                    // Full iframe element (lazy-load when expanded, only if demoUrl exists)
+                    let iframe;
+                    if (proj.demoUrl) {
+                        iframe = document.createElement('iframe');
+                        iframe.className = 'coding-demo-iframe';
+                        iframe.dataset.src = proj.demoUrl; // store URL for lazy-load
+                        iframe.title = `${proj.title} Demo`;
+                        iframe.frameBorder = '0';
+                        iframe.allowFullscreen = true;
+                        content.appendChild(iframe);
+                    }
+
+                    // View button
+                    const viewBtn = document.createElement('a');
+                    viewBtn.href = proj.link || proj.demoUrl;
+                    viewBtn.className = 'coding-view-btn';
+                    viewBtn.textContent = 'View Demo';
+                    viewBtn.target = '_blank';
+                    content.appendChild(viewBtn);
+
+                    card.appendChild(content);
+
+                    // Toggle expand/collapse & lazy-load iframe
+                    card.addEventListener('click', (e) => {
+                        if (e.target.tagName !== 'IFRAME' && e.target.tagName !== 'A') {
+                            card.classList.toggle('expanded');
+                            if (card.classList.contains('expanded') && iframe && !iframe.src) {
+                                iframe.src = iframe.dataset.src; // load demo when expanded
+                            }
+                        }
+                    });
+
+                    grid.appendChild(card);
+                });
+                revealOnScroll();
+            })
+            .catch(error => console.error('Error loading coding projects:', error));
+
+        // Load regular projects from JSON with iframe covers
+        fetch('projects.json')
+            .then(response => response.json())
+            .then(projects => {
+                const grid = document.getElementById('projectsGrid');
+                projects.forEach(proj => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+
+                    // Use iframe as cover if demoUrl exists, otherwise use image
+                    if (proj.demoUrl) {
+                        const coverIframe = document.createElement('iframe');
+                        coverIframe.src = proj.demoUrl;
+                        coverIframe.className = 'project-cover-iframe';
+                        coverIframe.title = `${proj.title} Preview`;
+                        coverIframe.frameBorder = '0';
+                        coverIframe.allowFullscreen = true;
+                        card.appendChild(coverIframe);
+                    } else if (proj.image) {
+                        // Fallback to image if no demoUrl
+                        const img = document.createElement('img');
+                        img.src = proj.image;
+                        img.alt = proj.title;
+                        img.className = 'project-image';
+                        card.appendChild(img);
+                    }
+
+                    const content = document.createElement('div');
+                    content.className = 'project-content';
+
+                    // Title
+                    const title = document.createElement('h3');
+                    title.className = 'project-title';
+                    title.textContent = proj.title;
+                    content.appendChild(title);
+
+                    // Description
+                    const desc = document.createElement('p');
+                    desc.className = 'project-description';
+                    desc.innerHTML = proj.description;
+                    content.appendChild(desc);
+
+                    // Tags
+                    const tagsDiv = document.createElement('div');
+                    tagsDiv.className = 'project-tags';
+                    tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
+                    content.appendChild(tagsDiv);
+
+                    // Optional code blocks
+                    if (proj.code) {
+                        proj.code.forEach(codeObj => {
+                            const codeBlock = document.createElement('pre');
+                            codeBlock.className = 'project-code';
+                            const codeElem = document.createElement('code');
+                            codeElem.innerHTML = escapeHTML(codeObj.snippet);
+                            codeBlock.appendChild(codeElem);
+                            content.appendChild(codeBlock);
+                        });
+                    }
+
+                    // View button
+                    const viewBtn = document.createElement('a');
+                    viewBtn.href = proj.link;
+                    viewBtn.className = 'view-btn';
+                    viewBtn.textContent = 'View Project';
+                    content.appendChild(viewBtn);
+
+                    card.appendChild(content);
+
+                    // Toggle expand/collapse
+                    card.addEventListener('click', () => card.classList.toggle('expanded'));
+
+                    grid.appendChild(card);
+                });
+                revealOnScroll();
+            })
+            .catch(error => console.error('Error loading projects:', error));
+    </script>
 </body>
-
 </html>
