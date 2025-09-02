@@ -728,61 +728,71 @@
             })
             .catch(error => console.error('Error loading coding projects:', error));
 
-fetch('projects.json')
-      .then(response => response.json())
-      .then(projects => {
-        const grid = document.getElementById('projectsGrid');
-        projects.forEach(proj => {
-          const card = document.createElement('div');
-          card.className = 'project-card';
-          const content = document.createElement('div');
-          content.className = 'project-content';
-          // Project image
-          const img = document.createElement('img');
-          img.src = proj.image;
-          img.alt = proj.title;
-          img.className = 'project-image';
-          content.appendChild(img);
-          // Title
-          const title = document.createElement('h3');
-          title.className = 'project-title';
-          title.textContent = proj.title;
-          content.appendChild(title);
-          // Description
-          const desc = document.createElement('p');
-          desc.className = 'project-description';
-          desc.innerHTML = proj.description;
-          content.appendChild(desc);
-          // Tags
-          const tagsDiv = document.createElement('div');
-          tagsDiv.className = 'project-tags';
-          tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
-          content.appendChild(tagsDiv);
-          // Optional code blocks
-          if (proj.code) {
-            proj.code.forEach(codeObj => {
-              const codeBlock = document.createElement('pre');
-              codeBlock.className = 'project-code';
-              const codeElem = document.createElement('code');
-              codeElem.innerHTML = escapeHTML(codeObj.snippet);
-              codeBlock.appendChild(codeElem);
-              content.appendChild(codeBlock);
-            });
-          }
-          // View button
-          const viewBtn = document.createElement('a');
-          viewBtn.href = proj.link;
-          viewBtn.className = 'view-btn';
-          viewBtn.textContent = 'View Project';
-          content.appendChild(viewBtn);
-          card.appendChild(content);
-          // Toggle expand/collapse
-          card.addEventListener('click', () => card.classList.toggle('expanded'));
-          grid.appendChild(card);
-        });
-        revealOnScroll();
-      })
-      .catch(error => console.error('Error loading projects:', error));
+        // Load regular projects from JSON (back to original implementation)
+        fetch('projects.json')
+            .then(response => response.json())
+            .then(projects => {
+                const grid = document.getElementById('projectsGrid');
+                projects.forEach(proj => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+                    const content = document.createElement('div');
+                    content.className = 'project-content';
+
+                    // Project image (original implementation)
+                    const img = document.createElement('img');
+                    img.src = proj.image;
+                    img.alt = proj.title;
+                    img.className = 'project-image';
+                    content.appendChild(img);
+
+                    // Title
+                    const title = document.createElement('h3');
+                    title.className = 'project-title';
+                    title.textContent = proj.title;
+                    content.appendChild(title);
+
+                    // Description
+                    const desc = document.createElement('p');
+                    desc.className = 'project-description';
+                    desc.innerHTML = proj.description;
+                    content.appendChild(desc);
+
+                    // Tags
+                    const tagsDiv = document.createElement('div');
+                    tagsDiv.className = 'project-tags';
+                    tagsDiv.innerHTML = proj.tags.map(tag => `<span>${tag}</span>`).join('');
+                    content.appendChild(tagsDiv);
+
+                    // Optional code blocks
+                    if (proj.code) {
+                        proj.code.forEach(codeObj => {
+                            const codeBlock = document.createElement('pre');
+                            codeBlock.className = 'project-code';
+                            const codeElem = document.createElement('code');
+                            codeElem.innerHTML = escapeHTML(codeObj.snippet);
+                            codeBlock.appendChild(codeElem);
+                            content.appendChild(codeBlock);
+                        });
+                    }
+
+                    // View button
+                    const viewBtn = document.createElement('a');
+                    viewBtn.href = proj.link;
+                    viewBtn.className = 'view-btn';
+                    viewBtn.textContent = 'View Project';
+                    content.appendChild(viewBtn);
+
+                    card.appendChild(content);
+
+                    // Toggle expand/collapse
+                    card.addEventListener('click', () => card.classList.toggle('expanded'));
+
+                    grid.appendChild(card);
+                });
+                revealOnScroll();
+            })
+            .catch(error => console.error('Error loading projects:', error));
     </script>
 </body>
 </html>
