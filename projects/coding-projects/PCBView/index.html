@@ -381,9 +381,8 @@
   const abs = tok.replace(/^[+-]/, '');
   const intval = parseInt(abs, 10);
   if (Number.isNaN(intval)) return 0;
-  // 4.6 format: divide by 10^6
   let val = intval / 1e6;
-  return val * sign; // unit is already mm
+  return val * sign; 
 }
 
       const subs = [];
@@ -502,11 +501,10 @@
       const box = computeBBox();
       const widthMM = box.maxX - box.minX;
       const heightMM = box.maxY - box.minY;
-      const padding = 40; // px
+      const padding = 40; 
       const scaleX = (canvas.width - padding * 2) / Math.max(0.001, widthMM);
       const scaleY = (canvas.height - padding * 2) / Math.max(0.001, heightMM);
       const scale = Math.min(scaleX, scaleY);
-      // compute offsets so box.min maps to padding
       const offsetX = padding - box.minX * scale;
       const offsetY = padding - box.minY * scale;
       metaInfo = {
@@ -978,12 +976,11 @@
     showTopSilk.addEventListener('change', draw);
     showBottomSilk.addEventListener('change', draw);
 const resizeObserver = new ResizeObserver(() => {
-  if (!board.edge) return;   // Only redraw if a file is loaded
+  if (!board.edge) return;   
   fitCanvasToBBox();
   draw();
 });
 
-// Attach observer to the parent of the canvas
 resizeObserver.observe(canvas.parentElement);
 
     reset();
