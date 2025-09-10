@@ -976,11 +976,14 @@
     showEdge.addEventListener('change', draw);
     showTopSilk.addEventListener('change', draw);
     showBottomSilk.addEventListener('change', draw);
-    window.addEventListener('resize', () => {
-      if (!board.edge) return;
-      fitCanvasToBBox();
-      draw();
-    });
+const resizeObserver = new ResizeObserver(() => {
+  if (!board.edge) return;  
+  fitCanvasToBBox();
+  draw();
+});
+
+resizeObserver.observe(canvas.parentElement);
+
     reset();
     fitCanvasToBBox();
 
