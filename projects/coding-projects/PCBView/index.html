@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PCB Placement Viewer | Mateo Johnson</title>
+  <style>
+    :root {
+      --bg: #071026;
+      --card: #071322;
+      --muted: #9fb0d0;
+      --accent: #60a5fa;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
+      background: linear-gradient(180deg, #051022, #021018);
+      color: #dff0ff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1200px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 12px 40px rgba(2, 6, 23, 0.8);
+    }
+
+    header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #e6f7ff;
+    }
+
+    .controls {
+      margin-left: auto;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      background: linear-gradient(180deg, var(--accent), #2b8cff);
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(38, 113, 255, 0.12);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      padding: 8px 10px;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .canvas-wrap {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      display: flex;
+      padding: 12px;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    #boardCanvas {
+      background: linear-gradient(180deg, #061426, #021218);
+      border-radius: 6px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .sidebar {
+      width: 340px;
+      min-width: 240px;
+      max-height: 760px;
+      overflow: auto;
+      padding: 8px;
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 6px 8px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .comp-list {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .comp-row {
+      padding: 6px 8px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .comp-row:hover {
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .highlight {
+      background: linear-gradient(90deg, #153a62, #103552);
+      color: white;
+    }
+
+    input[type=file] {
+      display: none;
+    }
+
+    label.fileBtn {
+      cursor: pointer;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      color: var(--muted);
+      border: 1px dashed rgba(255, 255, 255, 0.03);
+    }
+
+    select,
+    input[type=checkbox] {
+      background: transparent;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .toggles {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .swatch {
+      width: 18px;
+      height: 12px;
+      border-radius: 3px;
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app" role="application">
+    <header>
+      <div>
+        <h1>PCB Viewer — footprints & side filter</h1>
+        <div class="small">Fixed real scale (user-readable). Uses Silkscreen Gerbers to draw footprints.</div>
+      </div>
+
+      <div class="controls">
+        <label class="fileBtn" title="Select ZIP">
+          Load ZIP
+          <input id="zipInput" type="file" accept=".zip" />
+        </label>
+
+        <button id="prevBtn" class="btn secondary">◀ Prev</button>
+        <button id="nextBtn" class="btn">Next ▶</button>
+      </div>
+    </header>
+
+    <div class="canvas-wrap" style="align-items:stretch;">
+      <div style="flex:1; min-width:480px;">
+        <canvas id="boardCanvas" width="900" height="620"></canvas>
+      </div>
+
+      <div class="sidebar" id="sidebar">
+        <div class="meta" id="meta">No file loaded.</div>
+
+        <div style="display:flex; gap:8px; align-items:center;">
+          <label class="small" for="sideFilter">Show:</label>
+          <select id="sideFilter">
+            <option value="top">Top only</option>
+            <option value="bottom">Bottom only</option>
+            <option value="both">Both</option>
+          </select>
+
+          <label style="margin-left:auto;"><input id="showEdge" type="checkbox" checked /> Edge</label>
+        </div>
+
+        <div class="toggles">
+          <label><input id="showTopSilk" type="checkbox" checked /> Show F.SilkS (top)</label>
+          <label><input id="showBottomSilk" type="checkbox" checked /> Show B.SilkS (bottom)</label>
+        </div>
+
+        <div class="legend">
+          <div class="swatch" style="background:#76b7ff"></div>
+          <div class="small">Board edge / outline</div>
+        </div>
+
+        <div class="nav" style="margin-top:12px;">
+          <div class="pill" id="indexPill">0 / 0</div>
+          <div style="flex:1"></div>
+          <div class="small" id="fileInfo"></div>
+        </div>
+
+        <div class="comp-list" id="compList"></div>
+
+        <footer>
+          <div class="small">Works best when ZIP contains: *-Edge_Cuts.gbr, F.SilkS.gbr, B.SilkS.gbr, *-top-pos.csv and/or *-bottom-pos.csv (KiCad CSV placement).</div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script>
+    const canvas = document.getElementById('boardCanvas');
+    const ctx = canvas.getContext('2d');
+    const zipInput = document.getElementById('zipInput');
+    const meta = document.getElementById('meta');
+    const compListDiv = document.getElementById('compList');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indexPill = document.getElementById('indexPill');
+    const sideFilter = document.getElementById('sideFilter');
+    const showEdge = document.getElementById('showEdge');
+    const showTopSilk = document.getElementById('showTopSilk');
+    const showBottomSilk = document.getElementById('showBottomSilk');
+    const fileInfo = document.getElementById('fileInfo');
+    let board = {
+      edge: null,
+      topSilk: null,
+      bottomSilk: null
+    };
+    let components = {
+      top: [],
+      bottom: []
+    };
+    let compMap = {
+      top: [],
+      bottom: []
+    };
+    let curIndex = -1;
+    let visibleMode = 'top';
+    let metaInfo = {};
+
+    function readFileAsArrayBuffer(file) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = e => res(e.target.result);
+        r.onerror = rej;
+        r.readAsArrayBuffer(file);
+      });
+    }
+
+    function readFileAsText(file) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = e => res(e.target.result);
+        r.onerror = rej;
+        r.readAsText(file);
+      });
+    }
+
+    function reset() {
+      board = {
+        edge: null,
+        topSilk: null,
+        bottomSilk: null
+      };
+      components = {
+        top: [],
+        bottom: []
+      };
+      compMap = {
+        top: [],
+        bottom: []
+      };
+      curIndex = -1;
+      metaInfo = {};
+      compListDiv.innerHTML = '';
+      meta.textContent = 'No file loaded.';
+      fileInfo.textContent = '';
+      draw();
+    }
+
+    function parseGerberPaths(txt) {
+      const lines = txt.split(/\r?\n/);
+      let formatInt = 4,
+        formatDec = 6;
+      let unit = 'mm';
+      for (const ln of lines) {
+        const fm = ln.match(/%FSLA?X?(\d)(\d)Y/);
+        if (fm) {
+          formatInt = parseInt(fm[1]);
+          formatDec = parseInt(fm[2]);
+          break;
+        }
+      }
+      for (const ln of lines) {
+        if (/%MOMM%/.test(ln) || /MOMM/.test(ln)) {
+          unit = 'mm';
+          break;
+        }
+        if (/%MOIN%/.test(ln) || /MOIN/.test(ln)) {
+          unit = 'in';
+          break;
+        }
+      }
+
+      function coordFromToken(tok) {
+        if (!tok) return 0;
+        const sign = tok.startsWith('-') ? -1 : 1;
+        const abs = tok.replace(/^[+-]/, '');
+        const intval = parseInt(abs, 10);
+        if (Number.isNaN(intval)) return 0;
+        let val = intval / Math.pow(10, formatDec);
+        if (unit === 'in') val = val * 25.4;
+        return val * sign;
+      }
+      const subs = [];
+      let cur = [];
+      for (const ln of lines) {
+        const m = ln.match(/X([+-]?\d+)Y([+-]?\d+)D0?([12])/);
+        if (m) {
+          const x = coordFromToken(m[1]);
+          const y = coordFromToken(m[2]);
+          const d = m[3];
+          if (d === '2') {
+            if (cur.length) {
+              subs.push({
+                pts: cur.slice(),
+                closed: false
+              });
+              cur = [];
+            }
+            cur.push({
+              x,
+              y
+            });
+          } else if (d === '1') {
+            cur.push({
+              x,
+              y
+            });
+          }
+        } else {
+          const m2 = ln.match(/X([+-]?\d+)/);
+          const m3 = ln.match(/Y([+-]?\d+)/);
+        }
+      }
+      if (cur.length) subs.push({
+        pts: cur.slice(),
+        closed: false
+      });
+      for (const s of subs) {
+        if (s.pts.length >= 3) {
+          const a = s.pts[0],
+            b = s.pts[s.pts.length - 1];
+          if (Math.hypot(a.x - b.x, a.y - b.y) < 0.0005) s.closed = true;
+        }
+      }
+      return {
+        subs,
+        unit
+      };
+    }
+
+    function centroidOfPath(path) {
+      if (!path || !path.pts || path.pts.length === 0) return {
+        x: 0,
+        y: 0
+      };
+      let sx = 0,
+        sy = 0;
+      for (const p of path.pts) {
+        sx += p.x;
+        sy += p.y;
+      }
+      return {
+        x: sx / path.pts.length,
+        y: sy / path.pts.length
+      };
+    }
+
+    function computeBBox() {
+      let minX = 1e9,
+        minY = 1e9,
+        maxX = -1e9,
+        maxY = -1e9;
+      const addPoint = (p) => {
+        minX = Math.min(minX, p.x);
+        minY = Math.min(minY, p.y);
+        maxX = Math.max(maxX, p.x);
+        maxY = Math.max(maxY, p.y);
+      };
+      if (board.edge)
+        for (const s of board.edge.subs)
+          for (const p of s.pts) addPoint(p);
+      if (board.topSilk)
+        for (const s of board.topSilk.subs)
+          for (const p of s.pts) addPoint(p);
+      if (board.bottomSilk)
+        for (const s of board.bottomSilk.subs)
+          for (const p of s.pts) addPoint(p);
+      for (const c of components.top) addPoint({
+        x: c.x,
+        y: c.y
+      });
+      for (const c of components.bottom) addPoint({
+        x: c.x,
+        y: c.y
+      });
+      if (minX === 1e9) {
+        minX = 0;
+        minY = 0;
+        maxX = 100;
+        maxY = 100;
+      }
+      return {
+        minX,
+        minY,
+        maxX,
+        maxY
+      };
+    }
+
+    function fitCanvasToBBox() {
+      const parentRect = canvas.parentElement.getBoundingClientRect();
+      const pxW = Math.max(480, Math.floor(parentRect.width));
+      const pxH = Math.max(360, Math.floor(parentRect.height));
+      canvas.width = pxW;
+      canvas.height = pxH;
+      const box = computeBBox();
+      const widthMM = box.maxX - box.minX;
+      const heightMM = box.maxY - box.minY;
+      const padding = 40; // px
+      const scaleX = (canvas.width - padding * 2) / Math.max(0.001, widthMM);
+      const scaleY = (canvas.height - padding * 2) / Math.max(0.001, heightMM);
+      const scale = Math.min(scaleX, scaleY);
+      // compute offsets so box.min maps to padding
+      const offsetX = padding - box.minX * scale;
+      const offsetY = padding - box.minY * scale;
+      metaInfo = {
+        bbox: box,
+        scale,
+        offsetX,
+        offsetY,
+        widthMM,
+        heightMM,
+        pxW,
+        pxH
+      };
+    }
+
+    function mmToPxX(x) {
+      return x * metaInfo.scale + metaInfo.offsetX;
+    }
+
+    function mmToPxY(y) {
+      return y * metaInfo.scale + metaInfo.offsetY;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#03161c';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (showEdge.checked && board.edge) {
+        ctx.save();
+        ctx.strokeStyle = '#76b7ff';
+        ctx.lineWidth = 1.5;
+        ctx.fillStyle = 'rgba(28,80,130,0.02)';
+        for (const s of board.edge.subs) {
+          if (!s.pts || s.pts.length < 2) continue;
+          ctx.beginPath();
+          for (let i = 0; i < s.pts.length; i++) {
+            const p = s.pts[i];
+            const px = mmToPxX(p.x),
+              py = mmToPxY(p.y);
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          if (s.closed) ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+      if (board.topSilk && showTopSilk.checked) drawSilk(board.topSilk, '#ffffff', 'rgba(255,255,255,0.06)', 0.9);
+      if (board.bottomSilk && showBottomSilk.checked) drawSilk(board.bottomSilk, '#ffdca3', 'rgba(255,220,160,0.04)', 0.7);
+      const showTop = visibleMode === 'top' || visibleMode === 'both';
+      const showBottom = visibleMode === 'bottom' || visibleMode === 'both';
+
+      function drawComponentMarker(c, isSelected) {
+        const px = mmToPxX(c.x),
+          py = mmToPxY(c.y);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(px, py, isSelected ? 6 : 4, 0, Math.PI * 2);
+        ctx.fillStyle = isSelected ? '#60a5fa' : (c.side === 'top' ? '#a7d3ff' : '#ffdca3');
+        ctx.fill();
+        ctx.lineWidth = isSelected ? 2 : 1;
+        ctx.strokeStyle = isSelected ? '#e6f7ff' : '#102b3a';
+        ctx.stroke();
+        ctx.font = (isSelected ? '12px' : '10px') + ' Inter, Arial';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = isSelected ? '#e6f7ff' : '#cfe8ff';
+        ctx.fillText(c.ref, px, py - (isSelected ? 10 : 8));
+        ctx.restore();
+      }
+      if (showTop)
+        for (let i = 0; i < components.top.length; i++) {
+          drawComponentMarker(components.top[i], (visibleMode === 'top' && i === curIndex));
+        }
+      if (showBottom)
+        for (let i = 0; i < components.bottom.length; i++) {
+          drawComponentMarker(components.bottom[i], (visibleMode === 'bottom' && i === curIndex));
+        }
+      drawMappedFootprints();
+      updateIndexPill();
+    }
+
+    function drawSilk(silk, strokeColor, fillColor, opacity) {
+      ctx.save();
+      ctx.lineWidth = 0.9;
+      ctx.strokeStyle = strokeColor;
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = fillColor;
+      for (const s of silk.subs) {
+        if (!s.pts || s.pts.length < 2) continue;
+        ctx.beginPath();
+        for (let i = 0; i < s.pts.length; i++) {
+          const p = s.pts[i];
+          const px = mmToPxX(p.x),
+            py = mmToPxY(p.y);
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        if (s.closed) ctx.closePath();
+        ctx.stroke();
+        if (s.closed) ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawMappedFootprints() {
+      ctx.save();
+      ctx.lineWidth = 1;
+      if (compMap.top) {
+        for (let i = 0; i < compMap.top.length; i++) {
+          const group = compMap.top[i];
+          if (!group || group.length === 0) continue;
+          const isSelected = (visibleMode === 'top' && i === curIndex);
+          ctx.save();
+          ctx.globalAlpha = isSelected ? 1.0 : 0.85;
+          ctx.strokeStyle = isSelected ? '#bfe8ff' : '#8ec6ff';
+          ctx.fillStyle = isSelected ? 'rgba(16,50,80,0.55)' : 'rgba(14,38,62,0.35)';
+          for (const s of group) {
+            if (!s.pts || s.pts.length < 2) continue;
+            ctx.beginPath();
+            for (let j = 0; j < s.pts.length; j++) {
+              const p = s.pts[j];
+              const px = mmToPxX(p.x),
+                py = mmToPxY(p.y);
+              if (j === 0) ctx.moveTo(px, py);
+              else ctx.lineTo(px, py);
+            }
+            if (s.closed) ctx.closePath();
+            ctx.stroke();
+            if (s.closed) ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+      if (compMap.bottom) {
+        for (let i = 0; i < compMap.bottom.length; i++) {
+          const group = compMap.bottom[i];
+          if (!group || group.length === 0) continue;
+          const isSelected = (visibleMode === 'bottom' && i === curIndex);
+          ctx.save();
+          ctx.globalAlpha = isSelected ? 1.0 : 0.85;
+          ctx.strokeStyle = isSelected ? '#ffdca3' : '#ffb86b';
+          ctx.fillStyle = isSelected ? 'rgba(54,34,10,0.45)' : 'rgba(40,22,8,0.28)';
+          for (const s of group) {
+            if (!s.pts || s.pts.length < 2) continue;
+            ctx.beginPath();
+            for (let j = 0; j < s.pts.length; j++) {
+              const p = s.pts[j];
+              const px = mmToPxX(p.x),
+                py = mmToPxY(p.y);
+              if (j === 0) ctx.moveTo(px, py);
+              else ctx.lineTo(px, py);
+            }
+            if (s.closed) ctx.closePath();
+            ctx.stroke();
+            if (s.closed) ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+      ctx.restore();
+    }
+
+    function updateIndexPill() {
+      let total = 0;
+      if (visibleMode === 'top') total = components.top.length;
+      else if (visibleMode === 'bottom') total = components.bottom.length;
+      else total = components.top.length + components.bottom.length;
+      let idxDisplay = 0;
+      if (curIndex >= 0) idxDisplay = curIndex + 1;
+      indexPill.textContent = `${idxDisplay} / ${total}`;
+      const items = compListDiv.querySelectorAll('.comp-row');
+      items.forEach((el, i) => {
+        el.classList.toggle('highlight', el.dataset.idx == curIndex && el.dataset.side === visibleMode);
+      });
+    }
+
+    function parsePlacementCSVText(txt) {
+      const lines = txt.split(/\r?\n/).filter(l => l.trim() !== '');
+      if (!lines.length) return [];
+      const header = splitCSVLine(lines[0]).map(h => h.replace(/^"|"$/g, '').trim().toLowerCase());
+      const getIndex = (name) => header.findIndex(h => h.includes(name));
+      const idxRef = getIndex('ref'),
+        idxVal = getIndex('val'),
+        idxPkg = getIndex('package'),
+        idxX = getIndex('posx'),
+        idxY = getIndex('posy'),
+        idxRot = getIndex('rot'),
+        idxSide = getIndex('side');
+      const rows = [];
+      for (let i = 1; i < lines.length; i++) {
+        const parts = splitCSVLine(lines[i]);
+        if (parts.length < 3) continue;
+        const ref = (parts[idxRef] || '').replace(/^"|"$/g, '');
+        const val = (parts[idxVal] || '').replace(/^"|"$/g, '');
+        const pkg = (parts[idxPkg] || '').replace(/^"|"$/g, '');
+        const x = parseFloat((parts[idxX] || '0').replace(/^"|"$/g, '')) || 0;
+        const y = parseFloat((parts[idxY] || '0').replace(/^"|"$/g, '')) || 0;
+        const rot = parseFloat((parts[idxRot] || '0').replace(/^"|"$/g, '')) || 0;
+        const side = (parts[idxSide] || '').replace(/^"|"$/g, '').toLowerCase() || 'top';
+        rows.push({
+          ref,
+          val,
+          pkg,
+          x,
+          y,
+          rot,
+          side
+        });
+      }
+      return rows;
+    }
+
+    function splitCSVLine(line) {
+      const res = [];
+      let cur = '',
+        inq = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') {
+          inq = !inq;
+          cur += ch;
+        } else if (ch === ',' && !inq) {
+          res.push(cur);
+          cur = '';
+        } else cur += ch;
+      }
+      res.push(cur);
+      return res.map(s => s.trim());
+    }
+    zipInput.addEventListener('change', async (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      reset();
+      meta.textContent = 'Loading ZIP...';
+      try {
+        const arrayBuffer = await readFileAsArrayBuffer(f);
+        const zip = await JSZip.loadAsync(arrayBuffer);
+        const filenames = Object.keys(zip.files);
+        const edgeKey = filenames.find(n => /edge/i.test(n) && n.toLowerCase().endsWith('.gbr'));
+        const topSilkKey = filenames.find(n => /f\.silk/i.test(n) && n.toLowerCase().endsWith('.gbr')) ||
+          filenames.find(n => /f_silks/i.test(n) && n.toLowerCase().endsWith('.gbr'));
+        const bottomSilkKey = filenames.find(n => /b\.silk/i.test(n) && n.toLowerCase().endsWith('.gbr')) ||
+          filenames.find(n => /b_silks/i.test(n) && n.toLowerCase().endsWith('.gbr'));
+        const topCSVKey = filenames.find(n => /top.*pos/i.test(n) && n.toLowerCase().endsWith('.csv'));
+        const bottomCSVKey = filenames.find(n => /bottom.*pos/i.test(n) && n.toLowerCase().endsWith('.csv'));
+        if (!edgeKey) {
+          meta.textContent = 'Edge_Cuts.gbr not found in ZIP.';
+          return;
+        }
+        meta.textContent = 'Parsing Edge_Cuts...';
+        const edgeTxt = await zip.files[edgeKey].async('string');
+        board.edge = parseGerberPaths(edgeTxt);
+        if (topSilkKey) {
+          meta.textContent = 'Parsing top silkscreen...';
+          const ttxt = await zip.files[topSilkKey].async('string');
+          board.topSilk = parseGerberPaths(ttxt);
+        }
+        if (bottomSilkKey) {
+          meta.textContent = 'Parsing bottom silkscreen...';
+          const btxt = await zip.files[bottomSilkKey].async('string');
+          board.bottomSilk = parseGerberPaths(btxt);
+        }
+        if (topCSVKey) {
+          meta.textContent = 'Reading top placement CSV...';
+          const t = await zip.files[topCSVKey].async('string');
+          components.top = parsePlacementCSVText(t).map(r => ({
+            ...r,
+            side: 'top'
+          }));
+        }
+        if (bottomCSVKey) {
+          meta.textContent = 'Reading bottom placement CSV...';
+          const b = await zip.files[bottomCSVKey].async('string');
+          components.bottom = parsePlacementCSVText(b).map(r => ({
+            ...r,
+            side: 'bottom'
+          }));
+        }
+        fitCanvasToBBox();
+        mapSilksToComponents();
+        meta.textContent = `Loaded: ${edgeKey} — top comps: ${components.top.length}, bottom comps: ${components.bottom.length}`;
+        fileInfo.textContent = `${edgeKey}`;
+        prepareComponentList();
+        draw();
+      } catch (err) {
+        console.error(err);
+        meta.textContent = 'Error loading ZIP: ' + (err && err.message ? err.message : err);
+      }
+    });
+
+    function mapSilksToComponents() {
+      function clusterSubs(subs, clusterRadiusMM = 3.0) {
+        if (!subs) return [];
+        const centroids = subs.map(s => ({
+          s,
+          c: centroidOfPath(s)
+        }));
+        const groups = [];
+        const used = new Array(subs.length).fill(false);
+        for (let i = 0; i < subs.length; i++) {
+          if (used[i]) continue;
+          const g = [subs[i]];
+          used[i] = true;
+          const ci = centroids[i].c;
+          for (let j = i + 1; j < subs.length; j++) {
+            if (used[j]) continue;
+            const cj = centroids[j].c;
+            const d = Math.hypot(ci.x - cj.x, ci.y - cj.y);
+            if (d <= clusterRadiusMM) {
+              used[j] = true;
+              g.push(subs[j]);
+            }
+          }
+          groups.push(g);
+        }
+        return groups;
+      }
+
+      function assignGroupsToComps(groups, comps) {
+        const mapping = new Array(comps.length).fill(null).map(() => []);
+        if (!comps || comps.length === 0) return mapping;
+        for (const g of groups) {
+          let sx = 0,
+            sy = 0,
+            cnt = 0;
+          for (const s of g) {
+            const c = centroidOfPath(s);
+            sx += c.x;
+            sy += c.y;
+            cnt++;
+          }
+          const gx = sx / cnt,
+            gy = sy / cnt;
+          let bestIdx = -1,
+            bestD = 1e9;
+          for (let i = 0; i < comps.length; i++) {
+            const d = Math.hypot(gx - comps[i].x, gy - comps[i].y);
+            if (d < bestD) {
+              bestD = d;
+              bestIdx = i;
+            }
+          }
+          const threshold = 6.0;
+          if (bestD <= threshold) mapping[bestIdx].push(...g);
+        }
+        return mapping;
+      }
+      compMap.top = [];
+      if (board.topSilk && components.top.length >= 0) {
+        const groupsTop = clusterSubs(board.topSilk.subs, 3.0);
+        compMap.top = assignGroupsToComps(groupsTop, components.top);
+      } else {
+        compMap.top = new Array(components.top.length).fill(null).map(() => []);
+      }
+      compMap.bottom = [];
+      if (board.bottomSilk && components.bottom.length >= 0) {
+        const groupsBottom = clusterSubs(board.bottomSilk.subs, 3.0);
+        compMap.bottom = assignGroupsToComps(groupsBottom, components.bottom);
+      } else {
+        compMap.bottom = new Array(components.bottom.length).fill(null).map(() => []);
+      }
+    }
+
+    function prepareComponentList() {
+      compListDiv.innerHTML = '';
+      const addRow = (c, idx, side) => {
+        const row = document.createElement('div');
+        row.className = 'comp-row';
+        row.dataset.idx = idx;
+        row.dataset.side = side;
+        row.innerHTML = `<div><strong>${c.ref}</strong> <span class="small"> ${c.val} ${c.pkg?(' / '+c.pkg):''}</span></div>
+                     <div class="small">${c.x.toFixed(2)}, ${c.y.toFixed(2)}</div>`;
+        row.addEventListener('click', () => {
+          visibleMode = side;
+          sideFilter.value = side;
+          curIndex = parseInt(idx);
+          centerOnComponent(side, curIndex);
+          draw();
+        });
+        compListDiv.appendChild(row);
+      };
+      for (let i = 0; i < components.top.length; i++) addRow(components.top[i], i, 'top');
+      for (let i = 0; i < components.bottom.length; i++) addRow(components.bottom[i], i, 'bottom');
+      if (visibleMode === 'top' && components.top.length > 0) curIndex = 0;
+      else if (visibleMode === 'bottom' && components.bottom.length > 0) curIndex = 0;
+      else if (visibleMode === 'both') {
+        if (components.top.length > 0) {
+          visibleMode = 'top';
+          sideFilter.value = 'top';
+          curIndex = 0;
+        } else if (components.bottom.length > 0) {
+          visibleMode = 'bottom';
+          sideFilter.value = 'bottom';
+          curIndex = 0;
+        } else curIndex = -1;
+      } else curIndex = (components.top.length + components.bottom.length > 0) ? 0 : -1;
+      updateIndexPill();
+    }
+
+    function centerOnComponent(side, idx) {
+      let c = null;
+      if (side === 'top') c = components.top[idx];
+      if (side === 'bottom') c = components.bottom[idx];
+      if (!c) return;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const curPxX = mmToPxX(c.x);
+      const curPxY = mmToPxY(c.y);
+      const dx = centerX - curPxX;
+      const dy = centerY - curPxY;
+      metaInfo.offsetX += dx;
+      metaInfo.offsetY += dy;
+    }
+    prevBtn.addEventListener('click', () => {
+      if (visibleMode === 'top') {
+        if (components.top.length === 0) return;
+        curIndex = (curIndex <= 0) ? (components.top.length - 1) : (curIndex - 1);
+      } else if (visibleMode === 'bottom') {
+        if (components.bottom.length === 0) return;
+        curIndex = (curIndex <= 0) ? (components.bottom.length - 1) : (curIndex - 1);
+        if (components.top.length > 0) {
+          visibleMode = 'top';
+          sideFilter.value = 'top';
+          curIndex = (curIndex <= 0) ? components.top.length - 1 : curIndex - 1;
+        }
+      }
+      centerOnComponent(visibleMode, curIndex);
+      draw();
+    });
+    nextBtn.addEventListener('click', () => {
+      if (visibleMode === 'top') {
+        if (components.top.length === 0) return;
+        curIndex = (curIndex >= components.top.length - 1) ? 0 : curIndex + 1;
+      } else if (visibleMode === 'bottom') {
+        if (components.bottom.length === 0) return;
+        curIndex = (curIndex >= components.bottom.length - 1) ? 0 : curIndex + 1;
+      } else {
+        if (components.top.length > 0) {
+          visibleMode = 'top';
+          sideFilter.value = 'top';
+          curIndex = (curIndex >= components.top.length - 1) ? 0 : curIndex + 1;
+        }
+      }
+      centerOnComponent(visibleMode, curIndex);
+      draw();
+    });
+    sideFilter.addEventListener('change', () => {
+      visibleMode = sideFilter.value;
+      if (visibleMode === 'top') {
+        if (components.top.length === 0) curIndex = -1;
+        else curIndex = Math.min(curIndex, components.top.length - 1) || 0;
+      } else if (visibleMode === 'bottom') {
+        if (components.bottom.length === 0) curIndex = -1;
+        else curIndex = Math.min(curIndex, components.bottom.length - 1) || 0;
+      } else {
+        if (components.top.length > 0) {
+          visibleMode = 'top';
+          sideFilter.value = 'top';
+          curIndex = 0;
+        } else if (components.bottom.length > 0) {
+          visibleMode = 'bottom';
+          sideFilter.value = 'bottom';
+          curIndex = 0;
+        } else curIndex = -1;
+      }
+      draw();
+    });
+    showEdge.addEventListener('change', draw);
+    showTopSilk.addEventListener('change', draw);
+    showBottomSilk.addEventListener('change', draw);
+    window.addEventListener('resize', () => {
+      if (!board.edge) return;
+      fitCanvasToBBox();
+      draw();
+    });
+    reset();
+    fitCanvasToBBox();
+
+    function parseGerber(content) {
+      let lines = content.split(/\r?\n/);
+      let x = 0,
+        y = 0;
+      let paths = [];
+      for (let line of lines) {
+        line = line.trim();
+        if (!line) continue;
+        let m = line.match(/X(-?\d+)Y(-?\d+)(D0[12])/);
+        if (m) {
+          let nx = parseInt(m[1], 10) / 10000;
+          let ny = parseInt(m[2], 10) / 10000;
+          if (m[3] === 'D02') {
+            x = nx;
+            y = ny;
+          } else if (m[3] === 'D01') {
+            paths.push({
+              x1: x,
+              y1: y,
+              x2: nx,
+              y2: ny
+            });
+            x = nx;
+            y = ny;
+          }
+        }
+      }
+      return paths;
+    }
+    parseGerberPaths = parseGerberPathsImproved;
+
+    function recomputeAndDraw() {
+      fitCanvasToBBox();
+      mapSilksToComponents();
+      prepareComponentList();
+      draw();
+    }
+  </script>
+</body>
+
+</html>
