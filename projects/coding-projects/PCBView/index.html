@@ -220,18 +220,18 @@
   <div class="app" role="application">
     <header>
       <div>
-        <h1>PCB Viewer — footprints & side filter</h1>
+        <h1>PCB component placer</h1>
         <div class="small">Fixed real scale (user-readable). Uses Silkscreen Gerbers to draw footprints.</div>
       </div>
 
       <div class="controls">
-        <label class="fileBtn" title="Select ZIP">
-          Load ZIP
+        <label class="fileBtn" title="Select ZIP"> 
+          Load file
           <input id="zipInput" type="file" accept=".zip" />
         </label>
 
-        <button id="prevBtn" class="btn secondary">◀ Prev</button>
-        <button id="nextBtn" class="btn">Next ▶</button>
+        <button id="prevBtn" class="btn secondary">◀</button>
+        <button id="nextBtn" class="btn">▶</button>
       </div>
     </header>
 
@@ -376,15 +376,16 @@
       }
 
       function coordFromToken(tok) {
-        if (!tok) return 0;
-        const sign = tok.startsWith('-') ? -1 : 1;
-        const abs = tok.replace(/^[+-]/, '');
-        const intval = parseInt(abs, 10);
-        if (Number.isNaN(intval)) return 0;
-        let val = intval / Math.pow(10, formatDec);
-        if (unit === 'in') val = val * 25.4;
-        return val * sign;
-      }
+  if (!tok) return 0;
+  const sign = tok.startsWith('-') ? -1 : 1;
+  const abs = tok.replace(/^[+-]/, '');
+  const intval = parseInt(abs, 10);
+  if (Number.isNaN(intval)) return 0;
+  // 4.6 format: divide by 10^6
+  let val = intval / 1e6;
+  return val * sign; // unit is already mm
+}
+
       const subs = [];
       let cur = [];
       for (const ln of lines) {
@@ -977,11 +978,12 @@
     showTopSilk.addEventListener('change', draw);
     showBottomSilk.addEventListener('change', draw);
 const resizeObserver = new ResizeObserver(() => {
-  if (!board.edge) return;  
+  if (!board.edge) return;   // Only redraw if a file is loaded
   fitCanvasToBBox();
   draw();
 });
 
+// Attach observer to the parent of the canvas
 resizeObserver.observe(canvas.parentElement);
 
     reset();
