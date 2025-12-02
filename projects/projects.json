@@ -23,7 +23,7 @@
     {
     "title": "IoT Weatherstation Board",
     "description": "A comprehensive environmental monitoring system designed for autonomous outdoor deployment. This weather station combines meteorological sensors, air quality monitoring, and power management into a single robust PCB design.",
-    "image": "https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTU0NzMsInB1ciI6ImJsb2JfaWQifX0=--24023b1fe159592bdda92d9402fa140dae35ce90/Screenshot%202025-11-28%20at%201.45.54%E2%80%AFPM.png",
+    "image": "https://mateo-johnson.github.io/resources/weatherStationcoverimage.png",
     "tags": [
       "Embedded Systems",
       "KiCAD",
