@@ -12,9 +12,7 @@
     <link rel="manifest" href="/site.webmanifest">
 
 <style>
-/* =========================
-   RESET & GLOBAL
-========================= */
+/* ================= RESET ================= */
 * {
     margin: 0;
     padding: 0;
@@ -29,9 +27,7 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* ================= HEADER ================= */
 header {
     position: sticky;
     top: 0;
@@ -40,8 +36,8 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(212,175,55,0.15);
     transition: all 0.3s ease;
 }
@@ -65,21 +61,20 @@ nav a {
     padding: 10px 18px;
     border-radius: 25px;
     font-weight: 600;
-    text-transform: uppercase;
     font-size: 0.9rem;
+    text-transform: uppercase;
     color: #555;
+    text-decoration: none;
     transition: all 0.3s ease;
-} 
+}
 
 nav a.active,
 nav a:hover {
     color: #D4AF37;
-    background: rgba(212,175,55,0.1);
+    background: rgba(212,175,55,0.12);
 }
 
-/* =========================
-   MAIN
-========================= */
+/* ================= MAIN ================= */
 main {
     max-width: 1200px;
     margin: auto;
@@ -99,9 +94,7 @@ main h1,
 main h1 { font-size: 3.5rem; }
 .section-header { font-size: 3rem; margin-top: 100px; }
 
-/* =========================
-   GRIDS
-========================= */
+/* ================= GRIDS ================= */
 .projects-grid,
 .coding-projects-grid {
     display: grid;
@@ -109,9 +102,7 @@ main h1 { font-size: 3.5rem; }
     gap: 32px;
 }
 
-/* =========================
-   CARDS (Shared)
-========================= */
+/* ================= CARDS ================= */
 .project-card,
 .coding-card {
     background: #fff;
@@ -120,17 +111,15 @@ main h1 { font-size: 3.5rem; }
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    max-height: 320px;
+    max-height: 340px;
 }
 
 .project-card.expanded,
 .coding-card.expanded {
-    max-height: 2000px;
+    max-height: 2200px;
 }
 
-/* =========================
-   MEDIA (NO CROPPING)
-========================= */
+/* ================= MEDIA (NO CROPPING) ================= */
 .project-image,
 .project-cover-iframe,
 .coding-cover-iframe {
@@ -142,9 +131,7 @@ main h1 { font-size: 3.5rem; }
     border: none;
 }
 
-/* =========================
-   CONTENT
-========================= */
+/* ================= CONTENT ================= */
 .project-content,
 .coding-card-content {
     padding: 20px;
@@ -170,18 +157,23 @@ main h1 { font-size: 3.5rem; }
 .coding-view-btn {
     opacity: 0;
     max-height: 0;
-    transition: all 0.4s ease;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
 }
 
-.project-card.expanded *,
-.coding-card.expanded * {
+.project-card.expanded .project-description,
+.project-card.expanded .project-tags,
+.project-card.expanded .project-code,
+.project-card.expanded .view-btn,
+.coding-card.expanded .coding-card-description,
+.coding-card.expanded .coding-card-tags,
+.coding-card.expanded .coding-demo-iframe,
+.coding-card.expanded .coding-view-btn {
     opacity: 1;
     max-height: 1000px;
+    margin-top: 10px;
 }
 
-/* =========================
-   TAGS
-========================= */
+/* ================= TAGS ================= */
 .project-tags span,
 .coding-card-tags span {
     display: inline-block;
@@ -193,9 +185,17 @@ main h1 { font-size: 3.5rem; }
     color: #D4AF37;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* ================= CODE ================= */
+.project-code {
+    background: #f9f9f9;
+    border-left: 4px solid #D4AF37;
+    padding: 14px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: monospace;
+}
+
+/* ================= BUTTONS ================= */
 .view-btn,
 .coding-view-btn {
     display: inline-block;
@@ -208,9 +208,7 @@ main h1 { font-size: 3.5rem; }
     text-decoration: none;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
     header {
         flex-direction: column;
@@ -248,10 +246,10 @@ main h1 { font-size: 3.5rem; }
 
 <main>
     <h1>My Projects</h1>
-    <div id="projectsGrid" class="projects-grid"></div>
+    <div class="projects-grid" id="projectsGrid"></div>
 
     <h2 class="section-header">Web Design Demos</h2>
-    <div id="codingProjectsGrid" class="coding-projects-grid"></div>
+    <div class="coding-projects-grid" id="codingProjectsGrid"></div>
 </main>
 
 <footer style="text-align:center;padding:60px 20px;background:#2C2C2C;color:#fff;">
@@ -259,17 +257,116 @@ main h1 { font-size: 3.5rem; }
 </footer>
 
 <script>
-/* Header scroll */
+/* HEADER SCROLL */
 window.addEventListener('scroll', () => {
     document.getElementById('header')
         .classList.toggle('scrolled', window.scrollY > 50);
 });
 
-/* Expand cards */
-document.addEventListener('click', e => {
-    const card = e.target.closest('.project-card, .coding-card');
-    if (!card || e.target.tagName === 'A' || e.target.tagName === 'IFRAME') return;
-    card.classList.toggle('expanded');
+/* ESCAPE HTML */
+function escapeHTML(str) {
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+/* ================= CODING PROJECTS ================= */
+fetch('coding-projects.json')
+.then(res => res.json())
+.then(projects => {
+    const grid = document.getElementById('codingProjectsGrid');
+
+    projects.forEach(proj => {
+        const card = document.createElement('div');
+        card.className = 'coding-card';
+
+        if (proj.demoUrl) {
+            const cover = document.createElement('iframe');
+            cover.src = proj.demoUrl;
+            cover.className = 'coding-cover-iframe';
+            cover.setAttribute('loading','lazy');
+            card.appendChild(cover);
+        }
+
+        const content = document.createElement('div');
+        content.className = 'coding-card-content';
+
+        content.innerHTML = `
+            <h3 class="coding-card-title">${proj.title}</h3>
+            <p class="coding-card-description">${proj.description}</p>
+            <div class="coding-card-tags">${proj.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+        `;
+
+        let iframe;
+        if (proj.demoUrl) {
+            iframe = document.createElement('iframe');
+            iframe.className = 'coding-demo-iframe';
+            iframe.dataset.src = proj.demoUrl;
+            iframe.setAttribute('loading','lazy');
+            content.appendChild(iframe);
+        }
+
+        const btn = document.createElement('a');
+        btn.href = proj.link || proj.demoUrl;
+        btn.target = '_blank';
+        btn.className = 'coding-view-btn';
+        btn.textContent = 'View Demo';
+        content.appendChild(btn);
+
+        card.appendChild(content);
+
+        card.addEventListener('click', e => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'IFRAME') return;
+            card.classList.toggle('expanded');
+            if (iframe && !iframe.src) iframe.src = iframe.dataset.src;
+        });
+
+        grid.appendChild(card);
+    });
+});
+
+/* ================= REGULAR PROJECTS ================= */
+fetch('projects.json')
+.then(res => res.json())
+.then(projects => {
+    const grid = document.getElementById('projectsGrid');
+
+    projects.forEach(proj => {
+        const card = document.createElement('div');
+        card.className = 'project-card';
+
+        const content = document.createElement('div');
+        content.className = 'project-content';
+
+        content.innerHTML = `
+            <img src="${proj.image}" class="project-image" alt="${proj.title}">
+            <h3 class="project-title">${proj.title}</h3>
+            <p class="project-description">${proj.description}</p>
+            <div class="project-tags">${proj.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+        `;
+
+        if (proj.code) {
+            proj.code.forEach(c => {
+                const pre = document.createElement('pre');
+                pre.className = 'project-code';
+                pre.innerHTML = `<code>${escapeHTML(c.snippet)}</code>`;
+                content.appendChild(pre);
+            });
+        }
+
+        const btn = document.createElement('a');
+        btn.href = proj.link;
+        btn.className = 'view-btn';
+        btn.textContent = 'View Project';
+        content.appendChild(btn);
+
+        card.appendChild(content);
+
+        card.addEventListener('click', e => {
+            if (e.target.tagName === 'A') return;
+            card.classList.toggle('expanded');
+        });
+
+        grid.appendChild(card);
+    });
 });
 </script>
 
