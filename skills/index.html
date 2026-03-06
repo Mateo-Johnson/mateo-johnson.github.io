@@ -2,946 +2,1005 @@
 <html lang="en">
 
 <head>
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skills & Achievements | Mateo Johnson</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
-    * {
+    :root {
+      --black: #080808;
+      --white: #F2EDE6;
+      --gold: #C8A84B;
+      --gold-dim: rgba(200, 168, 75, 0.12);
+      --muted: #4A4A4A;
+      --muted-light: #6A6A6A;
+      --border: rgba(200, 168, 75, 0.18);
+      --row-border: rgba(255, 255, 255, 0.06);
+      --green: #4CAF7D;
+    }
+
+    *,
+    *::before,
+    *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background-color: #FEFEFE;
-      color: #2C2C2C;
+      font-family: 'DM Mono', monospace;
+      background: var(--black);
+      color: var(--white);
       overflow-x: hidden;
-      line-height: 1.6;
     }
 
-    a {
-      text-decoration: none;
-      color: #2C2C2C;
-      transition: all 0.3s ease;
-    }
-
-    a:hover {
-      color: #D4AF37;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInFromLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes goldShimmer {
-      0% {
-        background-position: -200% center;
-      }
-
-      100% {
-        background-position: 200% center;
-      }
-    }
-
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-10px);
-      }
-    }
-
-    /* ================= HEADER ================= */
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    padding: 24px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(212,175,55,0.15);
-    transition: all 0.3s ease;
-}
-
-header.scrolled {
-    padding: 16px 32px;
-    box-shadow: 0 10px 40px rgba(212,175,55,0.15);
-}
-
-.logo-img {
-    max-width: 60px;
-    height: auto;
-}
-
-nav {
-    display: flex;
-    gap: 1.5rem;
-}
-
-nav a {
-    padding: 10px 18px;
-    border-radius: 25px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    color: #555;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-nav a.active,
-nav a:hover {
-    color: #D4AF37;
-    background: rgba(212,175,55,0.12);
-}
-    .page-hero {
-      padding: 140px 40px 80px;
-      background: linear-gradient(135deg, #FFFFFF 0%, #FFFEF7 25%, #FFF8E1 50%, #FFFEF7 75%, #FFFFFF 100%);
-      text-align: center;
-      position: relative;
-    }
-
-    .page-hero::before {
+    body::before {
       content: '';
-      position: absolute;
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    header {
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      background-image: radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    .page-hero h1 {
-      font-size: 4.5rem;
-      text-align: center;
-      margin-bottom: 60px;
-      font-weight: 300;
-      background: linear-gradient(135deg, #333 0%, #555 50%, #D4AF37 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: fadeInUp 1.2s ease-out forwards;
-      position: relative;
-    }
-
-    .page-hero h1::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 3px;
-      background: linear-gradient(90deg, #FFD700, #D4AF37);
-      border-radius: 2px;
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 0.5s forwards;
-    }
-
-    .page-hero p {
-      font-size: 1.3rem;
-      color: #666;
-      max-width: 600px;
-      margin: 0 auto;
-      animation: fadeInUp 1s ease-out 0.3s both;
-    }
-
-    .skills-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 80px 40px;
-    }
-
-    .section {
-      margin-bottom: 100px;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s ease-out;
-      position: relative;
-    }
-
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      bottom: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 30px;
-      height: 30px;
-      border: 2px solid #D4AF37;
-      border-top: none;
-      border-left: none;
-      transform: translateX(-50%) rotate(45deg);
-      animation: bounceArrow 2s ease-in-out infinite;
-      opacity: 0.7;
-    }
-
-    .section:not(:last-child) .section-indicator {
-      position: absolute;
-      bottom: -80px;
-      left: 50%;
-      transform: translateX(-50%);
+      z-index: 900;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 8px;
-      opacity: 0.6;
-      animation: fadeInUp 1s ease-out 1s both;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid transparent;
+      transition: all 0.4s;
     }
 
-    .section-arrow {
-      width: 24px;
-      height: 24px;
-      border: 2px solid #D4AF37;
-      border-top: none;
-      border-left: none;
-      transform: rotate(45deg);
-      transform-origin: center;
-      animation: bounceArrow 2s ease-in-out infinite;
-      display: inline-block;
-      margin: 0 auto;
+    header.scrolled {
+      border-color: var(--border);
+      backdrop-filter: blur(24px);
+      background: rgba(8, 8, 8, 0.85);
+      padding: 18px 48px;
     }
 
-    .section-dots {
+    .logo-mark {
       display: flex;
-      gap: 6px;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
     }
 
-    .section-dot {
-      width: 4px;
-      height: 4px;
-      background: #D4AF37;
-      border-radius: 50%;
-      animation: dotPulse 2s ease-in-out infinite;
+    .logo-hex {
+      width: 36px;
+      height: 36px;
     }
 
-    .section-dot:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .section-dot:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    @keyframes bounceArrow {
-
-      0%,
-      100% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 0.6;
-      }
-
-      50% {
-        transform: translateY(8px) rotate(45deg);
-        opacity: 1;
-      }
-    }
-
-    @keyframes dotPulse {
-
-      0%,
-      100% {
-        opacity: 0.4;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1.3);
-      }
-    }
-
-    .section h2 {
-      font-size: 2.5rem;
-      font-weight: 300;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: #333;
-      position: relative;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .section h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 3px;
-      background: linear-gradient(90deg, #FFD700, #D4AF37);
-      border-radius: 2px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    .stat-card {
-      background: rgba(255, 255, 255, 0.8);
-      padding: 2rem;
-      border-radius: 20px;
-      text-align: center;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.1);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
+    .logo-hex svg {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(212, 175, 55, 0.05));
-      transition: left 0.6s ease;
     }
 
-    .stat-card:hover::before {
-      left: 0;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
-      border-color: #D4AF37;
-    }
-
-    .stat-number {
-      font-size: 3rem;
-      font-weight: 700;
-      color: #D4AF37;
-      display: block;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .stat-label {
+    .logo-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
       font-size: 1rem;
-      color: #666;
+      color: var(--white);
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
     }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 4rem;
+    .logo-text span {
+      color: var(--gold);
     }
 
-    .skill-category {
-      background: rgba(255, 255, 255, 0.6);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.1);
-      transition: all 0.4s ease;
-    }
-
-    .skill-category:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15);
-    }
-
-    .skill-category h3 {
-      font-size: 1.5rem;
-      color: #D4AF37;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
+    nav {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 4px;
     }
 
-    .skill-category h3::before {
-      content: '';
-      width: 8px;
-      height: 8px;
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
+    nav a {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 2px;
+      transition: color 0.25s, background 0.25s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    nav .nav-cta {
+      margin-left: 8px;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 8px 20px;
+      border-radius: 2px;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    nav .nav-cta:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      border-left: 1px solid var(--row-border);
+      border-right: 1px solid var(--row-border);
+    }
+
+    .sys-bar {
+      margin-top: 88px;
+      padding: 12px 48px;
+      background: rgba(200, 168, 75, 0.04);
+      border-bottom: 1px solid var(--row-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .sys-bar-left {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .sys-dot {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: blink 3s ease-in-out infinite;
+      display: inline-block;
+      margin-right: 8px;
     }
 
-    .skill-tags {
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.4
+      }
+    }
+
+    .page-header {
+      padding: 48px 48px 40px;
+      border-bottom: 1px solid var(--row-border);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .page-header-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .doc-id {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+
+    .page-title span {
+      color: var(--gold);
+    }
+
+    .page-meta {
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--row-border);
+    }
+
+    .meta-row {
+      flex: 1;
+      padding: 14px 0;
+      border-right: 1px solid var(--row-border);
+      padding-right: 24px;
+      margin-right: 24px;
+      font-size: 0.7rem;
+    }
+
+    .meta-row:last-child {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+      flex: none;
+    }
+
+    .meta-key {
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.58rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .meta-val {
+      color: var(--white);
+      font-size: 0.82rem;
+    }
+
+    .meta-val.gold {
+      color: var(--gold);
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--row-border);
+      padding: 32px 0;
+      position: sticky;
+      top: 88px;
+      height: calc(100vh - 88px);
+      overflow-y: auto;
+    }
+
+    .sidebar-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 24px 16px;
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 24px;
+      font-size: 0.66rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      color: var(--gold);
+      border-left-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .sidebar-num {
+      font-size: 0.55rem;
+      color: var(--muted);
+    }
+
+    .sec {
+      border-bottom: 1px solid var(--row-border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .sec.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .sec-head {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      border-bottom: 1px solid var(--row-border);
+      background: rgba(200, 168, 75, 0.02);
+    }
+
+    .sec-num {
+      padding: 24px 28px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      border-right: 1px solid var(--row-border);
+      display: flex;
+      align-items: center;
+    }
+
+    .sec-title-wrap {
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sec-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .sec-count {
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 220px 160px 1fr;
+      border-bottom: 1px solid var(--row-border);
+    }
+
+    .stat-row:last-child {
+      border-bottom: none;
+    }
+
+    .stat-cell {
+      padding: 28px 40px;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .stat-cell.label {
+      border-right: 1px solid var(--row-border);
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding-left: 28px;
+    }
+
+    .stat-cell.value {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      color: var(--gold);
+      border-right: 1px solid var(--row-border);
+    }
+
+    .stat-cell.desc {
+      color: var(--muted-light);
+      font-size: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      border-bottom: 1px solid var(--row-border);
+    }
+
+    .skill-row:last-child {
+      border-bottom: none;
+    }
+
+    .skill-cat {
+      padding: 32px 28px;
+      border-right: 1px solid var(--row-border);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .skill-tags-cell {
+      padding: 28px 40px;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
+      gap: 10px;
+      align-content: flex-start;
     }
 
-    .skill-tag {
-      padding: 8px 16px;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
-      color: #666;
-      border-radius: 25px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      transition: all 0.3s ease;
-      cursor: pointer;
+    .tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      color: var(--muted-light);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 7px 16px;
+      transition: all 0.2s;
+      cursor: default;
     }
 
-    .skill-tag:hover {
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    .tag:hover {
+      color: var(--gold);
+      border-color: var(--border);
+      background: var(--gold-dim);
     }
 
-    .awards-grid {
+    .award-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 2rem;
+      grid-template-columns: 220px 1fr 1.4fr;
+      border-bottom: 1px solid var(--row-border);
+      transition: background 0.2s;
     }
 
-    .award-card {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-      border-left: 4px solid #D4AF37;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
+    .award-row:last-child {
+      border-bottom: none;
     }
 
-    .award-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(212, 175, 55, 0.1));
-      border-radius: 0 20px 0 50px;
+    .award-row:hover {
+      background: rgba(255, 255, 255, 0.015);
     }
 
-    .award-card:hover {
-      transform: translateY(-8px) rotate(-1deg);
-      box-shadow: 0 25px 50px rgba(212, 175, 55, 0.2);
-      border-left-color: #FFD700;
+    .award-idx {
+      padding: 28px 28px;
+      border-right: 1px solid var(--row-border);
+      font-size: 0.6rem;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
     }
 
-    .leadership-card {
-      background: linear-gradient(135deg, #FFF8E1, #FFE4B5);
-      padding: 2rem;
-      border-radius: 25px;
-      box-shadow: 0 20px 50px rgba(212, 175, 55, 0.25);
-      border-top: 4px solid #B8860B;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
+    .award-name {
+      padding: 28px 40px;
+      border-right: 1px solid var(--row-border);
     }
 
-    .leadership-card::before {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: -10px;
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(184, 134, 11, 0.15));
-      border-radius: 50%;
+    .award-title-text {
+      font-size: 0.85rem;
+      color: var(--white);
+      margin-bottom: 6px;
+      line-height: 1.5;
     }
 
-    .leadership-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 30px 60px rgba(212, 175, 55, 0.3);
-      border-top-color: #FFD700;
+    .award-org-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
 
-    .award-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 0.5rem;
+    .award-desc-cell {
+      padding: 28px 40px;
+      font-size: 0.75rem;
+      color: var(--muted-light);
+      line-height: 1.8;
+      display: flex;
+      align-items: flex-start;
     }
 
-    .award-org {
-      font-size: 1rem;
-      color: #D4AF37;
-      font-weight: 500;
-      margin-bottom: 1rem;
+    .exp-row {
+      display: grid;
+      grid-template-columns: 220px 220px 1fr;
+      border-bottom: 1px solid var(--row-border);
+      transition: background 0.2s;
     }
 
-    .award-description {
-      color: #666;
-      line-height: 1.6;
-      font-size: 0.95rem;
+    .exp-row:last-child {
+      border-bottom: none;
     }
 
-    .experience-timeline {
-      position: relative;
-      margin: 2rem 0;
+    .exp-row:hover {
+      background: rgba(255, 255, 255, 0.015);
     }
 
-    .timeline-line {
-      position: absolute;
-      left: 30px;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, #FFD700, #D4AF37);
+    .exp-idx {
+      padding: 28px 28px;
+      border-right: 1px solid var(--row-border);
+      font-size: 0.6rem;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
     }
 
-    .experience-item {
-      position: relative;
-      margin-bottom: 3rem;
-      padding-left: 80px;
-    }
-
-    .experience-dot {
-      position: absolute;
-      left: 21px;
-      top: 10px;
-      width: 18px;
-      height: 18px;
-      background: linear-gradient(135deg, #FFD700, #D4AF37);
-      border-radius: 50%;
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-      animation: float 3s ease-in-out infinite;
-    }
-
-    .experience-content {
-      background: rgba(255, 255, 255, 0.8);
-      padding: 1.5rem;
-      border-radius: 15px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .experience-content:hover {
-      transform: translateX(10px);
-      box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
-    }
-
-    .experience-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 0.5rem;
-    }
-
-    .experience-company {
-      color: #D4AF37;
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .experience-description {
-      color: #666;
+    .exp-org {
+      padding: 28px 28px;
+      border-right: 1px solid var(--row-border);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+      display: flex;
+      align-items: flex-start;
       line-height: 1.6;
     }
 
-    @media (max-width: 768px) {
-      header {
-        padding: 20px;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .page-hero {
-        padding: 120px 20px 60px;
-      }
-
-      .page-hero h1 {
-        font-size: 2.5rem;
-      }
-
-      .skills-container {
-        padding: 60px 20px;
-      }
-
-      .section h2 {
-        font-size: 2rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .skills-grid,
-      .awards-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .experience-item {
-        padding-left: 60px;
-      }
+    .exp-detail {
+      padding: 28px 40px;
     }
 
-    .logo-img {
-      max-width: 60px;
-      max-height: 60px;
-      width: auto;
-      height: auto;
-      display: block;
+    .exp-role {
+      font-size: 0.85rem;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .exp-desc {
+      font-size: 0.73rem;
+      color: var(--muted-light);
+      line-height: 1.85;
     }
 
     footer {
-      background: linear-gradient(135deg, #333 0%, #2C2C2C 100%);
-      color: #fff;
-      padding: 60px 20px;
-      text-align: center;
-      margin-top: 80px;
-      position: relative;
-      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .footer-copy {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-email a {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .footer-email a:hover {
+      color: var(--gold);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 4px;
+    }
+
+    .footer-links a {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+      border-color: var(--border);
+      background: var(--gold-dim);
+    }
+
+    @media (max-width: 900px) {
+
+      header,
+      header.scrolled {
+        padding: 18px 20px;
+      }
+
+      nav a:not(.nav-cta) {
+        display: none;
+      }
+
+      .sys-bar {
+        padding: 10px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .page-header {
+        grid-template-columns: 1fr;
+        padding: 40px 20px 0;
+      }
+
+      .ph-left {
+        border-right: none;
+        padding-right: 0;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--row-border);
+      }
+
+      .ph-right {
+        padding-left: 0;
+        padding-top: 32px;
+      }
+
+      .body {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .sec-head {
+        grid-template-columns: 56px 1fr;
+      }
+
+      .stat-row,
+      .skill-row,
+      .award-row,
+      .exp-row {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-cell.label,
+      .skill-cat,
+      .award-idx,
+      .award-name,
+      .exp-idx,
+      .exp-org {
+        border-right: none;
+        border-bottom: 1px solid var(--row-border);
+      }
+
+      footer {
+        padding: 24px 20px;
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
-<header id="header">
-    <a href="/">
-        <img src="https://mateo-johnson.github.io/resources/logo3.png" class="logo-img" alt="Logo">
-    </a>
+  <header id="header">
+    <a href="/" class="logo-mark" style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.16em;text-transform:uppercase;color:#F2EDE6;text-decoration:none;">Mateo<span style="color:#C8A84B;margin:0 7px;font-weight:300;font-size:1.2rem;line-height:1;">/</span>Johnson</a>
     <nav>
-        <a class="active">Skills</a>
-        <a href="/projects">Projects</a>
-        <a href="/contact">Contact</a>
+      <a href="/skills" class="active">Skills</a>
+      <a href="/projects">Projects</a>
+      <a href="/contact" class="nav-cta">Contact</a>
     </nav>
-</header>
+  </header>
 
-  <section class="page-hero">
-    <h1>Skills & Achievements</h1>
-    <p>An overview of my academic accomplishments, technical expertise, and professional experience in electrical engineering and robotics.</p>
-  </section>
-
-  <div class="skills-container">
-
-    <section class="section" id="academics">
-      <h2>Academic Excellence</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span class="stat-number">4.0</span>
-          <span class="stat-label">Unweighted GPA</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">4.23</span>
-          <span class="stat-label">Weighted GPA</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">33</span>
-          <span class="stat-label">ACT Score</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">8+</span>
-          <span class="stat-label">College Courses</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-number">150+</span>
-          <span class="stat-label">Service Hours/Year</span>
-        </div>
+  <div class="page-wrap">
+    <div class="sys-bar">
+      <div class="sys-bar-left">
+        <span><span class="sys-dot"></span>System online</span>
+        <span>DOC-002 / SKILLS &amp; ACHIEVEMENTS</span>
+        <span>REV 2025.1</span>
       </div>
-    </section>
+      <div>MATEO JOHNSON — ENGINEERING PORTFOLIO</div>
+    </div>
 
-    <section class="section" id="skills">
-      <h2>Technical Expertise</h2>
-      <div class="skills-grid">
-        <div class="skill-category">
-          <h3>Programming Languages</h3>
-          <div class="skill-tags">
-            <div class="skill-tag">Python</div>
-            <div class="skill-tag">Java</div>
-            <div class="skill-tag">C++</div>
-            <div class="skill-tag">C</div>
-            <div class="skill-tag">C#</div>
-            <div class="skill-tag">JavaScript</div>
-            <div class="skill-tag">Swift</div>
-            <div class="skill-tag">HTML/CSS</div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3>Embedded Systems</h3>
-          <div class="skill-tags">
-            <div class="skill-tag">Microcontroller Programming</div>
-            <div class="skill-tag">PCB Design</div>
-            <div class="skill-tag">FPGA Development</div>
-            <div class="skill-tag">IoT Systems</div>
-            <div class="skill-tag">Dual-MCU Architecture</div>
-            <div class="skill-tag">Control Systems</div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3>Design & CAD</h3>
-          <div class="skill-tags">
-            <div class="skill-tag">Onshape</div>
-            <div class="skill-tag">Fusion360</div>
-            <div class="skill-tag">KiCAD</div>
-            <div class="skill-tag">EAGLE</div>
-            <div class="skill-tag">EasyEDA</div>
-            <div class="skill-tag">Technical Drawing</div>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3>Robotics & Hardware</h3>
-          <div class="skill-tags">
-            <div class="skill-tag">Swerve Drive</div>
-            <div class="skill-tag">Motor Controllers</div>
-            <div class="skill-tag">Sensor Integration</div>
-            <div class="skill-tag">Rocketry & Flight Control</div>
-            <div class="skill-tag">3D Printing</div>
-            <div class="skill-tag">Pick & Place Systems</div>
-          </div>
-        </div>
+    <div class="page-header">
+      <div class="page-header-top">
+        <div class="doc-id">MJ-ENG / 002 — Skills Index</div>
+        <h1 class="page-title">Skills &amp; <span>Achievements</span></h1>
       </div>
-    </section>
-
-    <section class="section" id="awards">
-      <h2>Awards & Recognition</h2>
-      <div class="awards-grid">
-        <div class="award-card">
-          <div class="award-title">ISEF 2025 Participant</div>
-          <div class="award-org">International Science and Engineering Fair</div>
-          <div class="award-description">Selected to compete in the Embedded Systems category with dual-MCU microcontroller research project.</div>
-        </div>
-        <div class="award-card">
-          <div class="award-title">2025 Melvin Scholar</div>
-          <div class="award-org">American Junior Academy of Science</div>
-          <div class="award-description">Recognition for outstanding research contributions and scientific excellence in engineering.</div>
-        </div>
-        <div class="award-card">
-          <div class="award-title">Grand Award Winner</div>
-          <div class="award-org">Buckeye Science & Engineering Fair</div>
-          <div class="award-description">First place recognition for innovative dual-MCU system design and implementation.</div>
-        </div>
-        <div class="award-card">
-          <div class="award-title">Air Force Innovation in Engineering Award</div>
-          <div class="award-org">Buckeye Science & Engineering Fair</div>
-          <div class="award-description">Special recognition for engineering innovation at BSEF 2025.</div>
-        </div>
-        <div class="award-card">
-          <div class="award-title">Attorney General's Recognition </div>
-          <div class="award-org">State of Ohio</div>
-          <div class="award-description">Recognition for ISEF 2025 participation representing Ohio.</div>
-        </div>
-        <div class="award-card">
-          <div class="award-title">Governor's Recognition</div>
-          <div class="award-org">State of Ohio</div>
-          <div class="award-description">Recognition for ISEF 2025 participation representing Ohio.</div>
-        </div>
-        <div class="award-card">
-          <div class="award-title">Connect & Lead Leadership Conference</div>
-          <div class="award-org">High School Representative</div>
-          <div class="award-description">Inaugural delegate for Ohio’s Connect & Lead Leadership Conference, focused on cultivating leadership in high school students.</div>
-        </div>
-        <div class="award-card">
-          <div class="award-title">2025 STEM Innovation Forum</div>
-          <div class="award-org">Experiential Learning Guest Speaker</div>
-          <div class="award-description">Student guest speaker before Regeneron panel, speaking about positive experiences with experiential learning to over 200 professionals from various industries</div>
-        </div>
+      <div class="page-meta">
+        <div class="meta-row"><span class="meta-key">Status</span><span class="meta-val gold">● Active</span></div>
+        <div class="meta-row"><span class="meta-key">GPA (UW)</span><span class="meta-val">4.0</span></div>
+        <div class="meta-row"><span class="meta-key">GPA (W)</span><span class="meta-val">4.23</span></div>
+        <div class="meta-row"><span class="meta-key">ACT</span><span class="meta-val">33</span></div>
+        <div class="meta-row"><span class="meta-key">Sections</span><span class="meta-val">05</span></div>
       </div>
-    </section>
+    </div>
 
-    <section class="section" id="experience">
-      <h2>Professional Experience</h2>
-      <div class="experience-timeline">
-        <div class="timeline-line"></div>
-
-        <div class="experience-item">
-          <div class="experience-dot"></div>
-          <div class="experience-content">
-            <div class="experience-title">eVTOL Research Intern</div>
-            <div class="experience-company">Ohio State University</div>
-            <div class="experience-description">5-week Intership conducting research on electric vertical takeoff and landing aircraft power systems design, focusing on efficiency optimization and control algorithms.</div>
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="experience-dot"></div>
-          <div class="experience-content">
-            <div class="experience-title">IT Specialist & Development Intern</div>
-            <div class="experience-company">Embold</div>
-            <div class="experience-description">Completed CompTIA certification work (ITF, A+, Network+, Security+), developed frontend interfaces / backend automation processes.</div>
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="experience-dot"></div>
-          <div class="experience-content">
-            <div class="experience-title">STEM Summer Camp Instructor</div>
-            <div class="experience-company">PAST Foundation</div>
-            <div class="experience-description">Led Arduino robotics camps, operated 3D printing operations, and developed STEM curriculum for diverse student populations.</div>
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="experience-dot"></div>
-          <div class="experience-content">
-            <div class="experience-title">Volunteer STEM Instructor</div>
-            <div class="experience-company">Wickliffe Progressive Elementary</div>
-            <div class="experience-description">Planned, taught and evaluated 100+ hours of STEM coursework for K-5 students, focusing on math, physics, programming and the design process.</div>
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="experience-dot"></div>
-          <div class="experience-content">
-            <div class="experience-title">3D Printing Course Instructor</div>
-            <div class="experience-company">Wickliffe Progressive Elementary</div>
-            <div class="experience-description">Planned, taught and evaluated an after-school 6 week 3D printing class, focusing on 3D design, printer knowledge and design process thinking.</div>
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="experience-dot"></div>
-          <div class="experience-content">
-            <div class="experience-title">Workforce Development Mentor</div>
-            <div class="experience-company">Various Organizations</div>
-            <div class="experience-description">Provided peer mentoring focused on children of color affinity groups in my neighborhood and completed Leadership Excellence Certification at the PAST foundation.</div>
-          </div>
-        </div>
-
-        <div class="experience-item">
-          <div class="experience-dot"></div>
-          <div class="experience-content">
-            <div class="experience-title">Camp Counselor & CIT</div>
-            <div class="experience-company">Camp Wyandot</div>
-            <div class="experience-description">3 years of leadership experience, including 2 years as Counselor in Training (CIT) and 1 year as full counselor, developing youth mentorship and leadership skills.</div>
-          </div>
-        </div>
+    <div class="body">
+      <div class="sidebar">
+        <div class="sidebar-label">Index</div>
+        <nav>
+          <a href="#academics" class="active"><span class="sidebar-num">01</span>&nbsp;&nbsp;Academics</a>
+          <a href="#technical"><span class="sidebar-num">02</span>&nbsp;&nbsp;Technical</a>
+          <a href="#awards"><span class="sidebar-num">03</span>&nbsp;&nbsp;Awards</a>
+          <a href="#experience"><span class="sidebar-num">04</span>&nbsp;&nbsp;Experience</a>
+          <a href="#leadership"><span class="sidebar-num">05</span>&nbsp;&nbsp;Leadership</a>
+        </nav>
       </div>
-    </section>
 
-    <section class="section" id="leadership">
-      <h2>Leadership & Impact</h2>
-      <div class="awards-grid">
-        <div class="leadership-card">
-          <div class="award-title">FRC Team Leader</div>
-          <div class="award-org">2 Years (11th/12th Grade)</div>
-          <div class="award-description">Led overall robot design and team strategy, mentored multiple FRC teams in programming, design and leadership (1307, 6464, 5667, 9075).</div>
-        </div>
-        <div class="leadership-card">
-          <div class="award-title">FRC Programming Manager</div>
-          <div class="award-org">2 Years (9th/10th Grade)</div>
-          <div class="award-description">Led codebase language change to Java, implemented swerve drivetrain systems, and created 10+ open-source team tools as the youngest team manager.</div>
-        </div>
-        <div class="leadership-card">
-          <div class="award-title">Civic Engagement</div>
-          <div class="award-org">Ohio State Government</div>
-          <div class="award-description">Met with State Senator William P. DeMora to discuss STEM initiatives for low-income communities and policy development.</div>
-        </div>
-        <div class="leadership-card">
-          <div class="award-title">Community Outreach</div>
-          <div class="award-org">150+ Hours Annually</div>
-          <div class="award-description">Host STEM events and volunteer teach at local elementary schools, focusing on increasing diversity and representation in engineering education.</div>
-        </div>
+      <div>
+        <section class="sec" id="academics">
+          <div class="sec-head">
+            <div class="sec-num">01</div>
+            <div class="sec-title-wrap"><span class="sec-title">Academic Excellence</span><span class="sec-count">5 entries</span></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-cell label">Unweighted GPA</div>
+            <div class="stat-cell value">4.0</div>
+            <div class="stat-cell desc">Perfect unweighted score across all coursework</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-cell label">Weighted GPA</div>
+            <div class="stat-cell value">4.23</div>
+            <div class="stat-cell desc">Includes AP and college-level course weighting</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-cell label">ACT Score</div>
+            <div class="stat-cell value">33</div>
+            <div class="stat-cell desc">99th percentile composite score</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-cell label">College Courses</div>
+            <div class="stat-cell value">8+</div>
+            <div class="stat-cell desc">Dual-enrollment and AP courses completed</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-cell label">Service Hours</div>
+            <div class="stat-cell value">150+</div>
+            <div class="stat-cell desc">STEM outreach and community service per year</div>
+          </div>
+        </section>
+
+        <section class="sec" id="technical">
+          <div class="sec-head">
+            <div class="sec-num">02</div>
+            <div class="sec-title-wrap"><span class="sec-title">Technical Expertise</span><span class="sec-count">4 categories</span></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Programming</div>
+            <div class="skill-tags-cell"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">C++</span><span class="tag">C</span><span class="tag">C#</span><span class="tag">JavaScript</span><span class="tag">Swift</span><span class="tag">HTML/CSS</span></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Embedded</div>
+            <div class="skill-tags-cell"><span class="tag">Microcontroller Programming</span><span class="tag">PCB Design</span><span class="tag">FPGA Development</span><span class="tag">IoT Systems</span><span class="tag">Dual-MCU Architecture</span><span class="tag">Control Systems</span></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Design / CAD</div>
+            <div class="skill-tags-cell"><span class="tag">Onshape</span><span class="tag">Fusion360</span><span class="tag">KiCAD</span><span class="tag">EAGLE</span><span class="tag">EasyEDA</span><span class="tag">Technical Drawing</span></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Robotics / HW</div>
+            <div class="skill-tags-cell"><span class="tag">Swerve Drive</span><span class="tag">Motor Controllers</span><span class="tag">Sensor Integration</span><span class="tag">Rocketry &amp; Flight Control</span><span class="tag">3D Printing</span><span class="tag">Pick &amp; Place Systems</span></div>
+          </div>
+        </section>
+
+        <section class="sec" id="awards">
+          <div class="sec-head">
+            <div class="sec-num">03</div>
+            <div class="sec-title-wrap"><span class="sec-title">Awards &amp; Recognition</span><span class="sec-count">8 entries</span></div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-001</div>
+            <div class="award-name">
+              <div class="award-title-text">ISEF 2025 Participant</div>
+              <div class="award-org-text">Intl. Science &amp; Engineering Fair</div>
+            </div>
+            <div class="award-desc-cell">Selected to compete in Embedded Systems category with dual-MCU microcontroller research project.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-002</div>
+            <div class="award-name">
+              <div class="award-title-text">2025 Melvin Scholar</div>
+              <div class="award-org-text">American Junior Academy of Science</div>
+            </div>
+            <div class="award-desc-cell">Recognition for outstanding research contributions and scientific excellence in engineering.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-003</div>
+            <div class="award-name">
+              <div class="award-title-text">Grand Award Winner</div>
+              <div class="award-org-text">Buckeye Science &amp; Engineering Fair</div>
+            </div>
+            <div class="award-desc-cell">First place for innovative dual-MCU system design and implementation.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-004</div>
+            <div class="award-name">
+              <div class="award-title-text">Air Force Innovation in Engineering</div>
+              <div class="award-org-text">Buckeye Science &amp; Engineering Fair</div>
+            </div>
+            <div class="award-desc-cell">Special recognition for engineering innovation at BSEF 2025.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-005</div>
+            <div class="award-name">
+              <div class="award-title-text">Attorney General's Recognition</div>
+              <div class="award-org-text">State of Ohio</div>
+            </div>
+            <div class="award-desc-cell">Recognition for ISEF 2025 participation representing Ohio.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-006</div>
+            <div class="award-name">
+              <div class="award-title-text">Governor's Recognition</div>
+              <div class="award-org-text">State of Ohio</div>
+            </div>
+            <div class="award-desc-cell">Recognition for ISEF 2025 participation representing Ohio.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-007</div>
+            <div class="award-name">
+              <div class="award-title-text">Connect &amp; Lead Conference</div>
+              <div class="award-org-text">High School Representative</div>
+            </div>
+            <div class="award-desc-cell">Inaugural delegate for Ohio's Connect &amp; Lead Leadership Conference.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">A-008</div>
+            <div class="award-name">
+              <div class="award-title-text">2025 STEM Innovation Forum</div>
+              <div class="award-org-text">Guest Speaker — Regeneron Panel</div>
+            </div>
+            <div class="award-desc-cell">Spoke on experiential learning to 200+ professionals from various industries.</div>
+          </div>
+        </section>
+
+        <section class="sec" id="experience">
+          <div class="sec-head">
+            <div class="sec-num">04</div>
+            <div class="sec-title-wrap"><span class="sec-title">Professional Experience</span><span class="sec-count">7 entries</span></div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-idx">E-001</div>
+            <div class="exp-org">Ohio State University</div>
+            <div class="exp-detail">
+              <div class="exp-role">eVTOL Research Intern</div>
+              <div class="exp-desc">5-week internship on electric vertical takeoff and landing aircraft power systems, efficiency optimization and control algorithms.</div>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-idx">E-002</div>
+            <div class="exp-org">Embold</div>
+            <div class="exp-detail">
+              <div class="exp-role">IT Specialist &amp; Development Intern</div>
+              <div class="exp-desc">CompTIA certifications (ITF, A+, Network+, Security+), frontend interfaces and backend automation processes.</div>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-idx">E-003</div>
+            <div class="exp-org">PAST Foundation</div>
+            <div class="exp-detail">
+              <div class="exp-role">STEM Summer Camp Instructor</div>
+              <div class="exp-desc">Led Arduino robotics camps, operated 3D printing operations, developed STEM curriculum for diverse student populations.</div>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-idx">E-004</div>
+            <div class="exp-org">Wickliffe Progressive Elementary</div>
+            <div class="exp-detail">
+              <div class="exp-role">Volunteer STEM Instructor</div>
+              <div class="exp-desc">Planned, taught and evaluated 100+ hours of STEM coursework for K-5 students across math, physics, programming and design.</div>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-idx">E-005</div>
+            <div class="exp-org">Wickliffe Progressive Elementary</div>
+            <div class="exp-detail">
+              <div class="exp-role">3D Printing Course Instructor</div>
+              <div class="exp-desc">Designed and taught a 6-week after-school 3D printing course covering design, printer operation, and design-process thinking.</div>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-idx">E-006</div>
+            <div class="exp-org">Various Organizations</div>
+            <div class="exp-detail">
+              <div class="exp-role">Workforce Development Mentor</div>
+              <div class="exp-desc">Peer mentoring for children of color affinity groups; completed Leadership Excellence Certification at PAST Foundation.</div>
+            </div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-idx">E-007</div>
+            <div class="exp-org">Camp Wyandot</div>
+            <div class="exp-detail">
+              <div class="exp-role">Camp Counselor &amp; CIT</div>
+              <div class="exp-desc">3 years of leadership — 2 years as Counselor in Training, 1 year as full counselor. Youth mentorship and development.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="sec" id="leadership">
+          <div class="sec-head">
+            <div class="sec-num">05</div>
+            <div class="sec-title-wrap"><span class="sec-title">Leadership &amp; Impact</span><span class="sec-count">4 entries</span></div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">L-001</div>
+            <div class="award-name">
+              <div class="award-title-text">FRC Team Leader</div>
+              <div class="award-org-text">2 Years — 11th/12th Grade</div>
+            </div>
+            <div class="award-desc-cell">Led overall robot design and strategy, mentored FRC teams 1307, 6464, 5667, and 9075 in programming, design and leadership.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">L-002</div>
+            <div class="award-name">
+              <div class="award-title-text">FRC Programming Manager</div>
+              <div class="award-org-text">2 Years — 9th/10th Grade</div>
+            </div>
+            <div class="award-desc-cell">Led codebase migration to Java, implemented swerve drivetrain systems, created 10+ open-source tools as youngest team manager.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">L-003</div>
+            <div class="award-name">
+              <div class="award-title-text">Civic Engagement</div>
+              <div class="award-org-text">Ohio State Government</div>
+            </div>
+            <div class="award-desc-cell">Met with State Senator William P. DeMora to discuss STEM initiatives for low-income communities and policy development.</div>
+          </div>
+          <div class="award-row">
+            <div class="award-idx">L-004</div>
+            <div class="award-name">
+              <div class="award-title-text">Community Outreach</div>
+              <div class="award-org-text">150+ Hours Annually</div>
+            </div>
+            <div class="award-desc-cell">Hosts STEM events and teaches at local elementary schools, focusing on diversity and representation in engineering.</div>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
 
-  </div>
+  </div><!-- /page-wrap -->
 
   <footer>
-    <p>&copy; 2025 Mateo Johnson. All Rights Reserved.</p>
+    <div>
+      <div class="footer-copy">&copy; 2025 Mateo Johnson — All rights reserved</div>
+      <div class="footer-email"><a href="mailto:mjohnson012908@gmail.com">mjohnson012908@gmail.com</a></div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/mateo-johnson-7a39a5334/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/Mateo-Johnson" target="_blank">GitHub</a>
+      <a href="https://www.instagram.com/not_mateojohnson" target="_blank">Instagram</a>
+    </div>
   </footer>
 
   <script>
-    window.addEventListener('scroll', function() {
-      const header = document.getElementById('header');
-      if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    });
-    //0.2 doesnt work, but 0.1 looks ok
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('visible');
       });
-    }, observerOptions);
-    document.querySelectorAll('.section').forEach(section => {
-      observer.observe(section);
+    }, {
+      threshold: 0.05
     });
-    //smooth scroll from stack overflow lol
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+    document.querySelectorAll('.sec').forEach(s => observer.observe(s));
+    const sections = document.querySelectorAll('.sec[id]');
+    const sideLinks = document.querySelectorAll('.sidebar nav a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 160) cur = s.id;
+      });
+      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) {
+          e.preventDefault();
+          t.scrollIntoView({
+            behavior: 'smooth'
           });
         }
       });
     });
-    document.querySelectorAll('.skill-tag').forEach(tag => {
-      tag.addEventListener('click', function() {
-        this.style.transform = 'scale(0.95)'; //a little bit smaller, rememebr to check if this looks ok
-        setTimeout(() => {
-          this.style.transform = '';
-        }, 150);
-      });
-    });
-    document.querySelectorAll('.stat-card, .award-card').forEach((card, index) => {
-      card.style.animationDelay = `${index * 0.1}s`;
-    });
-    //floating animation? looks kinda strange but i like. tested with and without, without looks better i think
-    // document.querySelectorAll('.experience-dot').forEach((dot, index) => {
-    //   dot.style.animationDelay = `${index * 0.5}s`;
-    // });
   </script>
 </body>
 
 </html>
-
