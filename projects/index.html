@@ -653,6 +653,210 @@
     .demo-card:nth-child(1) { animation-delay: 0.05s; }
     .demo-card:nth-child(2) { animation-delay: 0.1s; }
     .demo-card:nth-child(3) { animation-delay: 0.15s; }
+
+    /* ─── MODAL ─── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--black);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      position: relative;
+    }
+    .modal::-webkit-scrollbar { width: 2px; }
+    .modal::-webkit-scrollbar-thumb { background: var(--gold); }
+    .modal-backdrop.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Gold top edge on open */
+    .modal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .modal-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(10%);
+    }
+    .modal-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: rgba(200,168,75,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--row-border);
+    }
+    .modal-img-placeholder svg { opacity: 0.1; }
+
+    .modal-header {
+      padding: 28px 32px 20px;
+      border-bottom: 1px solid var(--row-border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .modal-header-left { display: flex; flex-direction: column; gap: 8px; }
+    .modal-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .modal-badge {
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(200,168,75,0.3);
+      padding: 3px 10px;
+    }
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: -0.02em;
+      color: var(--white);
+      line-height: 1.1;
+    }
+    .modal-close {
+      background: none;
+      border: 1px solid var(--row-border);
+      color: var(--muted-light);
+      cursor: pointer;
+      width: 36px; height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      font-size: 1rem;
+      line-height: 1;
+    }
+    .modal-close:hover {
+      border-color: var(--border);
+      color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .modal-body {
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .modal-desc {
+      font-size: 0.8rem;
+      color: var(--muted-light);
+      line-height: 2;
+    }
+
+    .modal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--row-border);
+      border: 1px solid var(--row-border);
+    }
+    .modal-meta-cell {
+      background: var(--black);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .modal-meta-key {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .modal-meta-val {
+      font-size: 0.8rem;
+      color: var(--white);
+    }
+    .modal-meta-val.gold { color: var(--gold); }
+
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .modal-footer {
+      padding: 20px 32px;
+      border-top: 1px solid var(--row-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .modal-link {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      text-decoration: none;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s, gap 0.2s;
+    }
+    .modal-link:hover { background: var(--gold-light); gap: 14px; }
+
+    @media (max-width: 640px) {
+      .modal-header { padding: 20px; }
+      .modal-body { padding: 20px; }
+      .modal-footer { padding: 16px 20px; flex-direction: column; gap: 12px; align-items: stretch; }
+      .modal-link { justify-content: center; }
+      .modal-meta-grid { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -777,12 +981,99 @@
     </div>
   </footer>
 
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true">
+    <div class="modal" id="modal">
+      <div id="modalImgWrap"></div>
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-eyebrow">
+            <span id="modalIdx"></span>
+            <span class="modal-badge" id="modalBadge"></span>
+          </div>
+          <div class="modal-title" id="modalTitle"></div>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-desc" id="modalDesc"></div>
+        <div class="modal-meta-grid" id="modalMeta"></div>
+        <div class="modal-tags" id="modalTags"></div>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-status"><span class="status-dot"></span><span id="modalStatus">Live</span></div>
+        <a href="#" class="modal-link" id="modalLink" target="_blank">
+          View Project
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Header scroll
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
       header.classList.toggle('scrolled', window.scrollY > 40);
     });
+
+    // ── MODAL ──
+    const backdrop = document.getElementById('modalBackdrop');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(data) {
+      // Image
+      const imgWrap = document.getElementById('modalImgWrap');
+      if (data.image) {
+        imgWrap.innerHTML = `<img class="modal-img" src="${data.image}" alt="${data.title}">`;
+      } else {
+        imgWrap.innerHTML = `<div class="modal-img-placeholder"><svg width="64" height="64" viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" stroke="#C8A84B" stroke-width="1.5"/><circle cx="18" cy="21" r="4" stroke="#C8A84B" stroke-width="1.5"/><path d="M8 30l10-8 8 6 6-4 8 6" stroke="#C8A84B" stroke-width="1.5" stroke-linejoin="round"/></svg></div>`;
+      }
+
+      document.getElementById('modalIdx').textContent = data.idx || '';
+      document.getElementById('modalBadge').textContent = data.category || 'Hardware';
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalDesc').textContent = data.description;
+
+      // Meta grid
+      const meta = document.getElementById('modalMeta');
+      const metaItems = [
+        { key: 'Category', val: data.category || 'Hardware', gold: true },
+        { key: 'Status', val: '● Live', gold: true },
+        { key: 'Tags', val: (data.tags || []).length + ' technologies' },
+      ];
+      meta.innerHTML = metaItems.map(m =>
+        `<div class="modal-meta-cell">
+          <span class="modal-meta-key">${m.key}</span>
+          <span class="modal-meta-val${m.gold ? ' gold' : ''}">${m.val}</span>
+        </div>`
+      ).join('');
+
+      // Tags
+      document.getElementById('modalTags').innerHTML =
+        (data.tags || []).map(t => `<span class="card-tag">${t}</span>`).join('');
+
+      // Link
+      const link = document.getElementById('modalLink');
+      link.href = data.link || '#';
+      link.textContent = '';
+      link.innerHTML = `View Project <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+      document.getElementById('modalStatus').textContent = 'Live';
+
+      // Open
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      backdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     const arrowSVG = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
@@ -837,10 +1128,22 @@
               <div class="card-tags">${(proj.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
             </div>
             <div class="card-footer">
-              <a href="${proj.link || '#'}" class="card-link" target="_blank">View Project ${arrowSVG}</a>
+              <span class="card-link" style="cursor:pointer;">Expand ${arrowSVG}</span>
               <span class="card-status"><span class="status-dot"></span>Live</span>
             </div>
           `;
+
+          card.addEventListener('click', () => {
+            openModal({
+              idx: `P-${String(i+1).padStart(3,'0')}`,
+              title: proj.title,
+              description: proj.description,
+              category: proj.category || 'Hardware',
+              tags: proj.tags || [],
+              image: proj.image || null,
+              link: proj.link || '#',
+            });
+          });
 
           grid.appendChild(card);
         });
