@@ -1,0 +1,49 @@
+[
+  {
+    "title": "Dual-Processor Architectural Approaches to Distributed Processing in Embedded Robotics",
+    "authors": [
+      { "name": "Mateo Johnson", "isMe": true }
+    ],
+    "venue": "TechRxiv",
+    "year": "2025",
+    "type": "Preprint",
+    "abstract": "This letter presents a peer-level asymmetric dual-MCU architecture that partitions real-time control and best-effort computation across independent microcontrollers with bounded inter-processor communication latency. Experimental results on two reference platforms demonstrate 15-25% reductions in worst-case interrupt and control-loop latency and significantly improved control-loop jitter under load compared to single-MCU baselines.",
+    "tags": ["Dual-MCU", "Embedded Robotics", "Real-Time Systems", "Firmware", "Hardware Design"],
+    "link": "https://www.techrxiv.org/users/992754/articles/1371968-dual-processor-architectural-approaches-to-distributed-processing-in-embedded-robotics"
+  },
+  {
+    "title": "Thermal Coupling as a Source of Sustained Control Degradation in Embedded Robotic Controllers",
+    "authors": [
+      { "name": "Mateo Johnson", "isMe": true }
+    ],
+    "venue": "TechRxiv",
+    "year": "2026",
+    "type": "Preprint",
+    "abstract": "This letter experimentally isolates thermal coupling from scheduling effects in an embedded robotic controller executing fixed-priority workloads. Results demonstrate that control-loop drift and interrupt latency degradation in single-MCU systems correlate with thermal throttling rather than scheduler interference. Offloading computational load to a physically separate microcontroller reduces peak junction temperature by up to 28°C and preserves sustained control-loop stability without modifying control algorithms.",
+    "tags": ["Embedded Robotics", "Real-Time Systems", "Thermal Effects", "Control-Loop Stability"],
+    "link": "https://www.techrxiv.org/users/992754/articles/1375597-thermal-coupling-as-a-source-of-sustained-control-degradation-in-embedded-robotic-controllers"
+  },
+  {
+    "title": "Adaptive Task Migration for Peer-Level Dual-MCU Embedded Robotics Systems",
+    "authors": [
+      { "name": "Mateo Johnson", "isMe": true }
+    ],
+    "venue": "TechRxiv",
+    "year": "2026",
+    "type": "Preprint",
+    "abstract": "This letter presents an adaptive task migration framework that continuously monitors CPU load, thermal conditions, and inter-MCU latency to redistribute tasks in real time without violating control-loop deadlines. Experimental results on two dual-MCU platforms demonstrate a 12% increase in throughput, 23% fewer latency spikes exceeding 5ms, and an 8.3°C reduction in peak coordinator MCU temperature. Task migration overhead remains below 580µs, preserving deterministic control performance.",
+    "tags": ["Dual-MCU", "Adaptive Scheduling", "Embedded Robotics", "Real-Time Systems", "Thermal-Aware Scheduling"],
+    "link": "https://www.techrxiv.org/users/992754/articles/1377625-adaptive-task-migration-for-peer-level-dual-mcu-embedded-robotics-systems"
+  },
+  {
+    "title": "Dual-MCU Adaptive Priority Scheduling (DMAPS): A Mathematical Framework for Real-Time Task Distribution",
+    "authors": [
+      { "name": "Mateo Johnson", "isMe": true }
+    ],
+    "venue": "TechRxiv",
+    "year": "2026",
+    "type": "Preprint",
+    "abstract": "We present Dual-MCU Adaptive Priority Scheduling (DMAPS), a novel distributed real-time scheduling algorithm for coordinated microcontroller architectures. DMAPS achieves provable latency bounds while maintaining computational balance across heterogeneous processing units. Experimental validation demonstrates 45-57% latency reduction compared to single-MCU baselines and 17.2% lower latency than the next-best competing algorithm, with 5-10× lower jitter and O(1) amortized complexity.",
+    "tags": ["Scheduling Algorithm", "Dual-MCU", "Real-Time Systems", "Formal Methods", "Embedded Systems"]
+  }
+]
